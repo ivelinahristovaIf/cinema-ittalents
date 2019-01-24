@@ -27,7 +27,7 @@ public class Ticket {
 	public enum ticketType {
 		STANDART_TICKET, CHILD_TICKET, INVALID_TICKET, STUDENT_TICKET
 	}
-
+	
 	private Ticket(String seat, int price, Cinema cinema /* ,Movie movie */) {
 		this.seat = new Seat(seat);
 		setPrice(price);
@@ -124,5 +124,7 @@ public class Ticket {
 		return "Ticket [cinema=" + cinema + ", price=" + price + ", seat=" + seat.getSeatValue() + ", serialNumber="
 				+ serialNumber + "]";
 	}
+	
+	
 
 }
