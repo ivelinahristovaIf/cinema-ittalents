@@ -1,5 +1,6 @@
 package cinema;
 
+import java.io.Console;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -16,7 +17,6 @@ public class DemoCinema {
 
 	static Admin admin = Admin.createAdmin("admin", "admin");
 	static Scanner sc = new Scanner(System.in);
-
 
 //	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
 
@@ -61,10 +61,12 @@ public class DemoCinema {
 
 	}
 
-	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
+	private static boolean isValidUsernameAndPassword(String username, String password)
+			throws NoSuchAlgorithmException {
 		if (username != null) {
 			if (password != null) {
-				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
+				while (!(username.equals(DemoCinema.admin.getUsername())
+						&& Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
 					System.out.println("Въведете email : ");
 					username = sc.next();
