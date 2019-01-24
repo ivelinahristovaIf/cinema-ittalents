@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import cinema.Cinema;
+
 
 public class Ticket {
 	
@@ -14,7 +16,7 @@ public class Ticket {
 	private static final int STANDART_TICKET_PRICE = 10;
 
 
-//	private Cinema cinema;
+	private Cinema cinema;
 //	private Movie movie;
 	private int price;
 	private Seat seat;
@@ -29,11 +31,18 @@ public class Ticket {
 			new String("STUDENT TICKET")
 	));
 	
-	private Ticket(String seat, int price /*, Cinema cinema, Movie movie */) {
+	private Ticket(String seat, int price, Cinema cinema /*,Movie movie */) {
 		this.seat = new Seat(seat);
 		setPrice(price);
+		
+		if(cinema != null) {
+			this.cinema = cinema;
+		} else {
+			System.out.println("Cinema is null");
+		}
+		
 		this.serialNumber = ++Ticket.id; // unique serial number
-		//TO DO this. cinema = cinema, this movie = movie
+		//TO DO this.movie = movie
 	}
 	
 	
@@ -96,26 +105,26 @@ public class Ticket {
 
 	
 
-	public static Ticket getInstance(String ticketType, String seat) {
+	public static Ticket getInstance(String ticketType, String seat, Cinema cinema) {
 		String newTicketType = ticketType.toUpperCase();
 		
 		if(Ticket.ticketTypes.contains(newTicketType)) {
 			String ticket = ticketType;
 			
 			if(ticket.equalsIgnoreCase("Standart Ticket")) {
-				return new Ticket(seat, STANDART_TICKET_PRICE);
+				return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
 			}
 			
 			if(ticket.equalsIgnoreCase("Child Ticket")) {
-				return new Ticket(seat, CHILD_TICKET_PRICE);
+				return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
 			}
 			
 			if(ticket.equalsIgnoreCase("Student Ticket")) {
-				return new Ticket(seat, STUDENT_TICKET_PRICE);
+				return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
 			}
 			
 			if(ticket.equalsIgnoreCase("Invalid Ticket")) {
-				return new Ticket(seat, INVALID_TICKET_PRICE);
+				return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
 			}
 		} 
 		

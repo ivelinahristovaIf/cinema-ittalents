@@ -39,9 +39,8 @@ public class Consumer {
 	private void setPassword() {
 		System.out.println("Парола:");
 		String password = sc.next();
-		if (!isValidPassword(password)) {
+		while (!isValidPassword(password)) {
 			System.out.println("Try again: ");
-			// TODO recursive asking for password
 			password = sc.next();
 		}
 		this.password = password;

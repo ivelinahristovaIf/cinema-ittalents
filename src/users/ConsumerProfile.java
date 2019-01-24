@@ -66,9 +66,9 @@ class ConsumerProfile {
 			this.surName = surName;
 		}
 	}
-
+	
 	void setLastName() {
-		System.out.println("Презиме:");
+		System.out.println("фамилия");
 		String lastName = sc.next();
 		if (isValidName(lastName)) {
 			this.lastName = lastName;
