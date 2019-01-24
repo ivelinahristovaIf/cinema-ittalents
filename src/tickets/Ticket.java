@@ -62,14 +62,7 @@ public class Ticket {
 			} else {
 				System.out.println("That is invalid row");
 			}
-<<<<<<< HEAD
-			
-			
-			if(isValidPlace(stringSeat)) {
-=======
-
 			if (isValidPlace(stringSeat)) {
->>>>>>> 381fab7846cbec90d87fdf87df0efe85fec91129
 				this.place = Integer.parseInt(stringSeat.substring(1));
 			} else {
 				System.out.println("That is invalid place");
@@ -104,42 +97,11 @@ public class Ticket {
 			System.out.println("Ticket price must be a positive value");
 		}
 	}
-<<<<<<< HEAD
 	
 
 	
-
-	public static Ticket getInstance(String ticketType, String seat, Cinema cinema) {
-		String newTicketType = ticketType.toUpperCase();
-		
-		if(Ticket.ticketTypes.contains(newTicketType)) {
-			String ticket = ticketType;
-			
-			if(ticket.equalsIgnoreCase("Standart Ticket")) {
-				return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
-			}
-			
-			if(ticket.equalsIgnoreCase("Child Ticket")) {
-				return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
-			}
-			
-			if(ticket.equalsIgnoreCase("Student Ticket")) {
-				return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
-			}
-			
-			if(ticket.equalsIgnoreCase("Invalid Ticket")) {	
-				return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
-			}
-		} 
-		
-		System.out.println("We do not have that ticket type, Sorry");
-		//TO DO throw exception (spored men) i tva return null nqma da go ima
-		return null;
-		
-=======
 
 	public static Ticket getInstance(ticketType type, String seat, Cinema cinema) throws NotValidTicketTypeException {
-//		String newTicketType = ticketType.toUpperCase();
 		switch (type) {
 		case STANDART_TICKET:
 			return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
@@ -151,32 +113,6 @@ public class Ticket {
 			return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
 		}
 		throw new NotValidTicketTypeException("Няма такъв билет");
-
-//		if (Ticket.ticketTypes.contains(newTicketType)) {
-//			String ticket = ticketType;
-//
-//			if (ticket.equalsIgnoreCase("Standart Ticket")) {
-//				return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
-//			}
-//
-//			if (ticket.equalsIgnoreCase("Child Ticket")) {
-//				return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
-//			}
-//
-//			if (ticket.equalsIgnoreCase("Student Ticket")) {
-//				return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
-//			}
-//
-//			if (ticket.equalsIgnoreCase("Invalid Ticket")) {
-//				return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
-//			}
-//		}
-
-//		System.out.println("We do not have that ticket type, Sorry");
-		// TO DO throw exception (spored men) i tva return null nqma da go ima
-//		return null;
-
->>>>>>> 381fab7846cbec90d87fdf87df0efe85fec91129
 	}
 
 	public Seat getSeat() {

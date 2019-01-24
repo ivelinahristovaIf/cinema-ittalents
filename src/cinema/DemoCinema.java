@@ -8,6 +8,9 @@ import users.Admin;
 import users.Consumer;
 
 public class DemoCinema {
+	public static void menu() {
+		System.out.println("Изберете");
+	}
 
 	public static void main(String[] args) {
 		try {
