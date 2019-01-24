@@ -21,14 +21,11 @@ public class Ticket {
 	private static int id = 0;
 	private int serialNumber;
 
-	private static final Set<String> TICKET_TYPE = new HashSet<>(Arrays.asList(new String("STANDART TICKET"),
-			new String("CHILD TICKET"), new String("INVALID TICKET"), new String("STUDENT TICKET")));
-
 	public enum ticketType {
 		STANDART_TICKET, CHILD_TICKET, INVALID_TICKET, STUDENT_TICKET
 	}
 	
-	private Ticket(String seat, int price, Cinema cinema /* ,Movie movie */) {
+	private Ticket(String seat, int price, Cinema cinema /* ,M	ovie movie */) {
 		this.seat = new Seat(seat);
 		setPrice(price);
 
