@@ -68,11 +68,14 @@ public class Ticket {
 				System.out.println("That is invalid row");
 			}
 			
+			
 			if(isValidPlace(stringSeat)) {
 				this.place = Integer.parseInt(stringSeat.substring(1));
 			} else {
 				System.out.println("That is invalid place");
 			}
+			
+			this.isFree = true;
 		}
 
 		private boolean isValidPlace(String stringSeat) {
@@ -124,7 +127,7 @@ public class Ticket {
 				return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
 			}
 			
-			if(ticket.equalsIgnoreCase("Invalid Ticket")) {
+			if(ticket.equalsIgnoreCase("Invalid Ticket")) {	
 				return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
 			}
 		} 
