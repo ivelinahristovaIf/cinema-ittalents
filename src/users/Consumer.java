@@ -25,7 +25,6 @@ public class Consumer {
 	public Consumer(int id) {
 
 		this.id = id;
-		System.out.println("Регистрация");
 		System.out.println("Моля въведете вашите данни: ");
 		this.setEmail();
 		try {

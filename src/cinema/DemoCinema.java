@@ -1,9 +1,11 @@
 package cinema;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import crypt.Cryptography;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 import tickets.Ticket.ticketType;
@@ -33,8 +35,13 @@ public class DemoCinema {
 			String username = sc.next();
 			System.out.println("Въведете парола: ");
 			String password = sc.next();
-			if (isValidUsernameAndPassword(username, password)) {
-				admin.showMenu();
+			try {
+				if (isValidUsernameAndPassword(username, password)) {
+					admin.showMenu();
+				}
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if (option == 2) {
@@ -54,10 +61,10 @@ public class DemoCinema {
 
 	}
 
-	private static boolean isValidUsernameAndPassword(String username, String password) {
+	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
 		if (username != null) {
 			if (password != null) {
-				while (!(username.equals(DemoCinema.admin.getUsername()) && password.equals(admin.getPassword()))) {
+				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
 					System.out.println("Въведете email : ");
 					username = sc.next();
