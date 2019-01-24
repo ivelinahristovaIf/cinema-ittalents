@@ -1,5 +1,6 @@
 package users;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cinema.Cinema;
+import crypt.Cryptography;
 
 public class Consumer {
 	private static final int MIN_PASSWORD_LENGTH = 8;
@@ -26,7 +28,12 @@ public class Consumer {
 		System.out.println("Регистрация");
 		System.out.println("Моля въведете вашите данни: ");
 		this.setEmail();
-		this.setPassword();
+		try {
+			this.setPassword();
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("NoSuchAlgorithmException");
+			e.printStackTrace();
+		}
 
 		// TODO personal cinema
 //		if (isValidCinema(personalCinema)) {
@@ -38,14 +45,14 @@ public class Consumer {
 
 	}
 
-	private void setPassword() {
+	private void setPassword() throws NoSuchAlgorithmException {
 		System.out.println("Парола:");
 		String password = sc.next();
 		while (!isValidPassword(password)) {
 			System.out.println("Try again: ");
 			password = sc.next();
 		}
-		this.password = password;
+		this.password = Cryptography.cryptSHA256(password);
 	}
 
 	private void setEmail() {

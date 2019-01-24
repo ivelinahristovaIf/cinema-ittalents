@@ -11,17 +11,17 @@ import users.Admin;
 import users.Consumer;
 
 public class DemoCinema {
-	
+
 	static Admin admin = Admin.createAdmin("admin", "admin");
-	
-	
+	static Scanner sc = new Scanner(System.in);
+
+
 //	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
-	
+
 	// TODO how to make consumers non static
 	private static Set<Consumer> consumers;
 
 	public static void menu() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Изберете опция от менюто: ");
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
@@ -57,10 +57,15 @@ public class DemoCinema {
 	private static boolean isValidUsernameAndPassword(String username, String password) {
 		if (username != null) {
 			if (password != null) {
-				if (username.equals(DemoCinema.admin.getUsername()) && password.equals(admin.getPassword())) {
-					System.out.println("Вписахте се успешно като администратор!");
-					return true;
+				while (!(username.equals(DemoCinema.admin.getUsername()) && password.equals(admin.getPassword()))) {
+					System.err.println("Грешно потребителско име или парола!");
+					System.out.println("Въведете email : ");
+					username = sc.next();
+					System.out.println("Въведете парола: ");
+					password = sc.next();
 				}
+				System.out.println("Вписахте се успешно като администратор!");
+				return true;
 			}
 			System.out.println("Null admin password");
 			return false;
