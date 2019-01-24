@@ -62,14 +62,25 @@ public class DemoCinema {
 	}
 
 	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
+		System.out.println("Натиснете 'х' за да се върнете обратно към менюто");
 		if (username != null) {
 			if (password != null) {
 				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
+					
 					System.err.println("Грешно потребителско име или парола!");
-					System.out.println("Въведете email : ");
+					
+					System.out.println("Въведете потребителско име : ");
 					username = sc.next();
+	
+					if(username.equalsIgnoreCase("x") || password.equalsIgnoreCase("x")) {
+						menu();
+						return false;
+					}
+					
 					System.out.println("Въведете парола: ");
 					password = sc.next();
+
+
 				}
 				System.out.println("Вписахте се успешно като администратор!");
 				return true;
