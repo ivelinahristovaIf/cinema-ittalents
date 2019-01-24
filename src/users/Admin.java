@@ -4,9 +4,12 @@ public class Admin {
 	private String username;
 	private String password;
 	
-	public Admin(String username, String password) {
+	private static Admin theAdmin = null;
+	
+	private Admin(String username, String password) {
 		this.username = username;
 		this.password = password;
+		System.out.println("adminche");
 	}
 
 	public String getUsername() {
@@ -23,5 +26,12 @@ public class Admin {
 		
 	};
 	
+	public static Admin createAdmin(String username, String password) {
+		if(Admin.theAdmin == null) {
+			Admin.theAdmin = new Admin(username, password);
+		}
+		
+		return Admin.theAdmin;
+	}
 
 }

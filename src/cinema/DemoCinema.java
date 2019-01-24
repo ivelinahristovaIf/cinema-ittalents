@@ -11,7 +11,12 @@ import users.Admin;
 import users.Consumer;
 
 public class DemoCinema {
-	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
+	
+	static Admin admin = Admin.createAdmin("admin", "admin");
+	
+	
+//	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
+	
 	// TODO how to make consumers non static
 	private static Set<Consumer> consumers;
 
@@ -64,21 +69,19 @@ public class DemoCinema {
 		return false;
 	}
 
-	public static Admin createAdmin(String username, String password) {
-		// TODO Singleton
-		// TODO is correct username and password
-		return new Admin(username, password);
-	}
+//	public static Admin createAdmin(String username, String password) {
+//		// TODO Singleton
+//		// TODO is correct username and password
+//		return new Admin(username, password);
+//	}
 
 	public static void main(String[] args) {
 		try {
 			Ticket ticket = Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
 			System.out.println(ticket);
 		} catch (NotValidTicketTypeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Admin admin = new Admin("admin", "admin");
 		consumers = new HashSet<Consumer>();
 		menu();
 
