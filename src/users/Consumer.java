@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cinema.Cinema;
 
@@ -49,9 +51,12 @@ public class Consumer {
 	private void setEmail() {
 		System.out.println("E-mail:");
 		String email = sc.next();
-		if (isValidEmail(email)) {
-			this.email = email;
+		while (!isValidEmail(email)) {
+			System.out.println("Try again: ");
+			email = sc.next();
 		}
+		this.email = email;
+
 	}
 
 //	private boolean isValidCinema(Cinema personalCinema) {
@@ -64,13 +69,18 @@ public class Consumer {
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
 			return true;
 		}
-		System.out.println("Password must be at least with " + MIN_PASSWORD_LENGTH + " characters!");
+		System.err.println("Password must be at least with " + MIN_PASSWORD_LENGTH + " characters!");
 		return false;
 	}
 
 	private boolean isValidEmail(String email) {
-		// TODO validate email
-		return true;
+		Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+		Matcher regMatcher = regexPattern.matcher(email);
+		if (regMatcher.matches()) {
+			return true;
+		}
+		System.err.println("Not suitable email adress!");
+		return false;
 	}
 
 	@Override
