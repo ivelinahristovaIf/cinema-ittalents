@@ -48,10 +48,11 @@ public class Ticket {
 	
 	private class Seat{
 		
+		private static final char MAX_ROW_SMALL_LETTERS = 'z';
+		private static final char MIN_ROW_SMALL_LETTERS = 'a';
 		private static final char MAX_ROW = 'Z';
 		private static final char MIN_ROW = 'A';
 		
-		private static final char MIN_NUMBER_PLACE = '0';
 		private static final int MAX_NUMBER_PLACE = 15;
 		
 		
@@ -75,13 +76,13 @@ public class Ticket {
 		}
 
 		private boolean isValidPlace(String stringSeat) {
-			return Integer.parseInt(stringSeat.substring(1, stringSeat.length())) <= MIN_NUMBER_PLACE 
+			return Integer.parseInt(stringSeat.substring(1, stringSeat.length())) <= MAX_NUMBER_PLACE 
 					&& Integer.parseInt(stringSeat.substring(1, stringSeat.length())) >= 0;
 		}
 
 		private boolean isValidRow(String stringSeat) {
 			return (stringSeat.charAt(0) >= MIN_ROW && stringSeat.charAt(0) <= MAX_ROW)
-					|| (stringSeat.charAt(0) >= 'a' && stringSeat.charAt(0) <= 'z');
+					|| (stringSeat.charAt(0) >= MIN_ROW_SMALL_LETTERS && stringSeat.charAt(0) <= MAX_ROW_SMALL_LETTERS);
 		}
 		
 		public String getSeatValue() {
