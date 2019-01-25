@@ -1,5 +1,6 @@
 package cinema;
 
+import java.io.Console;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -17,7 +18,6 @@ public class DemoCinema {
 	static Admin admin = Admin.createAdmin("admin", "admin");
 	static Scanner sc = new Scanner(System.in);
 
-
 //	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
 
 	// TODO how to make consumers non static
@@ -31,6 +31,7 @@ public class DemoCinema {
 		int option = sc.nextInt();
 		if (option == 1) {
 			System.out.println("Администратор");
+			System.out.println("Натиснете 'х' за да се върнете обратно към менюто");
 			System.out.println("Въведете потребителско име: ");
 			String username = sc.next();
 			System.out.println("Въведете парола: ");
@@ -61,12 +62,20 @@ public class DemoCinema {
 
 	}
 
+//<<<<<<< HEAD
 	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
-		System.out.println("Натиснете 'х' за да се върнете обратно към менюто");
 		if (username != null) {
 			if (password != null) {
 				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
 					
+//=======
+//	private static boolean isValidUsernameAndPassword(String username, String password)
+//			throws NoSuchAlgorithmException {
+//		if (username != null) {
+//			if (password != null) {
+//				while (!(username.equals(DemoCinema.admin.getUsername())
+//						&& Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
+//>>>>>>> 6c4a4b4e7e6ecc2f4cb1d2f3ecb8c3190426a94f
 					System.err.println("Грешно потребителско име или парола!");
 					
 					System.out.println("Въведете потребителско име : ");
