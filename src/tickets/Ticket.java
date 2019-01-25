@@ -41,6 +41,8 @@ public class Ticket {
 		// TO DO this.movie = movie
 	}
 
+	
+	
 	private class Seat {
 
 		private static final char MAX_ROW_SMALL_LETTERS = 'z';
@@ -98,6 +100,41 @@ public class Ticket {
 			this.isFree = isFree;
 		}
 
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + place;
+			result = prime * result + ((row == null) ? 0 : row.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Seat other = (Seat) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (place != other.place)
+				return false;
+			if (row == null) {
+				if (other.row != null)
+					return false;
+			} else if (!row.equals(other.row))
+				return false;
+			return true;
+		}
+
+		private Ticket getOuterType() {
+			return Ticket.this;
+		}
+
 
 	}
 
@@ -139,6 +176,17 @@ public class Ticket {
 
 
 
+	public void reservedTicket() {
+		this.seat.setFree(false);
+	}
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
 
 	@Override
 	public int hashCode() {
@@ -164,6 +212,10 @@ public class Ticket {
 			return false;
 		return true;
 	}
+
+
+
+	
 	
 	
 

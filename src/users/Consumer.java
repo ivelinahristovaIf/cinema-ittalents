@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 import cinema.Cinema;
 import cinema.DemoCinema;
 import crypt.Cryptography;
+import tickets.NotValidTicketTypeException;
+import tickets.Ticket;
 
 public class Consumer {
 	private static final int MIN_PASSWORD_LENGTH = 8;
@@ -21,6 +23,7 @@ public class Consumer {
 	private String password;
 	private Cinema personalCinema; // the cinema he choosed; composition
 	private Set<Cinema> allCinemas;// choose from another cinema; agregation
+	private double money;
 
 	private ConsumerProfile myProfile;
 
@@ -131,6 +134,55 @@ public class Consumer {
 //		return true;
 //	}
 
+	public void buyTicket(Cinema cinema) throws NotValidTicketTypeException {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Какъв билет искате да купите: ");
+		System.out.println("За детски билет натиснете 1");
+		System.out.println("За стандартен билет натиснете 2");
+		System.out.println("За билет за инвалиди натиснете 3");
+		System.out.println("За студентски билет натиснете 4");
+		
+		int ticketType = sc.nextInt();
+		
+		System.out.println("Колко билета искате да купите: ");
+		int countTickets = sc.nextInt();
+
+		System.out.println("Изберете място");
+		String seat = sc.next();
+
+		Ticket ticket = null;
+		switch (ticketType) {
+		case 1:
+			ticket = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, cinema);
+			break;
+			
+		case 2: 
+			ticket = Ticket.getInstance(Ticket.ticketType.STANDART_TICKET, seat, cinema);
+			break;
+ 
+		case 3: 
+			ticket = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, seat, cinema);
+			break;
+			
+		case 4: 
+			ticket = Ticket.getInstance(Ticket.ticketType.STUDENT_TICKET, seat, cinema);
+			break;
+		default:
+			break;
+		}
+		
+		if(this.money > ticket.getPrice()) {
+			ticket.reservedTicket();
+			this.money -= ticket.getPrice();
+			System.out.println("Поздравления вие запазихте билет");
+			
+		} else {
+			System.out.println("Нямате достатъчно пари");
+		}
+		
+	}
+	
 	private boolean isValidPassword(String password) {
 		// TODO validate password
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
@@ -160,4 +212,33 @@ public class Consumer {
 		return myProfile;
 	}
 
+//	public static void main(String[] args) throws NotValidTicketTypeException {
+//		Cinema c = new Cinema();
+//
+//		Consumer con = new Consumer(5);
+//		con.money = 100000;
+//	
+//		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "j4", c);
+//		
+//		
+//		try {
+//			con.buyTicket(c);
+//		} catch (NotValidTicketTypeException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+////		try {
+////			con.buyTicket(c);
+////		} catch (NotValidTicketTypeException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//		
+//		System.out.println(con.money);
+//		
+//		
+//		
+//	}
+	
 }

@@ -1,5 +1,9 @@
 package users;
 
+import cinema.Cinema;
+import tickets.NotValidTicketTypeException;
+import tickets.Ticket;
+
 public class UsersDemo {
 
 	public static void main(String[] args) {
@@ -10,6 +14,11 @@ public class UsersDemo {
 		
 //		ivan.changePassword();
 //		ivan.setInterests();
+		
+		
+		
+
+		
 	}
 
 }
