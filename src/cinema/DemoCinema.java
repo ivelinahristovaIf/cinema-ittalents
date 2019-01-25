@@ -1,11 +1,8 @@
 package cinema;
 
-import java.io.Console;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Set;
 
 import crypt.Cryptography;
 import tickets.NotValidTicketTypeException;
@@ -29,19 +26,6 @@ public class DemoCinema {
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
 		System.out.println("3 -> Регистриране на нов потребител...");
-<<<<<<< HEAD
-		int option = sc.nextInt();
-		if (option == 1) {
-			System.out.println("Администратор");
-			System.out.println("Натиснете 'х' за да се върнете обратно към менюто");
-			System.out.println("Въведете потребителско име: ");
-			String username = sc.next();
-			System.out.println("Въведете парола: ");
-			String password = sc.next();
-			try {
-				if (isValidUsernameAndPassword(username, password)) {
-					admin.showMenu();
-=======
 		try {
 			int option = sc.nextInt();
 
@@ -56,9 +40,8 @@ public class DemoCinema {
 						admin.showMenu();
 					}
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
 					e.printStackTrace();
->>>>>>> c0eb884fec05ff6364b0300a2789c93303532032
 				}
 			}
 			if (option == 2) {
@@ -86,43 +69,33 @@ public class DemoCinema {
 
 	}
 
-<<<<<<< HEAD
-//<<<<<<< HEAD
-	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
-=======
 	private static boolean isValidEmailAndPasswor(String email, String password) {
-		// TODO Auto-generated method stub
+		// TODO validate email and password
 		return true;
 	}
 
 	private static boolean isValidUsernameAndPassword(String username, String password)
 			throws NoSuchAlgorithmException {
->>>>>>> c0eb884fec05ff6364b0300a2789c93303532032
 		if (username != null) {
 			if (password != null) {
-				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
-					
-//=======
-//	private static boolean isValidUsernameAndPassword(String username, String password)
-//			throws NoSuchAlgorithmException {
-//		if (username != null) {
-//			if (password != null) {
-//				while (!(username.equals(DemoCinema.admin.getUsername())
-//						&& Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
-//>>>>>>> 6c4a4b4e7e6ecc2f4cb1d2f3ecb8c3190426a94f
+				while (!(username.equals(DemoCinema.admin.getUsername())
+						&& Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
-					
+					System.err.println("Въведете Х за връщане назад към менюто или опитайте отново...");
+
 					System.out.println("Въведете потребителско име : ");
 					username = sc.next();
-	
-					if(username.equalsIgnoreCase("x") || password.equalsIgnoreCase("x")) {
+					if (username.equalsIgnoreCase("x")) {
 						menu();
 						return false;
 					}
-					
 					System.out.println("Въведете парола: ");
 					password = sc.next();
 
+					if (password.equalsIgnoreCase("x")) {
+						menu();
+						return false;
+					}
 
 				}
 				System.out.println("Вписахте се успешно като администратор!");
@@ -135,11 +108,6 @@ public class DemoCinema {
 		return false;
 	}
 
-//	public static Admin createAdmin(String username, String password) {
-//		// TODO Singleton
-//		// TODO is correct username and password
-//		return new Admin(username, password);
-//	}
 
 	public static void main(String[] args) {
 		try {
@@ -148,7 +116,6 @@ public class DemoCinema {
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}
-//		consumers = new HashSet<Consumer>();
 		menu();
 		System.out.println();
 		Cinema.consumers.stream().forEach(consumer -> consumer.setUpMyProfile());
