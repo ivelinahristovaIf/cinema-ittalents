@@ -2,8 +2,20 @@ package users;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 class ConsumerProfile {
+	private enum movieGenres {
+		ÄĞÀÌÀ, ÓÆÀÑÈ, ÊÎÌÅÄÈß, ÀÍÈÌÀÖÈß, ÅÊØÚÍ, ÔÀÍÒÀÑÒÈÊÀ, ÁÈÎÃĞÀÔÈ×ÅÍ, ÏĞÈÊËŞ×ÅÍÑÊÈ, ĞÎÌÀÍÒÈ×ÅÍ, ÊĞÈÌÈÍÀËÅÍ, ÂÎÅÍÅÍ,
+		ÍÀÓ×ÍÎ_ÏÎÏÓËßĞÅÍ, ÌŞÇÈÊÚË
+	}
+
+	private enum interests {
+		ÌÓÇÈÊÀ, ÊÍÈÃÈ, ÈÃĞÈ, ÇÀÁÀÂËÅÍÈß, ÀÂÒÎÌÎÁÈËÈ, ÍÀÓÊÀ, ÒÅÕÍÎËÎÃÈÈ, ÈÑÒÎĞÈß, ÑÅÌÅÉÑÒÂÎ, ÇÄĞÀÂÅ, ÁÈÇÍÅÑ,
+		ÑÎÖÈÀËÍÈ_ÌĞÅÆÈ, ÑÏÎĞÒ, ÏÚÒÓÂÀÍÅ, ÌÎÄÀ, ÕĞÀÍÀ, ÄÎÌÀØÍÈ_ËŞÁÈÌÖÈ, ÑÅĞÈÀËÈ, ÀÄĞÅÍÀËÈÍ
+	}
+
 	Scanner sc = new Scanner(System.in);
 
 	private String firstName;
@@ -16,12 +28,71 @@ class ConsumerProfile {
 	private String adress;
 	private String education;
 
+	private Set<String> favouriteGenres;
+	private Set<String> personalInterests;
+	// TODO movie generic
+	private Set<String> favouriteMovies;
+
 	public ConsumerProfile() {
 		this.setFirstName();
 		this.setSurName();
 		this.setLastName();
 		this.setBirthDate();
 		this.setCity();
+		this.favouriteGenres = new TreeSet<String>();
+		this.personalInterests = new TreeSet<String>();
+		// TODO Movie comparator
+		this.favouriteMovies = new TreeSet<String>();
+	}
+
+	void addFavouriteGenre() {
+		System.out.println("Ìîëÿ èçáåğåòå ëşáèì æàíğ îò ñïèñúêà: ");
+		for (movieGenres genre : movieGenres.values()) {
+			System.out.println(genre);
+		}
+		String genre = sc.next();
+		boolean isValid = false;
+		for (movieGenres favouriteGenre : movieGenres.values()) {
+			if (favouriteGenre.name().equalsIgnoreCase(genre)) {
+				isValid = true;
+				break;
+			}
+		}
+		if (isValid) {
+			boolean isAdded = this.favouriteGenres.add(genre.toUpperCase());
+			if (isAdded) {
+				System.out.println(genre.toUpperCase() + " áå äîáàâåí â ëşáèìè");
+			} else {
+				System.out.println(genre.toUpperCase() + " âå÷å å äîáàâåí â ëşáèìè æàíğîâå");
+			}
+		} else {
+			System.out.println("Íåâàëèäåí æàíğ!");
+		}
+	}
+
+	void addPersonalInterest() {
+		System.out.println("Ìîëÿ èçáåğåòå èíòåğåñ: ");
+		for (interests interest : interests.values()) {
+			System.out.println(interest);
+		}
+		String interest = sc.next();
+		boolean isValid = false;
+		for (interests personalInterest : interests.values()) {
+			if (personalInterest.name().equalsIgnoreCase(interest)) {
+				isValid = true;
+				break;
+			}
+		}
+		if (isValid) {
+			boolean isAdded = this.personalInterests.add(interest.toUpperCase());
+			if (isAdded) {
+				System.out.println(interest.toUpperCase() + " áå äîáàâåí â èíòåğåñè");
+			} else {
+				System.out.println(interest.toUpperCase() + " âå÷å å äîáàâåí â èíòåğåñè");
+			}
+		} else {
+			System.out.println("Íåâàëèäåí èíòåğåñ!");
+		}
 	}
 
 	private boolean isValidName(String name) {
@@ -57,7 +128,7 @@ class ConsumerProfile {
 		if (adress != null && adress.trim().length() > 5) {
 			this.adress = adress;
 		}
-		
+
 	}
 
 	protected void setEducation() {
@@ -94,17 +165,24 @@ class ConsumerProfile {
 	}
 
 	void setBirthDate() {
-		// TODO wont work with 1/1/97!
 		System.out.println("Äàòà íà ğàæäàíå: day/month/year");
 		String date = sc.next();
-		// 20/11/1997
-
-		int y = Integer.parseInt(date.substring(6));
-		int m = Integer.parseInt(date.substring(3, 5)); // 1-12 for January-December.
-		int d = Integer.parseInt(date.substring(0, 2));
-
-		LocalDate ld = LocalDate.of(y, m, d);
-		this.birthDate = ld;
+		// TODO regex
+		String[] splitDate = date.split("/");
+		if (splitDate.length == 3) {
+			try {
+				int y = Integer.parseInt(splitDate[2].length() == 4 ? splitDate[2] : "19" + splitDate[2]);
+				int m = Integer.parseInt(splitDate[1].length() == 2 ? splitDate[1] : "0" + splitDate[1]);
+				int d = Integer.parseInt(splitDate[0].length() == 2 ? splitDate[0] : "0" + splitDate[0]);
+				LocalDate ld = LocalDate.of(y, m, d);
+				this.birthDate = ld;
+			} catch (Exception e) {
+				System.err.println("Invalid date format!");
+				System.err.println(e.getMessage());
+			}
+		} else {
+			System.err.println("Invalid date!");
+		}
 	}
 
 	void setCity() {

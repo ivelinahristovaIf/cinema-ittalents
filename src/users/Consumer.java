@@ -43,10 +43,33 @@ public class Consumer {
 		this.allCinemas = new HashSet<Cinema>();
 
 	}
+
 	public void setUpMyProfile() {
 		this.myProfile.setPhoneNumber();
 		this.myProfile.setAdress();
 		this.myProfile.setEducation();
+	}
+
+	public void changePassword() {
+		System.out.println("Смяна на парола...");
+		System.out.println("Въведете старата парола:");
+		String oldPass = sc.next();
+		try {
+			while (!Cryptography.cryptSHA256(oldPass).equals(this.password)) {
+				System.err.println("Грешна парола! Опитайте пак: ");
+				oldPass = sc.next();
+			}
+			System.out.println("Въведете нова парола...");
+			this.setPassword();
+			System.out.println("Паролата е сменена успешно!");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	}
+	public void setInterests() {
+		//TODO choose multiple
+		this.myProfile.addFavouriteGenre();
+		this.myProfile.addPersonalInterest();
 	}
 
 	private void setPassword() throws NoSuchAlgorithmException {
@@ -98,6 +121,10 @@ public class Consumer {
 	public String toString() {
 		return "Consumer [id=" + id + ", email=" + email + ", password=" + password + ", personalCinema="
 				+ personalCinema + "," + myProfile + "]";
+	}
+
+	public ConsumerProfile getMyProfile() {
+		return myProfile;
 	}
 
 }
