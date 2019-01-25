@@ -17,6 +17,8 @@ public class Ticket {
 //	private Movie movie;
 	private int price;
 	private Seat seat;
+	private char row;
+	private int col;
 //	private String type;
 	private static int id = 0;
 	private int serialNumber;
@@ -67,12 +69,14 @@ public class Ticket {
 			
 			this.isFree = true;
 		}
-
+		
 		private boolean isValidPlace(String stringSeat) {
 			return Integer.parseInt(stringSeat.substring(1, stringSeat.length())) <= MAX_NUMBER_PLACE
 					&& Integer.parseInt(stringSeat.substring(1, stringSeat.length())) >= 0;
 		}
+		
 
+		
 		private boolean isValidRow(String stringSeat) {
 			return (stringSeat.charAt(0) >= MIN_ROW && stringSeat.charAt(0) <= MAX_ROW)
 					|| (stringSeat.charAt(0) >= MIN_ROW_SMALL_LETTERS && stringSeat.charAt(0) <= MAX_ROW_SMALL_LETTERS);
@@ -85,6 +89,16 @@ public class Ticket {
 				return "Sorry the ticket is null";
 			}
 		}
+
+		public boolean isFree() {
+			return isFree;
+		}
+
+		public void setFree(boolean isFree) {
+			this.isFree = isFree;
+		}
+
+
 	}
 
 	public void setPrice(int price) {
@@ -115,11 +129,40 @@ public class Ticket {
 	public Seat getSeat() {
 		return seat;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "Ticket [cinema=" + cinema + ", price=" + price + ", seat=" + seat.getSeatValue() + ", serialNumber="
 				+ serialNumber + "]";
+	}
+
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + serialNumber;
+		return result;
+	}
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ticket other = (Ticket) obj;
+		if (serialNumber != other.serialNumber)
+			return false;
+		return true;
 	}
 	
 	
