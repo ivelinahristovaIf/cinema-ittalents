@@ -17,7 +17,7 @@ public class MovieTheather {
 	//TODO id
 	private int id;
 	private Map<Character, TreeSet<Integer>> seats;
-	private Set<Ticket> tickets;
+	private Set<Ticket> tickets;//booked tickets
 	
 	public MovieTheather() {
 		this.seats = new TreeMap<Character,TreeSet<Integer>>();
@@ -34,7 +34,8 @@ public class MovieTheather {
 			this.seats.put(row, (TreeSet<Integer>) cols);
 		}
 	}
-	public void showSeatsInTheCinema() throws NotValidTicketTypeException {
+
+	public void showSeatsInTheathre() throws NotValidTicketTypeException {
 		System.out.println("Места в киното: ");
 		System.out.println("        ==============ЕКРАН==============");
 		System.out.println();

@@ -28,6 +28,7 @@ public class Cinema {
 	private static final char MAX_ROWS_IN_CINEMA = 'M';
 	private static final int MAX_COLS_IN_ONE_ROW = 15;
 	public static Set<Consumer> consumers; // TO DO private
+	//TODO remove tickets
 	private Set<Ticket> tickets;
 	private Set<MovieTheather> theathers;
 

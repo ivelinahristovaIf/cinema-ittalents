@@ -13,6 +13,7 @@ public class Ticket {
 	private static final int STANDART_TICKET_PRICE = 10;
 
 	private Cinema cinema;
+	//TODO MovieTheathre mt;
 //	private Movie movie;
 	private int price;
 	private Seat seat;

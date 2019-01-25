@@ -9,7 +9,7 @@ public class TheatherDemo {
 	public static void main(String[] args) {
 		MovieTheather mt = new MovieTheather();
 		try {
-			mt.showSeatsInTheCinema();
+			mt.showSeatsInTheathre();
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}
