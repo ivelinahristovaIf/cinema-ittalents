@@ -3,6 +3,7 @@ package cinema;
 import java.io.Console;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,13 +22,14 @@ public class DemoCinema {
 //	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
 
 	// TODO how to make consumers non static
-	private static Set<Consumer> consumers;
+//	private static Set<Consumer> consumers;
 
 	public static void menu() {
 		System.out.println("Изберете опция от менюто: ");
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
 		System.out.println("3 -> Регистриране на нов потребител...");
+<<<<<<< HEAD
 		int option = sc.nextInt();
 		if (option == 1) {
 			System.out.println("Администратор");
@@ -39,31 +41,63 @@ public class DemoCinema {
 			try {
 				if (isValidUsernameAndPassword(username, password)) {
 					admin.showMenu();
+=======
+		try {
+			int option = sc.nextInt();
+
+			if (option == 1) {
+				System.out.println("Администратор");
+				System.out.println("Въведете потребителско име: ");
+				String username = sc.next();
+				System.out.println("Въведете парола: ");
+				String password = sc.next();
+				try {
+					if (isValidUsernameAndPassword(username, password)) {
+						admin.showMenu();
+					}
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+>>>>>>> c0eb884fec05ff6364b0300a2789c93303532032
 				}
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
-		if (option == 2) {
-			System.out.println("Потребител");
-			System.out.println("Въведете email : ");
-			String username = sc.next();
-			System.out.println("Въведете парола: ");
-			String password = sc.next();
-		}
-		if (option == 3) {
-			System.out.println("Регистрирайте се като потребител...");
-			Consumer consumer = new Consumer(1);
-			// TODO add consumer to Cinema
-			System.out.println(consumer + " е регистриран");
-			consumers.add(consumer);
+			if (option == 2) {
+				System.out.println("Потребител");
+				System.out.println("Въведете email : ");
+				String email = sc.next();
+				System.out.println("Въведете парола: ");
+				String password = sc.next();
+				if (isValidEmailAndPasswor(email, password)) {
+					// TODO get consumer by email and password
+					// TODO show menu for consumer
+				}
+			}
+			if (option == 3) {
+				System.out.println("Регистрирайте се като потребител...");
+				Consumer consumer = new Consumer(1);
+				// TODO add consumer to Cinema
+				System.out.println(consumer + " е регистриран");
+				Cinema.consumers.add(consumer);
+			}
+		} catch (InputMismatchException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 
 	}
 
+<<<<<<< HEAD
 //<<<<<<< HEAD
 	private static boolean isValidUsernameAndPassword(String username, String password) throws NoSuchAlgorithmException {
+=======
+	private static boolean isValidEmailAndPasswor(String email, String password) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	private static boolean isValidUsernameAndPassword(String username, String password)
+			throws NoSuchAlgorithmException {
+>>>>>>> c0eb884fec05ff6364b0300a2789c93303532032
 		if (username != null) {
 			if (password != null) {
 				while (!(username.equals(DemoCinema.admin.getUsername()) && Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
@@ -114,8 +148,10 @@ public class DemoCinema {
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}
-		consumers = new HashSet<Consumer>();
+//		consumers = new HashSet<Consumer>();
 		menu();
+		System.out.println();
+		Cinema.consumers.stream().forEach(consumer -> consumer.setUpMyProfile());
 
 	}
 

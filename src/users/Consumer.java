@@ -43,6 +43,11 @@ public class Consumer {
 		this.allCinemas = new HashSet<Cinema>();
 
 	}
+	public void setUpMyProfile() {
+		this.myProfile.setPhoneNumber();
+		this.myProfile.setAdress();
+		this.myProfile.setEducation();
+	}
 
 	private void setPassword() throws NoSuchAlgorithmException {
 		System.out.println("Парола:");
