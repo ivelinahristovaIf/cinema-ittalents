@@ -1,6 +1,7 @@
 package cinema;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -60,6 +61,9 @@ public class DemoCinema {
 				Consumer consumer = new Consumer(1);
 				// TODO add consumer to Cinema
 				System.out.println(consumer + " е регистриран");
+				if(Cinema.consumers==null) {
+					Cinema.consumers = new HashSet<Consumer>();
+				}
 				Cinema.consumers.add(consumer);
 				//TODO showConsumerMenu is in option 2
 				consumer.showConsumerMenu();
@@ -112,12 +116,12 @@ public class DemoCinema {
 
 
 	public static void main(String[] args) {
-//		try {
-//			Ticket ticket = Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
-//			System.out.println(ticket);
-//		} catch (NotValidTicketTypeException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Ticket ticket = Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
+			System.out.println(ticket);
+		} catch (NotValidTicketTypeException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Добре дошли в Кино Арена!");
 		menu();
 		System.out.println();
