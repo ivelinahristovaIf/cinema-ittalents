@@ -44,19 +44,22 @@ public class Cinema {
 	
 	public void showSeatsInTheCinema() throws NotValidTicketTypeException {
 		System.out.println("Места в киното: ");
-		for(Entry<Character, TreeSet<Integer>> entry : this.movieTheatre.entrySet()) {
-			
-			
+		for(Entry<Character, TreeSet<Integer>> entry : this.movieTheatre.entrySet()) {		
 			System.out.print("Ред " + entry.getKey() + ": ");
 			for(Integer col : entry.getValue()) {
 				String s = (entry.getKey() + " - " + (""+col));
-				System.out.print(col + " ");
+				Ticket t = Ticket.getInstance(ticketType.CHILD_TICKET, s, this);
+				if(this.tickets.contains(t) && t.isReserved()) {
+					System.err.println(col + " ");
+				} else {
+					System.out.print(col + " ");
+				}
 			}
 			System.out.println();
 		}
 	}
 			
-	
+
 	public void addTicket(Ticket ticket) {
 		if(ticket != null) {
 			this.tickets.add(ticket);
@@ -75,7 +78,15 @@ public class Cinema {
 		return Collections.unmodifiableSet(tickets);
 	}
 	
-
+	
+	public static void main(String[] args) throws NotValidTicketTypeException {
+		Cinema c = new Cinema();
+		Consumer con = new Consumer(123);
+		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "J3", c);
+		c.addTicket(t);
+		
+		con.buyTicket(c);
+	}
 	
 	
 }

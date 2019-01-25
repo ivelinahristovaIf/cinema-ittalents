@@ -180,6 +180,9 @@ public class Ticket {
 		this.seat.setFree(false);
 	}
 
+	public boolean isReserved() {
+		return this.seat.isFree;
+	}
 
 	public int getPrice() {
 		return price;
