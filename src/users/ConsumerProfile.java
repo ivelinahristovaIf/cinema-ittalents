@@ -28,7 +28,7 @@ class ConsumerProfile {
 		if (name != null) {
 			if (name.trim().length() >= 3) {
 //				if (name.contains("[а-зА-З]+")) {
-					return true;
+				return true;
 //				}
 			}
 		}
@@ -36,19 +36,37 @@ class ConsumerProfile {
 		return false;
 	}
 
-	protected void setPhoneNumber(String phoneNumber) {
-		// TODO validate phone number
+	protected void setPhoneNumber() {
+		System.out.print("Въведете телефонен номер: ");
+		String phoneNumber = sc.next();
+		while (!isValidPhoneNumber(phoneNumber)) {
+			System.err.print("Невалиден формат, опитайте пак: ");
+			phoneNumber = sc.next();
+		}
 		this.phoneNumber = phoneNumber;
 	}
 
-	protected void setAdress(String adress) {
-		// TODO validate adress
-		this.adress = adress;
+	private boolean isValidPhoneNumber(String phoneNumber) {
+		return phoneNumber != null && phoneNumber.trim().length() == 10 && phoneNumber.startsWith("08");
 	}
 
-	protected void setEducation(String education) {
+	protected void setAdress() {
+		System.out.print("Въведете адрес: ");
+		String adress = sc.nextLine();
+		// TODO adress validation
+		if (adress != null && adress.trim().length() > 5) {
+			this.adress = adress;
+		}
+		
+	}
+
+	protected void setEducation() {
 		// TODO validate education
-		this.education = education;
+		System.out.print("\nВъведете  образование: ");
+		String education = sc.nextLine();
+		if (education != null && education.trim().length() >= 5) {
+			this.education = education;
+		}
 	}
 
 	void setFirstName() {
@@ -66,7 +84,7 @@ class ConsumerProfile {
 			this.surName = surName;
 		}
 	}
-	
+
 	void setLastName() {
 		System.out.println("фамилия");
 		String lastName = sc.next();
@@ -79,7 +97,7 @@ class ConsumerProfile {
 		// TODO wont work with 1/1/97!
 		System.out.println("Дата на раждане: day/month/year");
 		String date = sc.next();
-		//20/11/1997
+		// 20/11/1997
 
 		int y = Integer.parseInt(date.substring(6));
 		int m = Integer.parseInt(date.substring(3, 5)); // 1-12 for January-December.
@@ -90,9 +108,9 @@ class ConsumerProfile {
 	}
 
 	void setCity() {
-		//TODO seting city
+		// TODO seting city
 		this.city = "Sofia";
-		
+
 //		if (city != null && city.trim().length() >= 4) {
 //			// TODO choose from enum
 //			this.city = city;
@@ -101,9 +119,9 @@ class ConsumerProfile {
 
 	@Override
 	public String toString() {
-		return "firstName=" + firstName + ", surName=" + surName + ", lastName=" + lastName
-				+ ", birthDate=" + birthDate + ", city=" + city + ", phoneNumber=" + phoneNumber + ", adress=" + adress
-				+ ", education=" + education + "]";
+		return "firstName=" + firstName + ", surName=" + surName + ", lastName=" + lastName + ", birthDate=" + birthDate
+				+ ", city=" + city + ", phoneNumber=" + phoneNumber + ", adress=" + adress + ", education=" + education
+				+ "]";
 	}
 
 }
