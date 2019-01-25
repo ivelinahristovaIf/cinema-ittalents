@@ -16,6 +16,14 @@ import tickets.Ticket.ticketType;
 import users.Consumer;
 
 public class Cinema {
+	public enum movieGenres {
+		дпюлю, сфюях, йнледхъ, юмхлюжхъ, ейьзм, тюмрюярхйю, ахнцпютхвем, опхйкчвемяйх, пнлюмрхвем, йпхлхмюкем, бнемем,
+		мюсвмн_оноскъпем, лчгхйзк
+	}
+
+	public enum movieCategories {
+		A, B, C, D
+	}
 
 	private static final char MAX_ROWS_IN_CINEMA = 'M';
 	private static final int MAX_COLS_IN_ONE_ROW = 15;
