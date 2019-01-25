@@ -5,11 +5,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import cinema.Cinema;
+import cinema.Movie;
+
 class ConsumerProfile {
-	private enum movieGenres {
-		ÄĞÀÌÀ, ÓÆÀÑÈ, ÊÎÌÅÄÈß, ÀÍÈÌÀÖÈß, ÅÊØÚÍ, ÔÀÍÒÀÑÒÈÊÀ, ÁÈÎÃĞÀÔÈ×ÅÍ, ÏĞÈÊËŞ×ÅÍÑÊÈ, ĞÎÌÀÍÒÈ×ÅÍ, ÊĞÈÌÈÍÀËÅÍ, ÂÎÅÍÅÍ,
-		ÍÀÓ×ÍÎ_ÏÎÏÓËßĞÅÍ, ÌŞÇÈÊÚË
-	}
 
 	private enum interests {
 		ÌÓÇÈÊÀ, ÊÍÈÃÈ, ÈÃĞÈ, ÇÀÁÀÂËÅÍÈß, ÀÂÒÎÌÎÁÈËÈ, ÍÀÓÊÀ, ÒÅÕÍÎËÎÃÈÈ, ÈÑÒÎĞÈß, ÑÅÌÅÉÑÒÂÎ, ÇÄĞÀÂÅ, ÁÈÇÍÅÑ,
@@ -33,8 +32,7 @@ class ConsumerProfile {
 
 	private Set<String> favouriteGenres;
 	private Set<String> personalInterests;
-	// TODO movie generic
-	private Set<String> favouriteMovies;
+	private Set<Movie> favouriteMovies;
 
 	public ConsumerProfile() {
 		this.setFirstName();
@@ -45,17 +43,17 @@ class ConsumerProfile {
 		this.favouriteGenres = new TreeSet<String>();
 		this.personalInterests = new TreeSet<String>();
 		// TODO Movie comparator
-		this.favouriteMovies = new TreeSet<String>();
+		this.favouriteMovies = new TreeSet<Movie>((m1,m2)->m1.getId()-m2.getId());
 	}
 
 	void addFavouriteGenre() {
 		System.out.println("Ìîëÿ èçáåğåòå ëşáèì æàíğ îò ñïèñúêà: ");
-		for (movieGenres genre : movieGenres.values()) {
+		for (Cinema.movieGenres genre : Cinema.movieGenres.values()) {
 			System.out.println(genre);
 		}
 		String genre = sc.next();
 		boolean isValid = false;
-		for (movieGenres favouriteGenre : movieGenres.values()) {
+		for (Cinema.movieGenres favouriteGenre : Cinema.movieGenres.values()) {
 			if (favouriteGenre.name().equalsIgnoreCase(genre)) {
 				isValid = true;
 				break;

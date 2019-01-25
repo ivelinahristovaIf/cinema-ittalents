@@ -1,12 +1,11 @@
 package tickets;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import cinema.Cinema;
 
 public class Ticket {
+	public enum ticketType {
+		STANDART_TICKET, CHILD_TICKET, INVALID_TICKET, STUDENT_TICKET
+	}
 
 	private static final int INVALID_TICKET_PRICE = 5;
 	private static final int STUDENT_TICKET_PRICE = 8;
@@ -23,10 +22,6 @@ public class Ticket {
 	private static int id = 0;
 	private int serialNumber;
 
-	public enum ticketType {
-		STANDART_TICKET, CHILD_TICKET, INVALID_TICKET, STUDENT_TICKET
-	}
-	
 	private Ticket(String seat, int price, Cinema cinema /* ,M	ovie movie */) {
 		this.seat = new Seat(seat);
 		setPrice(price);
@@ -40,9 +35,66 @@ public class Ticket {
 		this.serialNumber = ++Ticket.id; // unique serial number
 		// TO DO this.movie = movie
 	}
+	public void setPrice(int price) {
+		if (price > 0) {
+			this.price = price;
+		} else {
+			System.out.println("Ticket price must be a positive value");
+		}
+	}
+	public static Ticket getInstance(ticketType type, String seat, Cinema cinema) throws NotValidTicketTypeException {
+		switch (type) {
+		case STANDART_TICKET:
+			return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
+		case CHILD_TICKET:
+			return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
+		case STUDENT_TICKET:
+			return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
+		case INVALID_TICKET:
+			return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
+		}
+		throw new NotValidTicketTypeException("Няма такъв билет");
+	}
 
+	public Seat getSeat() {
+		return seat;
+	}
 	
 	
+	@Override
+	public String toString() {
+		return "Ticket [cinema=" + cinema + ", price=" + price + ", seat=" + seat.getSeatValue() + ", serialNumber="
+				+ serialNumber + "]";
+	}
+	public void reservedTicket() {
+		this.seat.setFree(false);
+	}
+	public int getPrice() {
+		return price;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + serialNumber;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ticket other = (Ticket) obj;
+		if (serialNumber != other.serialNumber)
+			return false;
+		return true;
+	}
+	
+	//INNER CLASS
+
 	private class Seat {
 
 		private static final char MAX_ROW_SMALL_LETTERS = 'z';
@@ -138,87 +190,6 @@ public class Ticket {
 
 	}
 
-	public void setPrice(int price) {
-		if (price > 0) {
-			this.price = price;
-		} else {
-			System.out.println("Ticket price must be a positive value");
-		}
-	}
-	
-
-	
-
-	public static Ticket getInstance(ticketType type, String seat, Cinema cinema) throws NotValidTicketTypeException {
-		switch (type) {
-		case STANDART_TICKET:
-			return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
-		case CHILD_TICKET:
-			return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
-		case STUDENT_TICKET:
-			return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
-		case INVALID_TICKET:
-			return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
-		}
-		throw new NotValidTicketTypeException("Няма такъв билет");
-	}
-
-	public Seat getSeat() {
-		return seat;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "Ticket [cinema=" + cinema + ", price=" + price + ", seat=" + seat.getSeatValue() + ", serialNumber="
-				+ serialNumber + "]";
-	}
-
-
-
-	public void reservedTicket() {
-		this.seat.setFree(false);
-	}
-
-	public boolean isReserved() {
-		return this.seat.isFree;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + serialNumber;
-		return result;
-	}
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Ticket other = (Ticket) obj;
-		if (serialNumber != other.serialNumber)
-			return false;
-		return true;
-	}
-
-
-
-	
 	
 	
 

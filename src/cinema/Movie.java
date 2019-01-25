@@ -3,24 +3,19 @@ package cinema;
 import java.time.LocalDate;
 
 public class Movie {
-	enum movieGenres {
-		ÄÐÀÌÀ, ÓÆÀÑÈ, ÊÎÌÅÄÈß, ÀÍÈÌÀÖÈß, ÅÊØÚÍ, ÔÀÍÒÀÑÒÈÊÀ, ÁÈÎÃÐÀÔÈ×ÅÍ, ÏÐÈÊËÞ×ÅÍÑÊÈ, ÐÎÌÀÍÒÈ×ÅÍ, ÊÐÈÌÈÍÀËÅÍ, ÂÎÅÍÅÍ,
-		ÍÀÓ×ÍÎ_ÏÎÏÓËßÐÅÍ, ÌÞÇÈÊÚË
-	}
-
-   enum movieCategories {
-		A, B, C, D
-	}
-
 	private static final int MAX_MINUTES = 220;
 	private static final int MIN_MINUTES = 30;
+	private int id;
 	private String name;
 	private short minutes;
 	private LocalDate premiere;
-	private movieGenres genre;
-	private movieCategories category;
+	private Cinema.movieGenres genre;
+	private Cinema.movieCategories category;
 
-	public Movie(String name, short minutes, LocalDate premiere, movieGenres g, movieCategories c) {
+	public Movie(int id, String name, short minutes, LocalDate premiere, Cinema.movieGenres g,
+			Cinema.movieCategories c) {
+		//TODO id
+		this.id = id;
 		if (name != null && name.trim().length() >= 2) {
 			this.name = name;
 		}
@@ -38,9 +33,9 @@ public class Movie {
 		}
 	}
 
-	private boolean isValidMovieCategory(movieCategories category) {
+	private boolean isValidMovieCategory(Cinema.movieCategories category) {
 		if (category != null) {
-			for (movieCategories cat : movieCategories.values()) {
+			for (Cinema.movieCategories cat : Cinema.movieCategories.values()) {
 				if (cat.name().equalsIgnoreCase(category.name())) {
 					return true;
 				}
@@ -50,9 +45,9 @@ public class Movie {
 		return false;
 	}
 
-	private boolean isValidMovieGenre(movieGenres genre) {
+	private boolean isValidMovieGenre(Cinema.movieGenres genre) {
 		if (genre != null) {
-			for (movieGenres g : movieGenres.values()) {
+			for (Cinema.movieGenres g : Cinema.movieGenres.values()) {
 				if (g.name().equalsIgnoreCase(genre.name())) {
 					return true;
 				}
@@ -71,6 +66,10 @@ public class Movie {
 	public String toString() {
 		return "Movie [name=" + name + ", minutes=" + minutes + ", premiere=" + premiere + ", genre=" + genre.name()
 				+ ", category=" + category.name() + "]";
+	}
+
+	public int getId() {
+		return this.id;
 	}
 
 }
