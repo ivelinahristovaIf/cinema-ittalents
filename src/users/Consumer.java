@@ -3,12 +3,14 @@ package users;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cinema.Cinema;
+import cinema.DemoCinema;
 import crypt.Cryptography;
 
 public class Consumer {
@@ -44,13 +46,43 @@ public class Consumer {
 
 	}
 
-	public void setUpMyProfile() {
+	public void showConsumerMenu() {
+		System.out.println("Добре дошли в потребителското меню!\nМоля, изберете опция: ");
+		System.out.println("1 -> Попълване на лични данни...");
+		System.out.println("2 -> Смяна на парола...");
+		System.out.println("3 -> Добавяне на интереси и любими жанрове...");
+		System.out.println("0 -> Връщане към главното меню / ИЗХОД =>");//TODO
+		try {
+		int option =  sc.nextInt();
+		switch (option) {
+		case 1:
+			this.setUpMyProfile();
+			break;
+		case 2:
+			this.changePassword();
+			break;
+		case 3:
+			this.setInterests();
+			break;
+		case 0:
+			DemoCinema.menu();
+//			showConsumerMenu();
+			break;
+		}
+		}catch(InputMismatchException e) {
+			showConsumerMenu();
+			System.out.println("Wrong command!");
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void setUpMyProfile() {
 		this.myProfile.setPhoneNumber();
 		this.myProfile.setAdress();
 		this.myProfile.setEducation();
 	}
 
-	public void changePassword() {
+	private void changePassword() {
 		System.out.println("Смяна на парола...");
 		System.out.println("Въведете старата парола:");
 		String oldPass = sc.next();
@@ -66,8 +98,9 @@ public class Consumer {
 			e.printStackTrace();
 		}
 	}
-	public void setInterests() {
-		//TODO choose multiple
+
+	private void setInterests() {
+		// TODO choose multiple
 		this.myProfile.addFavouriteGenre();
 		this.myProfile.addPersonalInterest();
 	}
@@ -119,7 +152,7 @@ public class Consumer {
 
 	@Override
 	public String toString() {
-		return "Consumer [id=" + id + ", email=" + email + ", password=" + password + ", personalCinema="
+		return /* "Consumer [id=" + id + */", email: " + email + ", password: " + password + ", предпочитано кино: "
 				+ personalCinema + "," + myProfile + "]";
 	}
 

@@ -22,7 +22,7 @@ public class DemoCinema {
 //	private static Set<Consumer> consumers;
 
 	public static void menu() {
-		System.out.println("Изберете опция от менюто: ");
+		System.out.println("Изберете опция от главното менюто: ");
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
 		System.out.println("3 -> Регистриране на нов потребител...");
@@ -61,6 +61,8 @@ public class DemoCinema {
 				// TODO add consumer to Cinema
 				System.out.println(consumer + " е регистриран");
 				Cinema.consumers.add(consumer);
+				//TODO showConsumerMenu is in option 2
+				consumer.showConsumerMenu();
 			}
 		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
@@ -110,15 +112,16 @@ public class DemoCinema {
 
 
 	public static void main(String[] args) {
-		try {
-			Ticket ticket = Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
-			System.out.println(ticket);
-		} catch (NotValidTicketTypeException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Ticket ticket = Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
+//			System.out.println(ticket);
+//		} catch (NotValidTicketTypeException e) {
+//			e.printStackTrace();
+//		}
+		System.out.println("Добре дошли в Кино Арена!");
 		menu();
 		System.out.println();
-		Cinema.consumers.stream().forEach(consumer -> consumer.setUpMyProfile());
+//		Cinema.consumers.stream().forEach(consumer -> consumer.setUpMyProfile());
 
 	}
 

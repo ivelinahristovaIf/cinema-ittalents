@@ -16,6 +16,9 @@ class ConsumerProfile {
 		СОЦИАЛНИ_МРЕЖИ, СПОРТ, ПЪТУВАНЕ, МОДА, ХРАНА, ДОМАШНИ_ЛЮБИМЦИ, СЕРИАЛИ, АДРЕНАЛИН
 	}
 
+	// TODO more cities
+	private static final String[] CITIES = { "София", "Пловдив", "Варна", "Стара Загора", "Плевен", "Смолян" };
+
 	Scanner sc = new Scanner(System.in);
 
 	private String firstName;
@@ -123,7 +126,7 @@ class ConsumerProfile {
 
 	protected void setAdress() {
 		System.out.print("Въведете адрес: ");
-		String adress = sc.nextLine();
+		String adress = sc.next();
 		// TODO adress validation
 		if (adress != null && adress.trim().length() > 5) {
 			this.adress = adress;
@@ -133,8 +136,8 @@ class ConsumerProfile {
 
 	protected void setEducation() {
 		// TODO validate education
-		System.out.print("\nВъведете  образование: ");
-		String education = sc.nextLine();
+		System.out.print("Въведете  образование: ");
+		String education = sc.next();
 		if (education != null && education.trim().length() >= 5) {
 			this.education = education;
 		}
@@ -186,20 +189,18 @@ class ConsumerProfile {
 	}
 
 	void setCity() {
-		// TODO seting city
-		this.city = "Sofia";
-
-//		if (city != null && city.trim().length() >= 4) {
-//			// TODO choose from enum
-//			this.city = city;
-//		}
+		System.out.println("Изберете град: ");
+		for (int i = 0; i < CITIES.length; i++) {
+			System.out.println(i + 1 + " -> " + CITIES[i]);
+		}
+		int index = sc.nextInt();
+		this.city = CITIES[index];
 	}
 
 	@Override
 	public String toString() {
-		return "firstName=" + firstName + ", surName=" + surName + ", lastName=" + lastName + ", birthDate=" + birthDate
-				+ ", city=" + city + ", phoneNumber=" + phoneNumber + ", adress=" + adress + ", education=" + education
-				+ "]";
+		return "име: " + firstName + ", презиме: " + surName + ", фамилия: " + lastName + ", рождена дата: " + birthDate
+				+ ", град " + city + ", телефон: " + phoneNumber + ", адрес: " + adress + ", образование: " + education;
 	}
 
 }
