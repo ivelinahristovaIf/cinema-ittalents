@@ -1,5 +1,6 @@
 package cinema;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,13 @@ public class MovieTheather {
 		this.fillMovieTheatre();
 		this.tickets = new HashSet<>();
 	}
+	
+	public void addBookedTicket(Ticket t) {
+		if(t != null) {
+			this.tickets.add(t);
+		}
+	}
+	
 	private void fillMovieTheatre() {
 		Set<Integer> cols = new TreeSet<>((i1,i2) -> i1 - i2);
 		
@@ -42,7 +50,6 @@ public class MovieTheather {
 		for(Entry<Character, TreeSet<Integer>> entry : this.seats.entrySet()) {
 			System.out.print("Ред " + entry.getKey() + ": ");
 			for(Integer col : entry.getValue()) {
-				String s = (entry.getKey() + " - " + (""+col));//TODO unused s
 				System.out.print(col + " ");
 			}
 			System.out.println();
@@ -54,5 +61,13 @@ public class MovieTheather {
 		} else {
 			System.out.println("Не може да се добави NULL билет");
 		}
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Set<Ticket> getTickets() {
+		return Collections.unmodifiableSet(tickets);
 	}
 }

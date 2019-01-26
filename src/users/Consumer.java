@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import cinema.Cinema;
 import cinema.DemoCinema;
+import cinema.MovieTheather;
 import crypt.Cryptography;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
@@ -134,7 +135,7 @@ public class Consumer {
 //		return true;
 //	}
 
-	public void buyTicket(Cinema cinema) throws NotValidTicketTypeException {
+	public void buyTicket(Cinema cinema, MovieTheather mt) throws NotValidTicketTypeException {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Какъв билет искате да купите: ");
@@ -147,8 +148,9 @@ public class Consumer {
 		
 		System.out.println("Колко билета искате да купите: ");
 		int countTickets = sc.nextInt();
-
+		
 		System.out.println("Изберете място");
+		mt.showSeatsInTheathre();
 		String seat = sc.next();
 
 		Ticket ticket = null;
@@ -173,10 +175,21 @@ public class Consumer {
 		}
 		
 		if(this.money > ticket.getPrice()) {
-			ticket.reservedTicket();
-			this.money -= ticket.getPrice();
-			System.out.println("Поздравления вие запазихте билет");
-			
+			boolean isAlreadyReserved = false;
+			for(Ticket t : mt.getTickets()) {
+				if(t != null && ticket != null && ticket.isTicketsEquals(t)) {
+					isAlreadyReserved = true;
+					break;
+				}
+			}
+			if(!isAlreadyReserved) {
+				cinema.addBookedTicket(mt, ticket);
+				ticket.reservedTicket();
+				this.money -= ticket.getPrice();
+				System.out.println("Поздравления вие запазихте билет");
+			} else {
+				System.out.println("Съжаляваме този билет вече е бил запазен");
+			}
 		} else {
 			System.out.println("Нямате достатъчно пари");
 		}
@@ -210,6 +223,14 @@ public class Consumer {
 
 	public ConsumerProfile getMyProfile() {
 		return myProfile;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
 	}
 
 //	public static void main(String[] args) throws NotValidTicketTypeException {

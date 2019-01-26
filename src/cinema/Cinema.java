@@ -35,11 +35,20 @@ public class Cinema {
 	public Cinema() {
 		consumers = new HashSet<Consumer>();
 		//TODO comparator
-		this.theathers = new TreeSet<MovieTheather>();
+		this.theathers = new TreeSet<MovieTheather>((mt1,mt2) -> - mt1.getId() - mt2.getId());
 		this.tickets = new HashSet<>();
 	}
 			
+	public void addMovieTheater(MovieTheather mt) {
+		this.theathers.add(mt);
+	}
 
+	public void addBookedTicket(MovieTheather mt, Ticket t) {
+		if(mt != null && t != null) {
+			mt.addBookedTicket(t);
+		}
+	}
+	
 	public void addTicket(Ticket ticket) {
 		if(ticket != null) {
 			this.tickets.add(ticket);
@@ -53,13 +62,33 @@ public class Cinema {
 	}
 	
 	
+	//MAIN
 	public static void main(String[] args) throws NotValidTicketTypeException {
 		Cinema c = new Cinema();
-		Consumer con = new Consumer(123);
+
 		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "J3", c);
 		c.addTicket(t);
+		Ticket t1 = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, "j3", c);
+		System.out.println(t.isTicketsEquals(t1));
+		MovieTheather mt = new MovieTheather();
+		mt.showSeatsInTheathre();
+		Consumer con = new Consumer(123);
+		c.addMovieTheater(mt);
 		
-		con.buyTicket(c);
+		Consumer con1 = new Consumer(20);
+		con1.setMoney(100);
+		
+		con.setMoney(10000);
+		con.buyTicket(c, mt);
+		System.out.println(c.theathers.size());
+		System.out.println(mt.getTickets().size());
+		System.out.println(con.getMoney());
+		
+		con1.buyTicket(c, mt);
+		System.out.println(c.theathers.size());
+		System.out.println(mt.getTickets().size());
+		System.out.println(con1.getMoney());
+		
 	}
 	
 	

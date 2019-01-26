@@ -1,6 +1,7 @@
 package tickets;
 
 import cinema.Cinema;
+import cinema.Movie;
 
 public class Ticket {
 	public enum ticketType {
@@ -13,8 +14,8 @@ public class Ticket {
 	private static final int STANDART_TICKET_PRICE = 10;
 
 	private Cinema cinema;
-	//TODO MovieTheathre mt;
-//	private Movie movie;
+	//MovieTheathre mt;
+	private Movie movie;
 	private int price;
 	private Seat seat;
 	private char row;
@@ -43,6 +44,18 @@ public class Ticket {
 			System.out.println("Ticket price must be a positive value");
 		}
 	}
+	
+	public boolean isTicketsEquals(Ticket t) {
+		if(t != null) {
+			return this.seat.getSeatValue().equals(t.seat.getSeatValue());
+		}
+		return false;
+	}
+	
+	public boolean isTwoSeatsEquals(String s1, String s2) {
+		return s1 != null && s2 != null && s1.equals(s2);
+	}
+	
 	public static Ticket getInstance(ticketType type, String seat, Cinema cinema) throws NotValidTicketTypeException {
 		switch (type) {
 		case STANDART_TICKET:
@@ -153,6 +166,7 @@ public class Ticket {
 			this.isFree = isFree;
 		}
 
+		
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -189,6 +203,13 @@ public class Ticket {
 		}
 
 
+	}
+
+	public char getRow() {
+		return row;
+	}
+	public int getCol() {
+		return col;
 	}
 
 	
