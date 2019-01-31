@@ -61,6 +61,11 @@ public class Cinema {
 		return Collections.unmodifiableSet(tickets);
 	}
 	
+	public void showProgram(MovieTheather mt) {
+		if(mt != null) {
+			//TODO
+		}
+	}
 	
 	//MAIN
 	public static void main(String[] args) throws NotValidTicketTypeException {

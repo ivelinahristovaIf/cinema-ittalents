@@ -1,6 +1,7 @@
 package cinema;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Movie {
 	private static final int MAX_MINUTES = 220;
@@ -11,7 +12,8 @@ public class Movie {
 	private LocalDate premiere;
 	private Cinema.movieGenres genre;
 	private Cinema.movieCategories category;
-
+	// TODO private LocalDateTime time;
+	
 	public Movie(int id, String name, short minutes, LocalDate premiere, Cinema.movieGenres g,
 			Cinema.movieCategories c) {
 		//TODO id
