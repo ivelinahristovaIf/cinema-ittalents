@@ -66,29 +66,22 @@ public class Cinema {
 	public static void main(String[] args) throws NotValidTicketTypeException {
 		Cinema c = new Cinema();
 
-		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "J3", c);
-		c.addTicket(t);
-		Ticket t1 = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, "j3", c);
-		System.out.println(t.isTicketsEquals(t1));
+//		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "J3", c);
+//		c.addTicket(t);
+//		Ticket t1 = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, "j3", c);
+//		System.out.println(t.isTicketsEquals(t1));
 		MovieTheather mt = new MovieTheather();
 		mt.showSeatsInTheathre();
 		Consumer con = new Consumer(123);
+		con.setMoney(10);
 		c.addMovieTheater(mt);
 		
 		Consumer con1 = new Consumer(20);
 		con1.setMoney(100);
 		
-		con.setMoney(10000);
 		con.buyTicket(c, mt);
-		System.out.println(c.theathers.size());
-		System.out.println(mt.getTickets().size());
-		System.out.println(con.getMoney());
-		
 		con1.buyTicket(c, mt);
-		System.out.println(c.theathers.size());
-		System.out.println(mt.getTickets().size());
-		System.out.println(con1.getMoney());
-		
+		System.out.println(mt.getBookedTickets());
 	}
 	
 	

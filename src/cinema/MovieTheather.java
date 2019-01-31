@@ -67,7 +67,7 @@ public class MovieTheather {
 		return id;
 	}
 
-	public Set<Ticket> getTickets() {
+	public Set<Ticket> getBookedTickets() {
 		return Collections.unmodifiableSet(tickets);
 	}
 }
