@@ -19,8 +19,10 @@ public class MovieTheather {
 	private int id;
 	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> tickets;//booked tickets
+	private String type;
 	
-	public MovieTheather() {
+	public MovieTheather(String type) {
+		this.type = type;
 		this.seats = new TreeMap<Character,TreeSet<Integer>>();
 		this.fillMovieTheatre();
 		this.tickets = new HashSet<>();
@@ -64,10 +66,14 @@ public class MovieTheather {
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public Set<Ticket> getBookedTickets() {
 		return Collections.unmodifiableSet(tickets);
+	}
+
+	public String getType() {
+		return this.type;
 	}
 }

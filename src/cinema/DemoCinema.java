@@ -14,10 +14,7 @@ import users.Consumer;
 
 public class DemoCinema {
 
-	static Admin admin = Admin.createAdmin("admin", "admin");
 	static Scanner sc = new Scanner(System.in);
-
-//	public static Admin admin = DemoCinema.createAdmin("admin", "admin");
 
 	// TODO how to make consumers non static
 //	private static Set<Consumer> consumers;
@@ -38,7 +35,7 @@ public class DemoCinema {
 				String password = sc.next();
 				try {
 					if (isValidUsernameAndPassword(username, password)) {
-						admin.showMenu();
+						Cinema.admin.showMenu();
 					}
 				} catch (NoSuchAlgorithmException e) {
 					System.out.println(e.getMessage());
@@ -84,8 +81,8 @@ public class DemoCinema {
 			throws NoSuchAlgorithmException {
 		if (username != null) {
 			if (password != null) {
-				while (!(username.equals(DemoCinema.admin.getUsername())
-						&& Cryptography.cryptSHA256(password).equals(admin.getPassword()))) {
+				while (!(username.equals(Cinema.admin.getUsername())
+						&& Cryptography.cryptSHA256(password).equals(Cinema.admin.getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
 					System.err.println("Въведете Х за връщане назад към менюто или опитайте отново...");
 
