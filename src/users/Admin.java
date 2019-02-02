@@ -49,7 +49,7 @@ public class Admin {
 		// TODO add movie, change program etc
 		System.out.println("0 -> За връщане към началното меню...");
 		System.out.println("1 -> За да създадете нов филм, да го добавите към каталога и да му зададете програма...");
-		System.out.println("2 -> За да добавите програма за филм...");
+		System.out.println("2 -> За да редактирате програмата на филм...");
 //		System.out.println("3 -> За да добавите филм към каталога... ");
 		try {
 			int option = sc.nextInt();
@@ -57,10 +57,10 @@ public class Admin {
 
 			// TODO if there is more code after switch -> return
 			case 1:
-				createMovie();
+				this.createMovie();
 				break;
 			case 2:
-				addProgramToMovie();
+				this.changeMovieProgram();
 				break;
 //			case 3: 
 //				
@@ -76,14 +76,14 @@ public class Admin {
 	public Movie createMovie() throws NotValidMovieGenreException {
 		Movie movie = Movie.getInstance();
 		this.cinema.addMovieToCatalogue(movie);
-		this.addProgramToMovie();
+		movie.setTimes();
 		return movie;
 	}
 
-	private void addProgramToMovie() {
+	private void changeMovieProgram() {
 		Movie movie = null;
 		if (this.movies.size() > 0) {
-			System.out.println("Изберете филм от каталога: ");
+			System.out.println("Изберете филм от каталога: ");//TODO data base
 			this.movies.stream().map(m -> m.getName()).forEachOrdered(m -> System.out.println(m));
 			String name = sc.next();
 			movie = this.movies.stream().filter(m -> m.getName().equalsIgnoreCase(name)).findFirst().get();
