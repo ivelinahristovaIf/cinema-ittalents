@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
@@ -133,7 +134,20 @@ public class MovieTheather {
 		for (Entry<Character, TreeSet<Integer>> entry : this.seats.entrySet()) {
 			System.out.print("Πεδ " + entry.getKey() + ": ");
 			for (Integer col : entry.getValue()) {
-				System.out.print(col + " ");
+				String seat = entry.getKey()+(""+col);
+				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, new Cinema());
+				boolean isFreeSeat = true;
+				for(Ticket ticket : this.getBookedTickets()) {
+					if(t.isTicketsEquals(ticket)) {
+						isFreeSeat = false;
+						break;
+					}
+				}
+				if(isFreeSeat) {
+					System.out.print(col + " ");
+				} else {
+					System.out.print("X" + " ");
+				}
 			}
 			System.out.println();
 		}

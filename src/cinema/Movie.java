@@ -122,10 +122,11 @@ public class Movie {
 		System.out.println(
 				"Колко прожекции искате да добавите? Не повече от " + (maxProjections - this.projections.size()));
 		byte number = DemoCinema.sc.nextByte();
-		if (number > maxProjections - this.projections.size()) {
-			System.out.println("Too much");
-			// TODO try again
-			return;
+		while (number > maxProjections - this.projections.size()) {
+			System.out.println("Не повече от " + (maxProjections - this.projections.size()));
+			
+			System.out.println("Колко прожекции искате да добавите: ");
+			number = DemoCinema.sc.nextByte();
 		}
 		while (this.projections.size() < number) {
 			this.listFreeHours();
@@ -175,9 +176,8 @@ public class Movie {
 		return false;
 	}
 
-	private boolean isValidPremiereDate(LocalDate premiere2) {
-		// TODO validate premiere
-		return true;
+	private boolean isValidPremiereDate(LocalDate premiere2) {		
+		return LocalDate.now().isBefore(premiere2);
 	}
 
 	@Override

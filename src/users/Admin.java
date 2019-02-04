@@ -101,6 +101,7 @@ public class Admin {
 		movie.setTimes();
 		return movie;
 	}
+	
 
 	private void changeMovieProgram() {
 		Movie movie = null;

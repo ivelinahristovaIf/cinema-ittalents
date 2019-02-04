@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -66,13 +67,10 @@ public class Cinema {
 				System.out.println();
 			}
 			this.showWeeksCalendar();
+			boolean flag = true;
 			try {
-				System.out.println("Моля въведете дата, на която да добавите прожекциите: ");
-				System.out.print("ден:");
-				byte day = DemoCinema.sc.nextByte();
-				System.out.print("месец:");
-				byte month = DemoCinema.sc.nextByte();
-				LocalDate date = LocalDate.of(LocalDate.now().getYear(), day, month);
+				LocalDate date = this.inputDate();
+				flag = false;
 				if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
 					System.out.println(date);
 					if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
@@ -80,17 +78,15 @@ public class Cinema {
 						// TODO freeHours moved in MovieTheather
 					}
 					this.moviesCatalogue.get(movieTheater).put(date, new TreeSet<Movie>(this.movieComparator));
-					// put movie in TreeSet
+					// add movie in TreeSet
 					boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
 					System.out.println("dobaven li e:" + isAdded);
-				} else {
-					System.out.println("Грешна дата! Моля изберете от текущата седмица: ");
-					// TODO try again
 				}
+				flag = false;
 			} catch (InputMismatchException e) {
 				System.err.println("Невалиден формат на датата!");
 				// TODO try again
-			}
+			}			
 		} else {
 			System.err.println("null movie or catalogue");
 		}
@@ -123,15 +119,32 @@ public class Cinema {
 			System.out.println("Не може да се добави NULL билет");
 		}
 	}
+	
+	private LocalDate inputDate() {
+		System.out.println("Моля въведете дата, на която да добавите прожекциите: ");
+		boolean flag = false;
+		LocalDate date = null;
+		
+		do {
+			System.out.print("ден:");
+			byte day = DemoCinema.sc.nextByte();
+			System.out.print("месец:");
+			byte month = DemoCinema.sc.nextByte();
+			date = LocalDate.of(LocalDate.now().getYear(), month, day);
+			if(date.isAfter(LocalDate.now())) {
+				flag = true;
+				break;
+			}
+			System.out.println("Невалидна дата моля опитайте отново");
+		} while(!flag);
+		
+		return date;
+	}
 
 	public Set<Ticket> getTickets() {
 		return Collections.unmodifiableSet(tickets);
 	}
 
-	public void showProgram(MovieTheather mt) {
-		if (mt != null) {
-			// TODO
-		}
-	}
+
 
 }

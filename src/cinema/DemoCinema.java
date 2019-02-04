@@ -1,6 +1,7 @@
 package cinema;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -73,7 +74,6 @@ public class DemoCinema {
 	}
 
 	private static boolean isValidEmailAndPasswor(String email, String password) {
-		// TODO validate email and password
 		return true;
 	}
 
@@ -111,7 +111,7 @@ public class DemoCinema {
 		return false;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NotValidMovieTheatherTypeException, NotValidTicketTypeException {
 		try {
 			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
 //			System.out.println(ticket);
@@ -121,7 +121,10 @@ public class DemoCinema {
 		System.out.println("Добре дошли в Кино Арена!");
 		menu();
 		System.out.println();
+		
+		Cinema cinema = new Cinema();
 
+		
 	}
 
 }
