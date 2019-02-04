@@ -31,72 +31,65 @@ public class Cinema {
 		A, B, C, D
 	}
 
-	public static final String[] MOVIE_THEATHER_TYPE = { "IMAX", "VIP", "LUXE", "PREMIUM" };
-
-	private static final char MAX_ROWS_IN_CINEMA = 'M';
-	private static final int MAX_COLS_IN_ONE_ROW = 15;
+//	private static final char MAX_ROWS_IN_CINEMA = 'M';
+//	private static final int MAX_COLS_IN_ONE_ROW = 15;
 	public static Set<Consumer> consumers; // TO DO private
 	// TODO remove tickets
 	private Set<Ticket> tickets;
 	private Set<MovieTheather> theathers;
 	// type->date->movie
-	private Map<String, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
+	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
 	private Comparator<Movie> movieComparator;
 	public static Admin admin = Admin.createAdmin("admin", "admin");
 
 	public Cinema() {
 		consumers = new HashSet<Consumer>();
-		// TODO comparator
+		// TODO comparator consumers
 		// TODO compare by theather type
 		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getId() - mt2.getId());
 		this.tickets = new HashSet<>();
 		// TODO maybe compare movies by id
 		this.movieComparator = (movie1, movie2) -> movie1.getName().compareToIgnoreCase(movie2.getName());
-		this.moviesCatalogue = new HashMap<>();
+		this.moviesCatalogue = new HashMap<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>();
 	}
 
 	// TODO admin method modify catalogue
-	public void addMovieToCatalogue(Movie movie) {
+	public void addMovieToCatalogue(Movie movie) throws NotValidMovieTheatherTypeException {
 		if (movie != null && this.moviesCatalogue != null) {
 			System.out.println("Моля изберете зала за прожекцията: ");
 			this.theathers.stream().map(theather -> theather.getType())
 					.forEach(theather -> System.out.println(theather));
-			String type = DemoCinema.sc.next();
-			if (isValidMovieType(type)) {
-				if (!this.moviesCatalogue.containsKey(type)) {
-					this.moviesCatalogue.put(type, new TreeMap<>());
-					System.out.println("Нова зала беше току що добавена в киното!");
-					System.out.println();
-				}
-				// TODO show list of dates from today to 1 week future
-				this.showWeeksCalendar();
-				try {
-					System.out.println("Моля въведете дата, на която да добавите прожекциите: ");
-					System.out.print("ден:");
-					byte day = DemoCinema.sc.nextByte();
-					System.out.print("месец:");
-					byte month = DemoCinema.sc.nextByte();
-					LocalDate date = LocalDate.of(LocalDate.now().getYear(), day, month);
-					if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
-						System.out.println(date);
-						if (this.moviesCatalogue.get(type).containsKey(date)) {
-							System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
-							//TODO freeHours moved in MovieTheather
-						}
-						this.moviesCatalogue.get(type).put(date, new TreeSet<Movie>(this.movieComparator));
-						// put movie in TreeSet
-						boolean isAdded = this.moviesCatalogue.get(type).get(date).add(movie);
-						System.out.println("dobaven li e:" + isAdded);
-					} else {
-						System.out.println("Wrong date!");
-						// TODO try again
+			MovieTheather movieTheater = MovieTheather.getInstance();
+			if (!this.moviesCatalogue.containsKey(movieTheater)) {
+				this.moviesCatalogue.put(movieTheater, new TreeMap<>());
+				System.out.println("Нова зала беше току що създадена в киното!");
+				System.out.println();
+			}
+			this.showWeeksCalendar();
+			try {
+				System.out.println("Моля въведете дата, на която да добавите прожекциите: ");
+				System.out.print("ден:");
+				byte day = DemoCinema.sc.nextByte();
+				System.out.print("месец:");
+				byte month = DemoCinema.sc.nextByte();
+				LocalDate date = LocalDate.of(LocalDate.now().getYear(), day, month);
+				if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
+					System.out.println(date);
+					if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
+						System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
+						// TODO freeHours moved in MovieTheather
 					}
-				} catch (InputMismatchException e) {
-					System.err.println("Incorrect date input!");
+					this.moviesCatalogue.get(movieTheater).put(date, new TreeSet<Movie>(this.movieComparator));
+					// put movie in TreeSet
+					boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
+					System.out.println("dobaven li e:" + isAdded);
+				} else {
+					System.out.println("Грешна дата! Моля изберете от текущата седмица: ");
 					// TODO try again
 				}
-//				System.out.println("Изберете начален час за прожекцията: ");
-
+			} catch (InputMismatchException e) {
+				System.err.println("Невалиден формат на датата!");
+				// TODO try again
 			}
 		} else {
 			System.err.println("null movie or catalogue");
@@ -105,24 +98,12 @@ public class Cinema {
 
 	private void showWeeksCalendar() {
 		LocalDate localDate = LocalDate.now();
-		System.out.println("Списък с дати през седмицата: ");
+		System.out.println("Календар за седмицата: ");
 		while (localDate.isBefore(LocalDate.now().plusDays(NUMBER_DAYS_IN_CALENDAR))) {
 			System.out.println(
 					localDate.getDayOfMonth() + "." + localDate.getMonthValue() + " - " + localDate.getDayOfWeek());
 			localDate = localDate.plusDays(1);
 		}
-	}
-
-	private boolean isValidMovieType(String type) {
-		for (int i = 0; i < Cinema.MOVIE_THEATHER_TYPE.length; i++) {
-			if (type.equalsIgnoreCase(MOVIE_THEATHER_TYPE[i])) {
-				type = MOVIE_THEATHER_TYPE[i];
-				return true;
-			}
-		}
-		System.err.println("Невалидна зала!");
-		// TODO try again
-		return false;
 	}
 
 	public void addMovieTheater(MovieTheather mt) {
@@ -152,30 +133,5 @@ public class Cinema {
 			// TODO
 		}
 	}
-
-	// MAIN
-//	public static void main(String[] args) throws NotValidTicketTypeException, NotValidMovieGenreException {
-//		Cinema c = new Cinema();
-//
-////		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "J3", c);
-////		c.addTicket(t);
-////		Ticket t1 = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, "j3", c);
-////		System.out.println(t.isTicketsEquals(t1));
-//		String type = "IMAX";
-//		MovieTheather mt = new MovieTheather(type);
-//		mt.showSeatsInTheathre();
-////		Consumer con = new Consumer(123);
-////		con.setMoney(10);
-////		c.addMovieTheater(mt);
-////
-////		Consumer con1 = new Consumer(20);
-////		con1.setMoney(100);
-////
-////		con.buyTicket(c, mt);
-////		con1.buyTicket(c, mt);
-////		System.out.println(mt.getBookedTickets());
-//
-//		c.addMovieToCatalogue(Movie.getInstance());
-//	}
 
 }

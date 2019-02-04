@@ -32,7 +32,7 @@ class ConsumerProfile {
 
 	private Set<String> favouriteGenres;
 	private Set<String> personalInterests;
-	private Set<Movie> favouriteMovies;
+	private Set<Movie> favouriteMovies; //TODO add to favorites
 
 	public ConsumerProfile() {
 		this.setFirstName();

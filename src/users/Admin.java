@@ -1,9 +1,7 @@
 package users;
 
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.util.InputMismatchException;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,6 +10,7 @@ import cinema.Cinema;
 import cinema.DemoCinema;
 import cinema.Movie;
 import cinema.NotValidMovieGenreException;
+import cinema.NotValidMovieTheatherTypeException;
 import crypt.Cryptography;
 
 public class Admin {
@@ -47,7 +46,6 @@ public class Admin {
 
 	public void showMenu() {
 		System.out.println("Изберете опция от администраторското меню:");
-		// TODO add movie, change program etc
 		System.out.println("0 -> За връщане към началното меню...");
 		System.out.println("1 -> За да създадете нов филм, да го добавите към каталога и да му зададете програма...");
 		System.out.println("2 -> За да редактирате програмата на филм...");
@@ -57,7 +55,11 @@ public class Admin {
 			switch (option) {
 			// if there is more code after switch -> return
 			case 1:
-				this.createMovie();
+				try {
+					this.createMovie();
+				} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
+					System.out.println("Повторен опит...");
+				}
 				break;
 			case 2:
 				this.changeMovieProgram();
@@ -68,7 +70,7 @@ public class Admin {
 				DemoCinema.menu();
 				break;
 			}
-		} catch (InputMismatchException | NotValidMovieGenreException e) {
+		} catch (InputMismatchException e) {
 			System.err.println("Грешна команда!");
 		}
 	};
@@ -93,7 +95,7 @@ public class Admin {
 
 	}
 
-	public Movie createMovie() throws NotValidMovieGenreException {
+	public Movie createMovie() throws NotValidMovieGenreException, NotValidMovieTheatherTypeException {
 		Movie movie = Movie.getInstance();
 		this.cinema.addMovieToCatalogue(movie);
 		movie.setTimes();
@@ -112,7 +114,7 @@ public class Admin {
 			System.out.println("Няма добавени филми!\nСъздайте нов филм: ");
 			try {
 				movie = this.createMovie();
-			} catch (NotValidMovieGenreException e) {
+			} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
 				e.getMessage();
 			}
 		}
