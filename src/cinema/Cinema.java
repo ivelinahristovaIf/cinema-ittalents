@@ -131,7 +131,7 @@ public class Cinema {
 			System.out.print("месец:");
 			byte month = DemoCinema.sc.nextByte();
 			date = LocalDate.of(LocalDate.now().getYear(), month, day);
-			if(date.isAfter(LocalDate.now())) {
+			if(date.isAfter(LocalDate.now())||date.equals(LocalDate.now())) {
 				flag = true;
 				break;
 			}
