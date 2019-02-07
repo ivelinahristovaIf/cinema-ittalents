@@ -66,7 +66,23 @@ public class Admin {
 				break;
 			case 3:
 				this.changePassword();
+				break;
 			case 0:
+				DemoCinema.menu();
+				break;
+			}
+			System.out.println("0 -> За да напуснете програмата...");
+			System.out.println("1 -> За да продължите действия...");
+			System.out.println("2 -> За да се отпишете...");
+			int next = sc.nextInt();
+			switch (next) {
+			case 0:
+				System.exit(0);
+				break;
+			case 1:
+				showMenu();
+				break;
+			case 2:
 				DemoCinema.menu();
 				break;
 			}
@@ -101,7 +117,6 @@ public class Admin {
 		movie.setTimes();
 		return movie;
 	}
-	
 
 	private void changeMovieProgram() {
 		Movie movie = null;

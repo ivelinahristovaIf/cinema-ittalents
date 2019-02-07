@@ -46,14 +46,15 @@ class ConsumerProfile {
 		this.favouriteMovies = new TreeSet<Movie>((m1,m2)->m1.getId()-m2.getId());
 	}
 
+	//TODO add to menu
 	void addFavouriteGenre() {
 		System.out.println("Моля изберете любим жанр от списъка: ");
-		for (Cinema.movieGenres genre : Cinema.movieGenres.values()) {
+		for (Cinema.MovieGenres genre : Cinema.MovieGenres.values()) {
 			System.out.println(genre);
 		}
 		String genre = sc.next();
 		boolean isValid = false;
-		for (Cinema.movieGenres favouriteGenre : Cinema.movieGenres.values()) {
+		for (Cinema.MovieGenres favouriteGenre : Cinema.MovieGenres.values()) {
 			if (favouriteGenre.name().equalsIgnoreCase(genre)) {
 				isValid = true;
 				break;

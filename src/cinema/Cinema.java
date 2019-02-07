@@ -23,18 +23,28 @@ import users.Consumer;
 public class Cinema {
 	private static final int NUMBER_DAYS_IN_CALENDAR = 7;
 
-	public enum movieGenres {
-		ДРАМА, УЖАСИ, КОМЕДИЯ, АНИМАЦИЯ, ЕКШЪН, ФАНТАСТИКА, БИОГРАФИЧЕН, ПРИКЛЮЧЕНСКИ, РОМАНТИЧЕН, КРИМИНАЛЕН, ВОЕНЕН,
-		НАУЧНО_ПОПУЛЯРЕН, МЮЗИКЪЛ
+	public enum MovieGenres {
+		// enum(value)
+		drama("ДРАМА"), horor("УЖАСИ"), comedy("КОМЕДИЯ"), anime("АНИМАЦИЯ"), action("ЕКШЪН"), fantasy("ФАНТАСТИКА"),
+		biography("БИОГРАФИЧЕН"), adventure("ПРИКЛЮЧЕНСКИ"), romance("РОМАНТИЧЕН"), crime("КРИМИНАЛЕН"),
+		military("ВОЕНЕН"), science("НАУЧНО ПОПУЛЯРЕН"), musical("МЮЗИКЪЛ");
+
+		private String name;
+
+		private MovieGenres(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
 	}
 
 	public enum movieCategories {
 		A, B, C, D
 	}
 
-//	private static final char MAX_ROWS_IN_CINEMA = 'M';
-//	private static final int MAX_COLS_IN_ONE_ROW = 15;
-	public static Set<Consumer> consumers; // TO DO private
+	public static Set<Consumer> consumers; // TO DO private non static
 	// TODO remove tickets
 	private Set<Ticket> tickets;
 	private Set<MovieTheather> theathers;
@@ -47,7 +57,7 @@ public class Cinema {
 		consumers = new HashSet<Consumer>();
 		// TODO comparator consumers
 		// TODO compare by theather type
-		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getId() - mt2.getId());
+		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getType().compareToIgnoreCase(mt2.getType()));
 		this.tickets = new HashSet<>();
 		// TODO maybe compare movies by id
 		this.movieComparator = (movie1, movie2) -> movie1.getName().compareToIgnoreCase(movie2.getName());
@@ -67,26 +77,26 @@ public class Cinema {
 				System.out.println();
 			}
 			this.showWeeksCalendar();
-			boolean flag = true;
-			try {
-				LocalDate date = this.inputDate();
-				flag = false;
-				if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
-					System.out.println(date);
-					if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
-						System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
-						// TODO freeHours moved in MovieTheather
-					}
-					this.moviesCatalogue.get(movieTheater).put(date, new TreeSet<Movie>(this.movieComparator));
-					// add movie in TreeSet
-					boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
-					System.out.println("dobaven li e:" + isAdded);
-				}
-				flag = false;
-			} catch (InputMismatchException e) {
-				System.err.println("Невалиден формат на датата!");
-				// TODO try again
-			}			
+//			boolean flag = true;
+//			try {
+			LocalDate date = this.inputDate();
+//				flag = false;
+//				if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
+			System.out.println(date);
+			if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
+				System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
+				// TODO freeHours moved in MovieTheather
+			}
+			this.moviesCatalogue.get(movieTheater).put(date, new TreeSet<Movie>(this.movieComparator));
+			// add movie in TreeSet
+			boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
+			System.out.println("dobaven li e:" + isAdded);
+//				}
+//				flag = false;
+//			} catch (InputMismatchException e) {
+//				System.err.println("Невалиден формат на датата 1!");
+//				// TODO try again
+//			}
 		} else {
 			System.err.println("null movie or catalogue");
 		}
@@ -106,12 +116,13 @@ public class Cinema {
 		this.theathers.add(mt);
 	}
 
-	public void addBookedTicket(MovieTheather mt, Ticket t) {
-		if (mt != null && t != null) {
-			mt.addBookedTicket(t);
+	public void addBookedTicket(MovieTheather mt, Ticket ticket) {
+		if (mt != null && ticket != null) {
+			mt.bookTicketInTheather(ticket);
 		}
 	}
 
+	// TODO tickets are in movieTheather only
 	public void addTicket(Ticket ticket) {
 		if (ticket != null) {
 			this.tickets.add(ticket);
@@ -119,32 +130,33 @@ public class Cinema {
 			System.out.println("Не може да се добави NULL билет");
 		}
 	}
-	
+
 	private LocalDate inputDate() {
-		System.out.println("Моля въведете дата, на която да добавите прожекциите: ");
-		boolean flag = false;
+		System.out.print("Моля изберете дата, на която да добавите прожекциите: ");
+		boolean retry = false;
 		LocalDate date = null;
-		
-		do {
-			System.out.print("ден:");
-			byte day = DemoCinema.sc.nextByte();
-			System.out.print("месец:");
-			byte month = DemoCinema.sc.nextByte();
-			date = LocalDate.of(LocalDate.now().getYear(), month, day);
-			if(date.isAfter(LocalDate.now())||date.equals(LocalDate.now())) {
-				flag = true;
-				break;
+		while (!retry) {
+			try {
+				String d = DemoCinema.sc.next();
+				String[] n = d.split("\\.");
+				Byte day = Byte.parseByte(n[0]);
+				Byte month = Byte.parseByte(n[1]);
+				date = LocalDate.of(LocalDate.now().getYear(), month, day);
+				retry = true;
+				if ((date.isAfter(LocalDate.now()) || date.equals(LocalDate.now()))
+						&& !date.isAfter(LocalDate.now().plusDays(NUMBER_DAYS_IN_CALENDAR))) {
+					break;
+				}
+				System.out.println("Невалидна дата моля опитайте отново");
+			} catch (InputMismatchException | NumberFormatException e) {
+				System.err.println("Невалиден формат на датата! Опитайте отново:");
+				retry = false;
 			}
-			System.out.println("Невалидна дата моля опитайте отново");
-		} while(!flag);
-		
+		}
 		return date;
 	}
 
 	public Set<Ticket> getTickets() {
 		return Collections.unmodifiableSet(tickets);
 	}
-
-
-
 }

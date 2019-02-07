@@ -4,11 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import cinema.Cinema.MovieGenres;
+
 public class Movie {
+	private static final int NUMBER_OF_DAYS_BEFORE_TODAY = 30;
+	private static final int NUMBER_OF_DAYS_FROM_TODAY = 1;
 	private static final short BREAK_BETWEEN_MOVIES = 20;
 	private static int maxProjections = 5;
 	private static final int MAX_LENGTH = 200;
@@ -17,7 +22,7 @@ public class Movie {
 	private String name;
 	private short length;
 	private LocalDate premiere;
-	private Cinema.movieGenres genre; //TODO in getInstance set genre
+	private Cinema.MovieGenres genre; // TODO in getInstance set genre
 	private Cinema.movieCategories category;
 	private Set<LocalTime> projections;
 	private LocalTime startTimes;
@@ -52,48 +57,62 @@ public class Movie {
 
 	public static Movie getInstance() throws NotValidMovieGenreException {
 		System.out.println("Изберете жанр от: ");
-		for (Cinema.movieGenres g : Cinema.movieGenres.values()) {
-			System.out.println(g.name());
+		for (int index = 0; index < Cinema.MovieGenres.values().length; index++) {
+			System.out.println(index + " - " + Cinema.MovieGenres.values()[index].getName());
 		}
-		Cinema.movieGenres genre = Cinema.movieGenres.valueOf(DemoCinema.sc.next().toUpperCase());
+		// TODO throw and catch exceptions
+		int index = DemoCinema.sc.nextInt();
+		Cinema.MovieGenres genre = Cinema.MovieGenres.values()[index];
 		System.out.println("Въведете име: ");
 		String name = DemoCinema.sc.next();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 		System.out.println("Въведете премиерна дата: (ден/месец/година)");
-		String date = DemoCinema.sc.next();
-		LocalDate premiere = LocalDate.parse(date, formatter);
+		LocalDate premiere = null; // TODO null pointer exception
+		boolean retry = false;
+		// Date input
+		while (!retry) {
+			try {
+				String date = DemoCinema.sc.next();
+				premiere = LocalDate.parse(date, formatter);
+				retry = true;
+			} catch (DateTimeParseException e) {
+				System.out.print("Невалиден формат. Опитайте отново:");
+				retry = false;
+			}
+		}
 		System.out.println("Изберете категория от: ");
 		for (Cinema.movieCategories c : Cinema.movieCategories.values()) {
 			System.out.println(c.name());
 		}
 		Cinema.movieCategories category = Cinema.movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
+
 		Movie movie;
 		switch (genre) {
-		case АНИМАЦИЯ:
+		case anime:
 			movie = new Movie(name, (short) 90, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(9, 0);
 			movie.endTimes = LocalTime.of(18, 20).minusMinutes(90);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
-		case МЮЗИКЪЛ:
-		case КОМЕДИЯ:
-		case РОМАНТИЧЕН:
+		case musical:
+		case comedy:
+		case romance:
 			movie = new Movie(name, (short) 120, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(12, 20);
 			movie.endTimes = LocalTime.of(00, 00).minusMinutes(120);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
-		case БИОГРАФИЧЕН:
-		case ВОЕНЕН:
-		case ДРАМА:
-		case ЕКШЪН:
-		case КРИМИНАЛЕН:
-		case НАУЧНО_ПОПУЛЯРЕН:
-		case ПРИКЛЮЧЕНСКИ:
-		case УЖАСИ:
-		case ФАНТАСТИКА:
+		case biography:
+		case military:
+		case drama:
+		case action:
+		case crime:
+		case science:
+		case adventure:
+		case horor:
+		case fantasy:
 			Movie.maxProjections = 4;
 			System.out.println("Въведете дължина на филма: ");
 			short length = DemoCinema.sc.nextShort();
@@ -105,6 +124,7 @@ public class Movie {
 			return movie;
 		}
 		throw new NotValidMovieGenreException("Няма такъв жанр филм!");
+
 	}
 
 	public void setTimes() {
@@ -124,34 +144,47 @@ public class Movie {
 		byte number = DemoCinema.sc.nextByte();
 		while (number > maxProjections - this.projections.size()) {
 			System.out.println("Не повече от " + (maxProjections - this.projections.size()));
-			
+
 			System.out.println("Колко прожекции искате да добавите: ");
 			number = DemoCinema.sc.nextByte();
 		}
 		while (this.projections.size() < number) {
+//			System.out.println(this.projections.size());
 			this.listFreeHours();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
-			System.out.println("Изберете час и минути: (h:mm)");
-			String inputTime = DemoCinema.sc.next();
-			LocalTime time = LocalTime.parse(inputTime, formatter);
-
-			this.projections.add(time);
-			this.freeHours.remove(time);
+			System.out.print("Изберете час и минути: (h:mm)");
+			boolean retry = false;
+			LocalTime time = null;
+			while (!retry) {
+				String inputTime;
+				try {
+					inputTime = DemoCinema.sc.next();
+					time = LocalTime.parse(inputTime, formatter);
+					retry = true; // break the loop
+					if (!this.freeHours.contains(time)) {
+						throw new InvalidHourException();
+					}
+				} catch (Exception e) {
+					System.out.print("Невалиден час! Опитайте отново. ");
+					retry = false;
+				}
+			}
+			if (time != null) {
+				this.projections.add(time);
+				this.freeHours.remove(time);
+			}
 		}
 	}
 
 	private Set<LocalTime> fillInFreeHours() {
 		Set<LocalTime> freeHours = new TreeSet<LocalTime>();
-		// TODO free times of genre Романтичен, Военен...
 		if (this.startTimes != null && this.endTimes != null) {
 			LocalTime time = this.startTimes;
-//			System.out.println(this.startTimes + "   " + this.endTimes);
 			int count = 0;
 			while (count < maxProjections) {
 				freeHours.add(time);
 				time = time.plusMinutes(this.length + BREAK_BETWEEN_MOVIES);
 				count++;
-//				System.out.println(time);
 			}
 			return freeHours;
 		}
@@ -176,8 +209,9 @@ public class Movie {
 		return false;
 	}
 
-	private boolean isValidPremiereDate(LocalDate premiere2) {		
-		return LocalDate.now().isBefore(premiere2);
+	private boolean isValidPremiereDate(LocalDate premiere) {
+		return premiere.isBefore(LocalDate.now().plusDays(NUMBER_OF_DAYS_FROM_TODAY))
+				&& premiere.isAfter(LocalDate.now().minusDays(NUMBER_OF_DAYS_BEFORE_TODAY));
 	}
 
 	@Override
@@ -193,28 +227,12 @@ public class Movie {
 	public String getName() {
 		return name;
 	}
-//
-//	public LocalTime getStartTimes() {
-//		return startTimes;
-//	}
-//
-//	public void setStartTimes(LocalTime startTimes) {
-//		this.startTimes = startTimes;
-//	}
-//
-//	public LocalTime getEndTimes() {
-//		return endTimes;
-//	}
-//
-//	public void setEndTimes(LocalTime endTimes) {
-//		this.endTimes = endTimes;
-//	}
 
-	public Cinema.movieGenres getGenre() {
+	public Cinema.MovieGenres getGenre() {
 		return genre;
 	}
 
-	public void setGenre(Cinema.movieGenres genre) {
+	public void setGenre(Cinema.MovieGenres genre) {
 		this.genre = genre;
 	}
 

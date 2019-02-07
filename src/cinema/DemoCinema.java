@@ -25,6 +25,7 @@ public class DemoCinema {
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
 		System.out.println("3 -> Регистриране на нов потребител...");
+		System.out.println("0 -> За изход...");
 		try {
 			int option = sc.nextInt();
 
@@ -65,6 +66,9 @@ public class DemoCinema {
 				Cinema.consumers.add(consumer);
 				// TODO showConsumerMenu is in option 2
 				consumer.showConsumerMenu();
+			}
+			if (option == 0) {
+				System.exit(0);
 			}
 		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
@@ -119,12 +123,12 @@ public class DemoCinema {
 			e.printStackTrace();
 		}
 		System.out.println("Добре дошли в Кино Арена!");
+		System.out.println();
 		menu();
 		System.out.println();
-		
+
 		Cinema cinema = new Cinema();
 
-		
 	}
 
 }
