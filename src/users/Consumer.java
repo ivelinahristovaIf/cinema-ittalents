@@ -55,25 +55,29 @@ public class Consumer {
 		System.out.println("1 -> Попълване на лични данни...");
 		System.out.println("2 -> Смяна на парола...");
 		System.out.println("3 -> Добавяне на интереси и любими жанрове...");
-		System.out.println("0 -> Връщане към главното меню / ИЗХОД =>");//TODO
+		System.out.println("4 -> Връщане към главното меню =>");
+		System.out.println("0 -> Изход...");
 		try {
-		int option =  sc.nextInt();
-		switch (option) {
-		case 1:
-			this.setUpMyProfile();
-			break;
-		case 2:
-			this.changePassword();
-			break;
-		case 3:
-			this.setInterests();
-			break;
-		case 0:
-			DemoCinema.menu();
+			int option = sc.nextInt();
+			switch (option) {
+			case 0:
+				System.exit(0);
+				break;
+			case 1:
+				this.setUpMyProfile();
+				break;
+			case 2:
+				this.changePassword();
+				break;
+			case 3:
+				this.setInterests();
+				break;
+			case 4:
+				DemoCinema.menu();
 //			showConsumerMenu();
-			break;
-		}
-		}catch(InputMismatchException e) {
+				break;
+			}
+		} catch (InputMismatchException e) {
 			showConsumerMenu();
 			System.out.println("Wrong command!");
 			System.out.println(e.getMessage());
@@ -137,18 +141,18 @@ public class Consumer {
 
 	public void buyTicket(Cinema cinema, MovieTheather mt) throws NotValidTicketTypeException {
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Колко билета искате да купите: ");
 		int countTickets = sc.nextInt();
-		
-		while(countTickets > 0) {
+
+		while (countTickets > 0) {
 			System.out.println("Какъв билет искате да купите: ");
 			System.out.println("За детски билет натиснете 1");
 			System.out.println("За стандартен билет натиснете 2");
 			System.out.println("За билет за инвалиди натиснете 3");
 			System.out.println("За студентски билет натиснете 4");
-			
-			int ticketType = sc.nextInt();	
+
+			int ticketType = sc.nextInt();
 			System.out.println("Изберете място");
 			mt.showSeatsInTheathre();
 			String seat = sc.next();
@@ -157,30 +161,30 @@ public class Consumer {
 			case 1:
 				ticket = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, cinema);
 				break;
-				
-			case 2: 
+
+			case 2:
 				ticket = Ticket.getInstance(Ticket.ticketType.STANDART_TICKET, seat, cinema);
 				break;
-	 
-			case 3: 
+
+			case 3:
 				ticket = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, seat, cinema);
 				break;
-				
-			case 4: 
+
+			case 4:
 				ticket = Ticket.getInstance(Ticket.ticketType.STUDENT_TICKET, seat, cinema);
 				break;
 			default:
 				break;
 			}
-			if(this.money > ticket.getPrice()) {
+			if (this.money > ticket.getPrice()) {
 				boolean isAlreadyReserved = false;
-				for(Ticket t : mt.getBookedTickets()) {
-					if(t != null && ticket != null && ticket.isTicketsEquals(t)) {
+				for (Ticket t : mt.getBookedTickets()) {
+					if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
 						isAlreadyReserved = true;
 						break;
 					}
 				}
-				if(!isAlreadyReserved) {
+				if (!isAlreadyReserved) {
 					cinema.addBookedTicket(mt, ticket);
 					ticket.reservedTicket();
 					this.money -= ticket.getPrice();
@@ -195,7 +199,7 @@ public class Consumer {
 			countTickets--;
 		}
 	}
-	
+
 	private boolean isValidPassword(String password) {
 		// TODO validate password
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
@@ -261,5 +265,5 @@ public class Consumer {
 //		
 //		
 //	}
-	
+
 }

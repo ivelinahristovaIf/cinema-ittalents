@@ -15,7 +15,7 @@ import users.Consumer;
 
 public class DemoCinema {
 
-	static Scanner sc = new Scanner(System.in);
+	public static Scanner sc = new Scanner(System.in);
 
 	// TODO how to make consumers non static
 //	private static Set<Consumer> consumers;
@@ -25,7 +25,7 @@ public class DemoCinema {
 		System.out.println("1 -> Вход за администратор...");
 		System.out.println("2 -> Вход за потребител...");
 		System.out.println("3 -> Регистриране на нов потребител...");
-		System.out.println("0 -> За изход...");
+		System.out.println("0 -> Изход...");
 		try {
 			int option = sc.nextInt();
 

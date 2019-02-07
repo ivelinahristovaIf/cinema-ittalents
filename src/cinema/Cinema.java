@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -24,7 +26,6 @@ public class Cinema {
 	private static final int NUMBER_DAYS_IN_CALENDAR = 7;
 
 	public enum MovieGenres {
-		// enum(value)
 		drama("ДРАМА"), horor("УЖАСИ"), comedy("КОМЕДИЯ"), anime("АНИМАЦИЯ"), action("ЕКШЪН"), fantasy("ФАНТАСТИКА"),
 		biography("БИОГРАФИЧЕН"), adventure("ПРИКЛЮЧЕНСКИ"), romance("РОМАНТИЧЕН"), crime("КРИМИНАЛЕН"),
 		military("ВОЕНЕН"), science("НАУЧНО ПОПУЛЯРЕН"), musical("МЮЗИКЪЛ");
@@ -64,16 +65,42 @@ public class Cinema {
 		this.moviesCatalogue = new HashMap<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>();
 	}
 
+	public MovieTheather addMovieTheatherToCinema() {
+		MovieTheather theather = null;
+		try {
+			theather = MovieTheather.getInstance();
+		} catch (NotValidMovieTheatherTypeException e) {
+			// TODO try ahain
+			e.printStackTrace();
+		}
+		if (theather != null) {
+			this.theathers.add(theather);
+		} else {
+			System.err.println("Null theather!"); // TODO make sure it is not null
+		}
+
+		return theather;
+	}
+
 	// TODO admin method modify catalogue
 	public void addMovieToCatalogue(Movie movie) throws NotValidMovieTheatherTypeException {
 		if (movie != null && this.moviesCatalogue != null) {
 			System.out.println("Моля изберете зала за прожекцията: ");
-			this.theathers.stream().map(theather -> theather.getType())
-					.forEach(theather -> System.out.println(theather));
-			MovieTheather movieTheater = MovieTheather.getInstance();
+			MovieTheather movieTheater = null;
+			if (this.theathers.size() > 0) {
+				List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.theathers);
+				for (int index = 1; index <= listOfTheathers.size(); index++) {
+					System.out.println(index + " - " + listOfTheathers.get(index - 1));
+				}
+				int index = DemoCinema.sc.nextInt();
+				movieTheater = listOfTheathers.get(index);
+			} else {
+				System.out.println("Все още няма добавени зали в киното! Създайте зала");
+				movieTheater = this.addMovieTheatherToCinema();
+			}
 			if (!this.moviesCatalogue.containsKey(movieTheater)) {
 				this.moviesCatalogue.put(movieTheater, new TreeMap<>());
-				System.out.println("Нова зала беше току що създадена в киното!");
+				System.out.println("Нова зала беше току що добавена в киното!");
 				System.out.println();
 			}
 			this.showWeeksCalendar();
@@ -159,4 +186,12 @@ public class Cinema {
 	public Set<Ticket> getTickets() {
 		return Collections.unmodifiableSet(tickets);
 	}
+
+	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
+		return Collections.unmodifiableMap(this.moviesCatalogue);
+	}
+
+//	public Set<MovieTheather> getTheathers() {
+//		return Collections.unmodifiableSet(this.theathers);
+//	}
 }

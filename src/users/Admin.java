@@ -1,14 +1,20 @@
 package users;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.sun.javafx.collections.MappingChange.Map;
+
 import cinema.Cinema;
 import cinema.DemoCinema;
 import cinema.Movie;
+import cinema.MovieTheather;
 import cinema.NotValidMovieGenreException;
 import cinema.NotValidMovieTheatherTypeException;
 import crypt.Cryptography;
@@ -71,9 +77,10 @@ public class Admin {
 				DemoCinema.menu();
 				break;
 			}
-			System.out.println("0 -> За да напуснете програмата...");
 			System.out.println("1 -> За да продължите действия...");
 			System.out.println("2 -> За да се отпишете...");
+			System.out.println("0 -> Изход...");
+
 			int next = sc.nextInt();
 			switch (next) {
 			case 0:
@@ -119,6 +126,24 @@ public class Admin {
 	}
 
 	private void changeMovieProgram() {
+		System.out.println("В коя зала е филма?");
+		// TODO if catalogue is not empty
+		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.cinema.getMoviesCatalogue().keySet());
+		for (int index = 1; index <= listOfTheathers.size(); index++) {
+			System.out.println(index + " - " + listOfTheathers.get(index - 1));
+		}
+		MovieTheather theather = listOfTheathers.get(DemoCinema.sc.nextInt());
+
+		System.out.println("За коя дата искате да редактирате програмата?");
+		List<LocalDate> dates = new LinkedList<LocalDate>(this.cinema.getMoviesCatalogue().get(theather).keySet());
+		for (int index = 1; index < dates.size(); index++) {
+			System.out.println(index + " - " + dates.get(index - 1));
+		}
+		LocalDate date = dates.get(DemoCinema.sc.nextInt());
+		
+//		this.cinema.getMoviesCatalogue().values();
+		TreeSet<Movie> movies = new TreeSet<Movie>(this.cinema.getMoviesCatalogue().get(theather).get(date));
+		//TODO select movies from table
 		Movie movie = null;
 		if (this.movies.size() > 0) {
 			System.out.println("Изберете филм от каталога: ");// TODO data base
