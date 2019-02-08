@@ -171,7 +171,7 @@ class ConsumerProfile {
 	}
 
 	void setBirthDate() {
-		System.out.println("Дата на раждане: day.month/year");
+		System.out.println("Дата на раждане: day.month.year");
 		boolean retry = false;
 		LocalDate date = null;
 		while (!retry) {
@@ -202,7 +202,14 @@ class ConsumerProfile {
 		for (int i = 0; i < CITIES.length; i++) {
 			System.out.println(i + 1 + " -> " + CITIES[i]);
 		}
-		int index = sc.nextInt();
+		String strIndex = sc.next();
+		String regex = "[0-9]+";
+		while(!(strIndex.matches(regex) && Integer.parseInt(strIndex) >= 0 && Integer.parseInt(strIndex) < CITIES.length)){
+			System.out.println("Невалидна команда. Моля опитайте отново");
+			strIndex = sc.next();
+		}
+		
+		int index = Integer.parseInt(strIndex)-1;
 		this.city = CITIES[index];
 	}
 

@@ -57,31 +57,44 @@ public class Admin {
 		System.out.println("2 -> За да редактирате програмата на филм...");
 		System.out.println("3 -> За смяна на парола...");
 		try {
-			int option = sc.nextInt();
-			switch (option) {
-			// if there is more code after switch -> return
-			case 1:
-				try {
-					this.createMovie();
-				} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
-					System.out.println("Повторен опит...");
+			String regex = "[0-3]+";
+			String option = sc.next();
+			if(option.matches(regex)) {
+				switch (Integer.parseInt(option)) {
+				// if there is more code after switch -> return
+				case 1:
+					try {
+						this.createMovie();
+					} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
+						System.out.println("Повторен опит...");
+					}
+					break;
+				case 2:
+					this.changeMovieProgram();
+					break;
+				case 3:
+					this.changePassword();
+					break;
+				case 0:
+					DemoCinema.menu();
+					break;
 				}
-				break;
-			case 2:
-				this.changeMovieProgram();
-				break;
-			case 3:
-				this.changePassword();
-				break;
-			case 0:
-				DemoCinema.menu();
-				break;
+			} else {
+				System.out.println("Грешна команда!");
 			}
+			
+			
 			System.out.println("1 -> За да продължите действия...");
 			System.out.println("2 -> За да се отпишете...");
 			System.out.println("0 -> Изход...");
 
-			int next = sc.nextInt();
+			String stringNumber = sc.next();
+			String regex1 = "[0-2]+";
+			while(!stringNumber.matches(regex1)) {
+				System.out.println("Моля опитайте пак");
+				stringNumber = sc.next();
+			}
+			int next = Integer.parseInt(stringNumber);
 			switch (next) {
 			case 0:
 				System.exit(0);
@@ -124,6 +137,7 @@ public class Admin {
 		movie.setTimes();
 		return movie;
 	}
+
 
 	private void changeMovieProgram() {
 		System.out.println("В коя зала е филма?");

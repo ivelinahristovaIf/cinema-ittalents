@@ -27,48 +27,54 @@ public class DemoCinema {
 		System.out.println("3 -> Регистриране на нов потребител...");
 		System.out.println("0 -> Изход...");
 		try {
-			int option = sc.nextInt();
-
-			if (option == 1) {
-				System.out.println("Администратор");
-				System.out.println("Въведете потребителско име: ");
-				String username = sc.next();
-				System.out.println("Въведете парола: ");
-				String password = sc.next();
-				try {
-					if (isValidUsernameAndPassword(username, password)) {
-						Cinema.admin.showMenu();
+			String option = sc.next();
+			String regex = "[0-3]+";
+			if(option.matches(regex)) {
+				if (Integer.parseInt(option) == 1) {
+					System.out.println("Администратор");
+					System.out.println("Въведете потребителско име: ");
+					String username = sc.next();
+					System.out.println("Въведете парола: ");
+					String password = sc.next();
+					try {
+						if (isValidUsernameAndPassword(username, password)) {
+							Cinema.admin.showMenu();
+						}
+					} catch (NoSuchAlgorithmException e) {
+						System.out.println(e.getMessage());
+						e.printStackTrace();
 					}
-				} catch (NoSuchAlgorithmException e) {
-					System.out.println(e.getMessage());
-					e.printStackTrace();
 				}
-			}
-			if (option == 2) {
-				System.out.println("Потребител");
-				System.out.println("Въведете email : ");
-				String email = sc.next();
-				System.out.println("Въведете парола: ");
-				String password = sc.next();
-				if (isValidEmailAndPasswor(email, password)) {
-					// TODO get consumer by email and password
-					// TODO show menu for consumer
+				if (Integer.parseInt(option) == 2) {
+					System.out.println("Потребител");
+					System.out.println("Въведете email : ");
+					String email = sc.next();
+					System.out.println("Въведете парола: ");
+					String password = sc.next();
+					if (isValidEmailAndPasswor(email, password)) {
+						// TODO get consumer by email and password
+						// TODO show menu for consumer
+						
+					}
 				}
-			}
-			if (option == 3) {
-				System.out.println("Регистрирайте се като потребител...");
-				Consumer consumer = new Consumer(1);
-				// TODO add consumer to Cinema
-				System.out.println(consumer + " е регистриран");
-				if (Cinema.consumers == null) {
-					Cinema.consumers = new HashSet<Consumer>();
+				if (Integer.parseInt(option) == 3) {
+					System.out.println("Регистрирайте се като потребител...");
+					Consumer consumer = new Consumer(1);
+					// TODO add consumer to Cinema
+					System.out.println(consumer + " е регистриран");
+					if (Cinema.consumers == null) {
+						Cinema.consumers = new HashSet<Consumer>();
+					}
+					Cinema.consumers.add(consumer);
+					// TODO showConsumerMenu is in option 2
+					consumer.showConsumerMenu();
 				}
-				Cinema.consumers.add(consumer);
-				// TODO showConsumerMenu is in option 2
-				consumer.showConsumerMenu();
-			}
-			if (option == 0) {
-				System.exit(0);
+				if (Integer.parseInt(option) == 0) {
+					System.exit(0);
+				} 
+			}else {
+				System.out.println("Невалиден номер, опитайте пак");
+				menu();
 			}
 		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
@@ -116,6 +122,10 @@ public class DemoCinema {
 	}
 
 	public static void main(String[] args) throws NotValidMovieTheatherTypeException, NotValidTicketTypeException {
+		Cinema cinema = new Cinema();
+
+
+		
 		try {
 			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
 //			System.out.println(ticket);
@@ -127,7 +137,7 @@ public class DemoCinema {
 		menu();
 		System.out.println();
 
-		Cinema cinema = new Cinema();
+
 
 	}
 

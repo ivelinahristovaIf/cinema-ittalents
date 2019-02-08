@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import cinema.Cinema.MovieGenres;
+import cinema.Cinema.movieCategories;
 
 public class Movie {
 	private static final int NUMBER_OF_DAYS_BEFORE_TODAY = 30;
@@ -60,7 +61,13 @@ public class Movie {
 			System.out.println(index + " - " + Cinema.MovieGenres.values()[index].getName());
 		}
 		// TODO throw and catch exceptions
-		int index = DemoCinema.sc.nextInt();
+		String stringIndex = DemoCinema.sc.next();
+		String reg = "[0-Cinema.MovieGenres.values().length]+";
+		while(!(stringIndex.matches(reg))) {
+			System.out.println("Опитайте отново");
+			stringIndex = DemoCinema.sc.next();
+		}
+		int index = Integer.parseInt(stringIndex);
 		Cinema.MovieGenres genre = Cinema.MovieGenres.values()[index];
 		System.out.println("Въведете име: ");
 		String name = DemoCinema.sc.next();
@@ -83,7 +90,14 @@ public class Movie {
 		for (Cinema.movieCategories c : Cinema.movieCategories.values()) {
 			System.out.println(c.name());
 		}
-		Cinema.movieCategories category = Cinema.movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
+		
+		String cat = DemoCinema.sc.next();
+		while(isInputCategoryWrong(cat)) {
+			System.out.println("Опитайте отново");
+			cat = DemoCinema.sc.next();
+		}
+		
+		Cinema.movieCategories category = Cinema.movieCategories.valueOf(cat.toUpperCase());
 
 		Movie movie;
 		switch (genre) {
@@ -114,8 +128,14 @@ public class Movie {
 		case fantasy:
 			Movie.maxProjections = 4;
 			System.out.println("Въведете дължина на филма: ");
-			short length = DemoCinema.sc.nextShort();
-			movie = new Movie(name, length, premiere, category);
+			String strLength = DemoCinema.sc.next();
+			String regex = "[0-9]+";
+			while(!(strLength.matches(regex) && Integer.parseInt(strLength) >= MIN_LENGTH && Integer.parseInt(strLength) <= MAX_LENGTH)) {
+				System.out.println("Невалидна дължина, моля опитайте пак");
+				strLength = DemoCinema.sc.next();
+			}
+			int length = Integer.parseInt(strLength);
+			movie = new Movie(name, (short) length, premiere, category);
 			movie.setGenre(genre);
 			movie.endTimes = LocalTime.of(23, 50);// TODO work after 12
 			movie.startTimes = movie.endTimes.minusMinutes(maxProjections * (movie.length + BREAK_BETWEEN_MOVIES));
@@ -124,6 +144,10 @@ public class Movie {
 		}
 		throw new NotValidMovieGenreException("Няма такъв жанр филм!");
 
+	}
+
+	private static boolean isInputCategoryWrong(String cat) {
+		return !cat.equalsIgnoreCase("A") && !cat.equalsIgnoreCase("B") && !cat.equalsIgnoreCase("C") && !cat.equalsIgnoreCase("D");
 	}
 
 	public void setTimes() {
@@ -140,15 +164,16 @@ public class Movie {
 		}
 		System.out.println(
 				"Колко прожекции искате да добавите? Не повече от " + (maxProjections - this.projections.size()));
-		byte number = DemoCinema.sc.nextByte();
-		while (number > maxProjections - this.projections.size()) {
-			System.out.println("Не повече от " + (maxProjections - this.projections.size()));
+		String strNumber = DemoCinema.sc.next();
+		String regex = "[0-9]+";
+		while (!(strNumber.matches(regex) && Integer.parseInt(strNumber) <= maxProjections - this.projections.size())) {
+			System.out.println("Невалидно въвеждане!");
 
 			System.out.println("Колко прожекции искате да добавите: ");
-			number = DemoCinema.sc.nextByte();
+			strNumber = DemoCinema.sc.next();
 		}
+		int number = Integer.parseInt(strNumber);
 		while (this.projections.size() < number) {
-//			System.out.println(this.projections.size());
 			this.listFreeHours();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
 			System.out.print("Изберете час и минути: (h:mm)");

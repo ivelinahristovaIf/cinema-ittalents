@@ -35,14 +35,12 @@ public class Cinema {
 			return name;
 		}
 	}
-
+	
 	public enum movieCategories {
 		A, B, C, D
 	}
 
 	public static Set<Consumer> consumers; // TO DO private non static
-	// TODO remove tickets
-	private Set<Ticket> tickets;
 	private Set<MovieTheather> theathers;
 	// type->date->movie
 	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
@@ -54,7 +52,6 @@ public class Cinema {
 		// TODO comparator consumers
 		// TODO compare by theather type
 		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getType().compareToIgnoreCase(mt2.getType()));
-		this.tickets = new HashSet<>();
 		// TODO maybe compare movies by id
 		this.movieComparator = (movie1, movie2) -> movie1.getName().compareToIgnoreCase(movie2.getName());
 		this.moviesCatalogue = new HashMap<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>();
@@ -65,13 +62,12 @@ public class Cinema {
 		try {
 			theather = MovieTheather.getInstance();
 		} catch (NotValidMovieTheatherTypeException e) {
-			// TODO try again
 			e.printStackTrace();
 		}
 		if (theather != null) {
 			this.theathers.add(theather);
 		} else {
-			System.err.println("Null theather!"); // TODO make sure it is not null
+			System.err.println("Null theather!"); 
 		}
 
 		return theather;
@@ -123,9 +119,9 @@ public class Cinema {
 		}
 	}
 
-	public void addMovieTheater(MovieTheather mt) {
-		this.theathers.add(mt);
-	}
+//	public void addMovieTheater(MovieTheather mt) {
+//		this.theathers.add(mt);
+//	}
 
 	public void addBookedTicket(MovieTheather mt, Ticket ticket) {
 		if (mt != null && ticket != null) {
@@ -133,14 +129,6 @@ public class Cinema {
 		}
 	}
 
-	// TODO tickets are in movieTheather only
-	public void addTicket(Ticket ticket) {
-		if (ticket != null) {
-			this.tickets.add(ticket);
-		} else {
-			System.out.println("Не може да се добави NULL билет");
-		}
-	}
 
 	private LocalDate inputDate() {
 		System.out.print("Моля изберете дата, на която да добавите прожекциите: ");
@@ -167,9 +155,6 @@ public class Cinema {
 		return date;
 	}
 
-	public Set<Ticket> getTickets() {
-		return Collections.unmodifiableSet(tickets);
-	}
 
 	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);

@@ -21,7 +21,7 @@ public class MovieTheather {
 
 	// TODO id
 	private Map<Character, TreeSet<Integer>> seats;
-	private Set<Ticket> bookedTickets;// booked tickets
+	private Set<Ticket> bookedTickets;
 	private String type;
 	private String videoFormat;
 	private String audioFormat;
@@ -46,23 +46,48 @@ public class MovieTheather {
 		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
 			System.out.println(index + " - " + MOVIE_THEATHER_TYPE[index - 1]);
 		}
-		String type = MOVIE_THEATHER_TYPE[DemoCinema.sc.nextInt() - 1];
+		
+		String type = MOVIE_THEATHER_TYPE[inputMovieTheaterFields(MOVIE_THEATHER_TYPE)];
 
 		System.out.println("Изберете видео формат от: ");
 		for (int index = 1; index <= VIDEO_FORMAT.length ; index++) {
 			System.out.println(index + " - " + VIDEO_FORMAT[index - 1]);
 		}
-		String videoFormat = VIDEO_FORMAT[DemoCinema.sc.nextInt() - 1];
-
+		String videoFormat = VIDEO_FORMAT[inputMovieTheaterFields(VIDEO_FORMAT)];
+		
 		System.out.println("Изберете аудио формат от: ");
 		for (int index = 1; index <= AUDIO_FORMAT.length; index++) {
 			System.out.println(index + " - " + AUDIO_FORMAT[index - 1]);
 		}
-		String audioFormat = AUDIO_FORMAT[DemoCinema.sc.nextInt() - 1];
+		String audioFormat = AUDIO_FORMAT[inputMovieTheaterFields(AUDIO_FORMAT)];
 
+		
 		return new MovieTheather(type, videoFormat, audioFormat);
-		// TODO try again
 
+	}
+
+	//try again.. sushto taka izbqgva arrayIndexOutOfBoundsException 
+	//i InputMismatchException ako se vuvede neshto gadno
+	private static int inputMovieTheaterFields(String[] str) {
+		int lenght = str.length;
+		String typeOption;
+		String regex = "[0-9]+";
+		int count = 0;
+		do{
+			if(count > 0) {
+				System.out.println("Няма зала с такъв номер. Моля опитайте пак");
+			}
+			typeOption = DemoCinema.sc.next();
+			if(typeOption.matches(regex)) {
+				if(Integer.parseInt(typeOption) >= 1 && Integer.parseInt(typeOption) <= lenght) {
+					break;
+				}
+			} else {
+				System.out.println("Невалидно въвеждане, моля въведете число");
+			}
+			count++;
+		}while(true);
+		return Integer.parseInt(typeOption)-1;
 	}
 
 	private boolean isValidTheatherType(String type) {
@@ -71,8 +96,6 @@ public class MovieTheather {
 				return true;
 			}
 		}
-//		System.err.println("Невалидна зала!");
-		// TODO try again
 		return false;
 	}
 
@@ -85,7 +108,6 @@ public class MovieTheather {
 			}
 		}
 		System.err.println("Невалиден видео формат!");
-		// TODO try again
 		return false;
 	}
 
@@ -98,7 +120,6 @@ public class MovieTheather {
 			}
 		}
 		System.err.println("Невалиден аудио формат!");
-		// TODO try again
 		return false;
 	}
 
