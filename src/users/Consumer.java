@@ -249,14 +249,12 @@ public class Consumer {
 //		try {
 //			con.buyTicket(c);
 //		} catch (NotValidTicketTypeException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		
 ////		try {
 ////			con.buyTicket(c);
 ////		} catch (NotValidTicketTypeException e) {
-////			// TODO Auto-generated catch block
 ////			e.printStackTrace();
 ////		}
 //		

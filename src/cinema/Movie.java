@@ -22,13 +22,12 @@ public class Movie {
 	private String name;
 	private short length;
 	private LocalDate premiere;
-	private Cinema.MovieGenres genre; // TODO in getInstance set genre
+	private Cinema.MovieGenres genre;
 	private Cinema.movieCategories category;
 	private Set<LocalTime> projections;
 	private LocalTime startTimes;
 	private LocalTime endTimes;
 	private Set<LocalTime> freeHours;
-	// TODO list available hours by category
 	// TODO private LocalDateTime time;
 
 	private Movie(/* int id, */ String name, short length, LocalDate premiere, Cinema.movieCategories c) {

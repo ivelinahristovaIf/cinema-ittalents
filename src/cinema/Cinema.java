@@ -1,8 +1,6 @@
 package cinema;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,14 +9,11 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
-import tickets.Ticket.ticketType;
 import users.Admin;
 import users.Consumer;
 
@@ -70,7 +65,7 @@ public class Cinema {
 		try {
 			theather = MovieTheather.getInstance();
 		} catch (NotValidMovieTheatherTypeException e) {
-			// TODO try ahain
+			// TODO try again
 			e.printStackTrace();
 		}
 		if (theather != null) {
@@ -82,7 +77,6 @@ public class Cinema {
 		return theather;
 	}
 
-	// TODO admin method modify catalogue
 	public void addMovieToCatalogue(Movie movie) throws NotValidMovieTheatherTypeException {
 		if (movie != null && this.moviesCatalogue != null) {
 			System.out.println("Моля изберете зала за прожекцията: ");
@@ -104,11 +98,7 @@ public class Cinema {
 				System.out.println();
 			}
 			this.showWeeksCalendar();
-//			boolean flag = true;
-//			try {
 			LocalDate date = this.inputDate();
-//				flag = false;
-//				if (date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now())) {
 			System.out.println(date);
 			if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
 				System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
@@ -118,12 +108,6 @@ public class Cinema {
 			// add movie in TreeSet
 			boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
 			System.out.println("dobaven li e:" + isAdded);
-//				}
-//				flag = false;
-//			} catch (InputMismatchException e) {
-//				System.err.println("Невалиден формат на датата 1!");
-//				// TODO try again
-//			}
 		} else {
 			System.err.println("null movie or catalogue");
 		}
@@ -169,9 +153,9 @@ public class Cinema {
 				Byte day = Byte.parseByte(n[0]);
 				Byte month = Byte.parseByte(n[1]);
 				date = LocalDate.of(LocalDate.now().getYear(), month, day);
-				retry = true;
 				if ((date.isAfter(LocalDate.now()) || date.equals(LocalDate.now()))
 						&& !date.isAfter(LocalDate.now().plusDays(NUMBER_DAYS_IN_CALENDAR))) {
+					retry = true;
 					break;
 				}
 				System.out.println("Невалидна дата моля опитайте отново");
@@ -190,8 +174,4 @@ public class Cinema {
 	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
 	}
-
-//	public Set<MovieTheather> getTheathers() {
-//		return Collections.unmodifiableSet(this.theathers);
-//	}
 }
