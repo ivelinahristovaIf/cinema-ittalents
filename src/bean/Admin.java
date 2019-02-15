@@ -44,15 +44,14 @@ public class Admin {
 		System.out.println("2 -> За да редактирате програмата на филм...");
 		System.out.println("3 -> За смяна на парола...");
 		try {
-<<<<<<< HEAD:src/bean/Admin.java
-			int option = sc.nextInt();
-			switch (option) {
-			case 1:
-				try {
-					this.createMovie();
-				} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
-					System.out.println("Повторен опит...");
-=======
+//			int option = sc.nextInt();
+//			switch (option) {
+//			case 1:
+//				try {
+//					this.createMovie();
+//				} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
+//					System.out.println("Повторен опит...");
+
 			String regex = "[0-3]+";
 			String option = sc.next();
 			if(option.matches(regex)) {
@@ -74,11 +73,12 @@ public class Admin {
 				case 0:
 					DemoCinema.menu();
 					break;
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6:src/users/Admin.java
+
 				}
-			} else {
-				System.out.println("Грешна команда!");
 			}
+//			} else {
+//				System.out.println("Грешна команда!");
+//			}
 			
 			
 			System.out.println("1 -> За да продължите действия...");

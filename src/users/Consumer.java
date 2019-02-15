@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import bean.Cinema;
 import bean.MovieTheather;
+import cinema.DemoCinema;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
@@ -38,11 +39,6 @@ public class Consumer {
 //			this.personalCinema = personalCinema;
 //		}
 		this.myProfile = new ConsumerProfile();
-		// TODO hashCode and equals
-<<<<<<< HEAD
-//		this.allCinemas = new HashSet<Cinema>();
-
-	}
 
 //	public void showConsumerMenu() {
 //		System.out.println("Добре дошли в потребителското меню!\nМоля, изберете опция: ");
@@ -91,9 +87,8 @@ public class Consumer {
 //				break;
 //			}
 //		} catch (InputMismatchException e) {
-=======
-		this.allCinemas = new HashSet<Cinema>();
-		this.money = 1000;
+
+	this.money=1000;
 
 	}
 
@@ -106,11 +101,11 @@ public class Consumer {
 		//TODO System.out.println("5 -> Запазване на билет...");
 		System.out.println("0 -> Изход...");
 		try {
-			String strOption = sc.next();
+			String strOption = DemoCinema.sc.next();
 			String reg = "[0-9]+";
 			while(!(strOption.matches(reg) && Integer.parseInt(strOption) >= 0 && Integer.parseInt(strOption) <= 4)) {
 				System.out.println("Невалидна опция. Моля опитайте отново");
-				strOption = sc.next();
+				strOption = DemoCinema.sc.next();
 			}
 			int option = Integer.parseInt(strOption);
 			switch (option) {
@@ -128,13 +123,16 @@ public class Consumer {
 				break;
 			case 4:
 				DemoCinema.menu();
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
+			}
 //			showConsumerMenu();
 //			System.out.println("Wrong command!");
 //			System.out.println(e.getMessage());
 //		}
-//	}
-	
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+	}
+
 //	private void chooseMovieFromAllToday() {
 //		Cinema.getInstance().showAllMoviesByDate(LocalDate.now());
 //		//TODO choose movie
@@ -146,20 +144,23 @@ public class Consumer {
 		this.myProfile.setEducation();
 	}
 
-//	private void changePassword() {
-//		System.out.println("Смяна на парола...");
-//		System.out.println("Въведете старата парола:");
-//		String oldPass = sc.next();
-//		try {
-//			while (!oldPass.equals(this.password)) {
-//				System.err.println("Грешна парола! Опитайте пак: ");
-//				oldPass = sc.next();
-//			}
-//			System.out.println("Въведете нова парола...");
-//			this.setPassword();
-//			System.out.println("Паролата е сменена успешно!");
-//		
-//	}
+	private void changePassword() {
+		System.out.println("Смяна на парола...");
+		System.out.println("Въведете старата парола:");
+		String oldPass = DemoCinema.sc.next();
+		try {
+			while (!oldPass.equals(this.password)) {
+				System.err.println("Грешна парола! Опитайте пак: ");
+				oldPass = DemoCinema.sc.next();
+			}
+			System.out.println("Въведете нова парола...");
+			this.setPassword();
+			System.out.println("Паролата е сменена успешно!");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 
 	private void setInterests() {
 		// TODO choose multiple
@@ -167,15 +168,15 @@ public class Consumer {
 		this.myProfile.addPersonalInterest();
 	}
 
-//	private void setPassword() {
-//		System.out.println("Парола:");
-//		String password = sc.next();
-//		while (!isValidPassword(password)) {
-//			System.out.println("Try again: ");
-//			password = sc.next();
-//		}
-//		this.password =password;
-//	}
+	private void setPassword() {
+		System.out.println("Парола:");
+		String password = DemoCinema.sc.next();
+		while (!isValidPassword(password)) {
+			System.out.println("Try again: ");
+			password = DemoCinema.sc.next();
+		}
+		this.password =password;
+	}
 
 //	private void setEmail() {
 //		System.out.println("E-mail:");
@@ -194,7 +195,7 @@ public class Consumer {
 //	}
 	public void showProgramForToday() {
 		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
-		
+
 	}
 
 	public void buyTicket(Cinema cinema, MovieTheather mt) throws NotValidTicketTypeException {

@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import bean.Cinema;
+import helper.NotValidMovieTheatherTypeException;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
@@ -43,8 +44,7 @@ public class MovieTheather implements Comparable<MovieTheather> {
 		this.bookedTickets = new HashSet<>();
 	}
 
-<<<<<<< HEAD
-=======
+
 	public static MovieTheather getInstance() throws NotValidMovieTheatherTypeException {
 		System.out.println("Изберете формат на залата от: ");
 		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
@@ -69,8 +69,6 @@ public class MovieTheather implements Comparable<MovieTheather> {
 		return new MovieTheather(type, videoFormat, audioFormat);
 
 	}
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
-
 	//try again.. sushto taka izbqgva arrayIndexOutOfBoundsException 
 	//i InputMismatchException ako se vuvede neshto gadno
 	private static int inputMovieTheaterFields(String[] str) {

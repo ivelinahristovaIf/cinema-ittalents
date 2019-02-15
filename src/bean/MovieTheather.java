@@ -115,6 +115,12 @@ public class MovieTheather {
 		this.type = type;
 	}
 
+
+	public void bookTicketInTheather(Ticket ticket) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	

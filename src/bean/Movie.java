@@ -6,16 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Set;
 import java.util.TreeSet;
-
-<<<<<<< HEAD:src/bean/Movie.java
 import cinema.DemoCinema;
 import helper.InvalidHourException;
 import helper.MovieGenres;
 import helper.NotValidMovieGenreException;
-=======
-import cinema.Cinema.MovieGenres;
-import cinema.Cinema.movieCategories;
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6:src/cinema/Movie.java
 
 public class Movie {
 
@@ -78,10 +72,6 @@ public class Movie {
 			System.out.println(index + " - " + MovieGenres.values()[index].getName());
 		}
 		// TODO throw and catch exceptions
-<<<<<<< HEAD:src/bean/Movie.java
-		int index = DemoCinema.sc.nextInt();
-		MovieGenres genre = MovieGenres.values()[index];
-=======
 		String stringIndex = DemoCinema.sc.next();
 		String reg = "[0-Cinema.MovieGenres.values().length]+";
 		while(!(stringIndex.matches(reg))) {
@@ -89,8 +79,8 @@ public class Movie {
 			stringIndex = DemoCinema.sc.next();
 		}
 		int index = Integer.parseInt(stringIndex);
-		Cinema.MovieGenres genre = Cinema.MovieGenres.values()[index];
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6:src/cinema/Movie.java
+		MovieGenres genre = MovieGenres.values()[index];
+
 		System.out.println("Въведете име: ");
 		String name = DemoCinema.sc.next();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -112,18 +102,14 @@ public class Movie {
 		for (movieCategories c : movieCategories.values()) {
 			System.out.println(c.name());
 		}
-<<<<<<< HEAD:src/bean/Movie.java
 		movieCategories category = movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
-=======
+
 		
 		String cat = DemoCinema.sc.next();
 		while(isInputCategoryWrong(cat)) {
 			System.out.println("Опитайте отново");
 			cat = DemoCinema.sc.next();
 		}
-		
-		Cinema.movieCategories category = Cinema.movieCategories.valueOf(cat.toUpperCase());
->>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6:src/cinema/Movie.java
 
 		Movie movie;
 //		MovieGenres g= MovieGenres.valueOf(genre);
