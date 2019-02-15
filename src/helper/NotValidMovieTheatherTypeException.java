@@ -1,4 +1,4 @@
-package cinema;
+package helper;
 
 public class NotValidMovieTheatherTypeException extends Exception {
 

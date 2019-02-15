@@ -3,30 +3,32 @@ package cinema;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Map.Entry;
-import java.util.Scanner;
 
+import bean.Cinema;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
-public class MovieTheather {
+public class MovieTheather implements Comparable<MovieTheather> {
 	public static final String[] MOVIE_THEATHER_TYPE = { "IMAX", "VIP", "LUXE", "PREMIUM" };
-	private static final String[] VIDEO_FORMAT = { "Real-D-3D", "2D", "HFR-3D", "4D" };
-	private static final String[] AUDIO_FORMAT = { "Digital", "Atmos" };
+	public static final String[] VIDEO_FORMAT = { "Real-D-3D", "2D", "HFR-3D", "4D" };
+	public static final String[] AUDIO_FORMAT = { "Digital", "Atmos" };
 	private static final char MAX_ROWS_IN_THEATHER = 'M';
 	private static final int MAX_COLS_IN_ONE_ROW = 15;
 
-	// TODO id
+	private final int id;
+	private static int nextId = 1;
 	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> bookedTickets;// booked tickets
 	private String type;
 	private String videoFormat;
 	private String audioFormat;
 
-	private MovieTheather(String type, String videoFormat, String audioFormat) {
+	public MovieTheather(String type, String videoFormat, String audioFormat) {
+		this.id = nextId++;
 		if (isValidTheatherType(type)) {
 			this.type = type;
 		}
@@ -41,29 +43,6 @@ public class MovieTheather {
 		this.bookedTickets = new HashSet<>();
 	}
 
-	public static MovieTheather getInstance() throws NotValidMovieTheatherTypeException {
-		System.out.println("Изберете формат на залата от: ");
-		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
-			System.out.println(index + " - " + MOVIE_THEATHER_TYPE[index - 1]);
-		}
-		String type = MOVIE_THEATHER_TYPE[DemoCinema.sc.nextInt() - 1];
-
-		System.out.println("Изберете видео формат от: ");
-		for (int index = 1; index <= VIDEO_FORMAT.length ; index++) {
-			System.out.println(index + " - " + VIDEO_FORMAT[index - 1]);
-		}
-		String videoFormat = VIDEO_FORMAT[DemoCinema.sc.nextInt() - 1];
-
-		System.out.println("Изберете аудио формат от: ");
-		for (int index = 1; index <= AUDIO_FORMAT.length; index++) {
-			System.out.println(index + " - " + AUDIO_FORMAT[index - 1]);
-		}
-		String audioFormat = AUDIO_FORMAT[DemoCinema.sc.nextInt() - 1];
-
-		return new MovieTheather(type, videoFormat, audioFormat);
-		// TODO try again
-
-	}
 
 	private boolean isValidTheatherType(String type) {
 		for (int i = 0; i < MOVIE_THEATHER_TYPE.length; i++) {
@@ -121,7 +100,7 @@ public class MovieTheather {
 			System.out.print("Ред " + entry.getKey() + ": ");
 			for (Integer col : entry.getValue()) {
 				String seat = entry.getKey() + ("" + col);
-				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, new Cinema());
+				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, Cinema.getInstance());
 				boolean isFreeSeat = true;
 				for (Ticket ticket : this.getBookedTickets()) {
 					if (t.isTicketsEquals(ticket)) {
@@ -157,11 +136,34 @@ public class MovieTheather {
 
 	@Override
 	public String toString() {
-		return "MovieTheather [ type=" + type + ", videoFormat=" + videoFormat + ", audioFormat="
-				+ audioFormat + "]";
+		return "MovieTheather [ type=" + type + ", videoFormat=" + videoFormat + ", audioFormat=" + audioFormat + "]";
 	}
-//	public static void main(String[] args) throws NotValidTicketTypeException {
-//		MovieTheather mt = new MovieTheather("IMAX", "2D", "Digital");
-//		mt.showSeatsInTheathre();
-//	}
+
+	@Override
+	public int compareTo(MovieTheather m) {
+		return this.id - m.id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MovieTheather other = (MovieTheather) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 }

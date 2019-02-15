@@ -1,6 +1,5 @@
-package users;
+package bean;
 
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
@@ -9,15 +8,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.sun.javafx.collections.MappingChange.Map;
-
-import cinema.Cinema;
 import cinema.DemoCinema;
-import cinema.Movie;
-import cinema.MovieTheather;
-import cinema.NotValidMovieGenreException;
-import cinema.NotValidMovieTheatherTypeException;
-import crypt.Cryptography;
+import helper.NotValidMovieGenreException;
+import helper.NotValidMovieTheatherTypeException;
+import writers.MovieWriter;
 
 public class Admin {
 	private static final int MIN_PASSWORD_LENGTH = 4;
@@ -25,20 +19,13 @@ public class Admin {
 	private String username;
 	private String password;
 
-	private static Admin theAdmin = null;
+	private static Admin instance = null;
 
 	private Set<Movie> movies; // bez projekciite
-	private Cinema cinema;
 
 	private Admin(String username, String password) {
 		this.username = username;
-		try {
-			this.setPassword(password);
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("NoSuchAlgorithmException from password");
-			e.printStackTrace();
-		}
-		this.cinema = new Cinema();
+		this.setPassword(password);
 		this.movies = new TreeSet<Movie>((m1, m2) -> m1.getName().compareTo(m2.getName()));
 	}
 
@@ -59,7 +46,6 @@ public class Admin {
 		try {
 			int option = sc.nextInt();
 			switch (option) {
-			// if there is more code after switch -> return
 			case 1:
 				try {
 					this.createMovie();
@@ -84,7 +70,7 @@ public class Admin {
 			int next = sc.nextInt();
 			switch (next) {
 			case 0:
-				System.exit(0);
+				// TODO
 				break;
 			case 1:
 				showMenu();
@@ -103,24 +89,20 @@ public class Admin {
 		System.out.println("Смяна на парола...");
 		System.out.println("Въведете старата парола:");
 		String oldPass = sc.next();
-		try {
-			while (!Cryptography.cryptSHA256(oldPass).equals(this.password)) {
-				System.err.println("Грешна парола! Опитайте пак: ");
-				oldPass = sc.next();
-			}
-			System.out.println("Въведете нова парола...");
-			String pass = sc.next();
-			this.setPassword(pass);
-			System.out.println("Паролата е сменена успешно!");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+		while (!oldPass.equals(this.password)) {
+			System.err.println("Грешна парола! Опитайте пак: ");
+			oldPass = sc.next();
 		}
-
+		System.out.println("Въведете нова парола...");
+		String pass = sc.next();
+		this.setPassword(pass);
+		System.out.println("Паролата е сменена успешно!");
 	}
 
 	public Movie createMovie() throws NotValidMovieGenreException, NotValidMovieTheatherTypeException {
 		Movie movie = Movie.getInstance();
-		this.cinema.addMovieToCatalogue(movie);
+//		MovieWriter.getInstance().addMovieToChronology(movie);//TODO
+		Cinema.getInstance().addMovieToCatalogue(movie);//TODO
 		movie.setTimes();
 		return movie;
 	}
@@ -128,25 +110,27 @@ public class Admin {
 	private void changeMovieProgram() {
 		System.out.println("В коя зала е филма?");
 		// TODO if catalogue is not empty
-		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.cinema.getMoviesCatalogue().keySet());
+		Cinema cinema = Cinema.getInstance();
+//		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(cinema.getMoviesCatalogue().keySet());
+		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>();//TODO ???
 		for (int index = 1; index <= listOfTheathers.size(); index++) {
 			System.out.println(index + " - " + listOfTheathers.get(index - 1));
 		}
 		MovieTheather theather = listOfTheathers.get(DemoCinema.sc.nextInt());
 
 		System.out.println("За коя дата искате да редактирате програмата?");
-		List<LocalDate> dates = new LinkedList<LocalDate>(this.cinema.getMoviesCatalogue().get(theather).keySet());
+		List<LocalDate> dates = new LinkedList<LocalDate>(cinema.getMoviesCatalogue().get(theather).keySet());
 		for (int index = 1; index < dates.size(); index++) {
 			System.out.println(index + " - " + dates.get(index - 1));
 		}
 		LocalDate date = dates.get(DemoCinema.sc.nextInt());
-		
+
 //		this.cinema.getMoviesCatalogue().values();
-		TreeSet<Movie> movies = new TreeSet<Movie>(this.cinema.getMoviesCatalogue().get(theather).get(date));
-		//TODO select movies from table
+		TreeSet<Movie> movies = new TreeSet<Movie>(cinema.getMoviesCatalogue().get(theather).get(date));
+		// TODO select movies from file
 		Movie movie = null;
 		if (this.movies.size() > 0) {
-			System.out.println("Изберете филм от каталога: ");// TODO data base
+			System.out.println("Изберете филм от каталога: ");// TODO file
 			this.movies.stream().map(m -> m.getName()).forEachOrdered(m -> System.out.println(m));
 			String name = sc.next();
 			movie = this.movies.stream().filter(m -> m.getName().equalsIgnoreCase(name)).findFirst().get();
@@ -164,23 +148,24 @@ public class Admin {
 		} catch (Exception e) {
 			System.err.println("Null movie in Admin!");
 			e.printStackTrace();
+			return;
 		}
 	}
 
-	public static Admin createAdmin(String username, String password) {
-		if (Admin.theAdmin == null) {
-			Admin.theAdmin = new Admin(username, password);
+	public static Admin getInstance() {
+		if (instance == null) {
+			instance = new Admin("admin", "admin");
 		}
 
-		return Admin.theAdmin;
+		return instance;
 	}
 
-	private void setPassword(String password) throws NoSuchAlgorithmException {
+	private void setPassword(String password) {
 		while (!isValidPassword(password)) {
 			System.out.println("Try again: ");
 			password = sc.next();
 		}
-		this.password = Cryptography.cryptSHA256(password);
+		this.password = password;
 	}
 
 	private boolean isValidPassword(String password) {

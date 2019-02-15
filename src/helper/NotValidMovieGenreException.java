@@ -1,4 +1,4 @@
-package cinema;
+package helper;
 
 public class NotValidMovieGenreException extends Exception {
 	private static final long serialVersionUID = 729226502775235228L;

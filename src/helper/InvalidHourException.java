@@ -1,4 +1,4 @@
-package cinema;
+package helper;
 
 public class InvalidHourException extends Exception {
 	private static final long serialVersionUID = 6501229486882563913L;

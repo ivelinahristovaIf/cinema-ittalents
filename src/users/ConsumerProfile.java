@@ -6,12 +6,11 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-import cinema.Cinema;
+import bean.Movie;
 import cinema.DemoCinema;
-import cinema.Movie;
+import helper.MovieGenres;
 
-class ConsumerProfile {
-
+public class ConsumerProfile {
 	private enum Interests {
 		music("МУЗИКА"), books("КНИГИ"), games("ИГРИ"), fun("ЗАБАВЛЕНИЯ"), cars("АВТОМОБИЛИ"), science("НАУКА"),
 		technology("ТЕХНОЛОГИИ"), history("ИСТОРИЯ"), family("СЕМЕЙСТВО"), health("ЗДРАВЕ"), business("БИЗНЕС"),
@@ -44,7 +43,7 @@ class ConsumerProfile {
 	private String adress;
 	private String education;
 
-	private Set<String> favouriteGenres;
+	private Set<MovieGenres> favouriteGenres;
 	private Set<String> personalInterests;
 	private Set<Movie> favouriteMovies; // TODO add movie to favorites
 
@@ -54,44 +53,35 @@ class ConsumerProfile {
 		this.setLastName();
 		this.setBirthDate();
 		this.setCity();
-		this.favouriteGenres = new TreeSet<String>();
+		this.favouriteGenres = new TreeSet<MovieGenres>();
 		this.personalInterests = new TreeSet<String>();
-		// TODO Movie comparator
-		this.favouriteMovies = new TreeSet<Movie>((m1, m2) -> m1.getId() - m2.getId());
+		this.favouriteMovies = new TreeSet<Movie>((m1, m2) -> m1.getName().compareTo(m2.getName()));
 	}
 
 	void addFavouriteMovie(Movie movie) {
-		this.favouriteMovies.add(movie);//TODO thread
+		this.favouriteMovies.add(movie);// TODO thread
 	}
+
 	void addFavouriteGenre() {
 		System.out.println("Моля изберете любим жанр от списъка: ");
-		for (Cinema.MovieGenres genre : Cinema.MovieGenres.values()) {
-			System.out.println(genre);
+		for (int i = 1; i < MovieGenres.values().length; i++) {
+			System.out.println(i + " - " + MovieGenres.values()[i - 1].getName());
 		}
-		String genre = sc.next();
-		boolean isValid = false;
-		for (Cinema.MovieGenres favouriteGenre : Cinema.MovieGenres.values()) {
-			if (favouriteGenre.name().equalsIgnoreCase(genre)) {
-				isValid = true;
-				break;
-			}
-		}
-		if (isValid) {
-			boolean isAdded = this.favouriteGenres.add(genre.toUpperCase());
-			if (isAdded) {
-				System.out.println(genre.toUpperCase() + " бе добавен в любими");
-			} else {
-				System.out.println(genre.toUpperCase() + " вече е добавен в любими жанрове");
-			}
+		
+//		TODO validate sc number
+		MovieGenres favGenre = MovieGenres.values()[DemoCinema.sc.nextInt() - 1];
+		boolean isAdded = this.favouriteGenres.add(favGenre);
+		if (isAdded) {
+			System.out.println(favGenre.getName() + " бе добавен в любими");
 		} else {
-			System.out.println("Невалиден жанр!");
+			System.out.println(favGenre.getName() + " вече е добавен в любими жанрове");
 		}
 	}
 
 	void addPersonalInterest() {
 		System.out.println("Моля изберете интерес: ");
 		for (int index = 1; index <= Interests.values().length; index++) {
-			System.out.println(index + " - " + Interests.values()[index - 1]);
+			System.out.println(index + " - " + Interests.values()[index - 1].getName());
 		}
 		Interests interest = Interests.values()[DemoCinema.sc.nextInt() - 1];
 
@@ -106,9 +96,7 @@ class ConsumerProfile {
 	private boolean isValidName(String name) {
 		if (name != null) {
 			if (name.trim().length() >= 3) {
-//				if (name.contains("[а-зА-З]+")) {//TODO
 				return true;
-//				}
 			}
 		}
 		System.out.println("Invalid name");
@@ -171,7 +159,7 @@ class ConsumerProfile {
 	}
 
 	void setBirthDate() {
-		System.out.println("Дата на раждане: day.month/year");
+		System.out.println("Дата на раждане: day.month.year");
 		boolean retry = false;
 		LocalDate date = null;
 		while (!retry) {
@@ -187,7 +175,7 @@ class ConsumerProfile {
 					break;
 				}
 				System.out.println("Съжалявам, но трябва да имате навършени 12 години!");
-			} catch (InputMismatchException | NumberFormatException e) {
+			} catch (InputMismatchException e) {
 				System.err.println("Невалиден формат на датата! Опитайте отново:");
 				retry = false;
 			}

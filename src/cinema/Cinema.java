@@ -13,66 +13,62 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import bean.Admin;
+import bean.Movie;
+import helper.NotValidMovieTheatherTypeException;
 import tickets.Ticket;
-import users.Admin;
 import users.Consumer;
 
 public class Cinema {
 	private static final int NUMBER_DAYS_IN_CALENDAR = 7;
 
-	public enum MovieGenres {
-		drama("ÄĞÀÌÀ"), horor("ÓÆÀÑÈ"), comedy("ÊÎÌÅÄÈß"), anime("ÀÍÈÌÀÖÈß"), action("ÅÊØÚÍ"), fantasy("ÔÀÍÒÀÑÒÈÊÀ"),
-		biography("ÁÈÎÃĞÀÔÈ×ÅÍ"), adventure("ÏĞÈÊËŞ×ÅÍÑÊÈ"), romance("ĞÎÌÀÍÒÈ×ÅÍ"), crime("ÊĞÈÌÈÍÀËÅÍ"),
-		military("ÂÎÅÍÅÍ"), science("ÍÀÓ×ÍÎ ÏÎÏÓËßĞÅÍ"), musical("ÌŞÇÈÊÚË");
 
-		private String name;
-
-		private MovieGenres(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-	}
-
-	public enum movieCategories {
-		A, B, C, D
-	}
-
-	public static Set<Consumer> consumers; // TO DO private non static
 	// TODO remove tickets
 	private Set<Ticket> tickets;
-	private Set<MovieTheather> theathers;
 	// type->date->movie
 	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
 	private Comparator<Movie> movieComparator;
-	public static Admin admin = Admin.createAdmin("admin", "admin");
+	private static Cinema instance = null;
 
-	public Cinema() {
-		consumers = new HashSet<Consumer>();
-		// TODO comparator consumers
-		// TODO compare by theather type
-		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getType().compareToIgnoreCase(mt2.getType()));
+	private Cinema() {
 		this.tickets = new HashSet<>();
 		// TODO maybe compare movies by id
 		this.movieComparator = (movie1, movie2) -> movie1.getName().compareToIgnoreCase(movie2.getName());
 		this.moviesCatalogue = new HashMap<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>();
+
+		for (int i = 0; i < MovieTheather.MOVIE_THEATHER_TYPE.length; i++) {
+			MovieTheather mt = new MovieTheather(MovieTheather.MOVIE_THEATHER_TYPE[i],
+					MovieTheather.VIDEO_FORMAT[(int) (MovieTheather.VIDEO_FORMAT.length * Math.random())],
+					MovieTheather.AUDIO_FORMAT[(int) (MovieTheather.AUDIO_FORMAT.length * Math.random())]);
+			this.moviesCatalogue.put(mt, new TreeMap<>());
+		}
 	}
 
-	public MovieTheather addMovieTheatherToCinema() {
+	public static Cinema getInstance() {
+		if (instance == null) {
+			instance = new Cinema();
+		}
+		return instance;
+	}
+
+	public void showAllMoviesByDate(LocalDate date) {
+		System.out.println("Âñè÷êè ôèëìè íà " + date);
+		for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
+			TreeSet<Movie> movies = this.moviesCatalogue.get(movieTheather).get(date);
+			if (movies != null) {
+				for (Movie movie : movies) {
+					System.out.println(movie.getId() + " " + movie);
+				}
+			}else {
+				System.out.println("Íÿìà ôèëìè çà òîçè äåí â çàëà "+movieTheather);
+			}
+		}
+	}
+
+	public MovieTheather addMovieTheatherToCinema(String type, String videoFormat, String audioFormat) {
 		MovieTheather theather = null;
-		try {
-			theather = MovieTheather.getInstance();
-		} catch (NotValidMovieTheatherTypeException e) {
-			// TODO try again
-			e.printStackTrace();
-		}
-		if (theather != null) {
-			this.theathers.add(theather);
-		} else {
-			System.err.println("Null theather!"); // TODO make sure it is not null
-		}
+		theather = new MovieTheather(type, videoFormat, audioFormat);
+		this.moviesCatalogue.put(theather, new TreeMap<>());
 
 		return theather;
 	}
@@ -81,16 +77,17 @@ public class Cinema {
 		if (movie != null && this.moviesCatalogue != null) {
 			System.out.println("Ìîëÿ èçáåğåòå çàëà çà ïğîæåêöèÿòà: ");
 			MovieTheather movieTheater = null;
-			if (this.theathers.size() > 0) {
-				List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.theathers);
+			if (!this.moviesCatalogue.isEmpty()) {
+				List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.moviesCatalogue.keySet());
 				for (int index = 1; index <= listOfTheathers.size(); index++) {
 					System.out.println(index + " - " + listOfTheathers.get(index - 1));
 				}
 				int index = DemoCinema.sc.nextInt();
-				movieTheater = listOfTheathers.get(index);
+				movieTheater = listOfTheathers.get(index - 1);
 			} else {
 				System.out.println("Âñå îùå íÿìà äîáàâåíè çàëè â êèíîòî! Ñúçäàéòå çàëà");
-				movieTheater = this.addMovieTheatherToCinema();
+				// TODO
+//				movieTheater = this.addMovieTheatherToCinema();
 			}
 			if (!this.moviesCatalogue.containsKey(movieTheater)) {
 				this.moviesCatalogue.put(movieTheater, new TreeMap<>());
@@ -121,10 +118,6 @@ public class Cinema {
 					localDate.getDayOfMonth() + "." + localDate.getMonthValue() + " - " + localDate.getDayOfWeek());
 			localDate = localDate.plusDays(1);
 		}
-	}
-
-	public void addMovieTheater(MovieTheather mt) {
-		this.theathers.add(mt);
 	}
 
 	public void addBookedTicket(MovieTheather mt, Ticket ticket) {

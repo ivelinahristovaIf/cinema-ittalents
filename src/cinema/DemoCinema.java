@@ -1,24 +1,18 @@
 package cinema;
 
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import crypt.Cryptography;
+import bean.Admin;
+import bean.Cinema;
+import helper.NotValidMovieTheatherTypeException;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 import tickets.Ticket.ticketType;
-import users.Admin;
-import users.Consumer;
 
 public class DemoCinema {
 
 	public static Scanner sc = new Scanner(System.in);
-
-	// TODO how to make consumers non static
-//	private static Set<Consumer> consumers;
 
 	public static void menu() {
 		System.out.println("Изберете опция от главното менюто: ");
@@ -28,21 +22,17 @@ public class DemoCinema {
 		System.out.println("0 -> Изход...");
 		try {
 			int option = sc.nextInt();
-
 			if (option == 1) {
 				System.out.println("Администратор");
 				System.out.println("Въведете потребителско име: ");
 				String username = sc.next();
 				System.out.println("Въведете парола: ");
 				String password = sc.next();
-				try {
+			
 					if (isValidUsernameAndPassword(username, password)) {
-						Cinema.admin.showMenu();
+						Admin.getInstance().showMenu();
 					}
-				} catch (NoSuchAlgorithmException e) {
-					System.out.println(e.getMessage());
-					e.printStackTrace();
-				}
+			
 			}
 			if (option == 2) {
 				System.out.println("Потребител");
@@ -50,43 +40,50 @@ public class DemoCinema {
 				String email = sc.next();
 				System.out.println("Въведете парола: ");
 				String password = sc.next();
-				if (isValidEmailAndPasswor(email, password)) {
-					// TODO get consumer by email and password
-					// TODO show menu for consumer
-				}
+
+//				if (consumer != null) {
+//					consumer.showConsumerMenu();
+//				}
+
 			}
 			if (option == 3) {
 				System.out.println("Регистрирайте се като потребител...");
-				Consumer consumer = new Consumer(1);
-				// TODO add consumer to Cinema
-				System.out.println(consumer + " е регистриран");
-				if (Cinema.consumers == null) {
-					Cinema.consumers = new HashSet<Consumer>();
+//				Consumer consumer = new Consumer();//TODO open register scene
+//				System.out.println(consumer + " е регистриран");
+
+				System.out.println("1 -> За да продължите действия...");
+				System.out.println("2 -> За да се отпишете...");
+				System.out.println("0 -> Изход...");
+
+				int next = sc.nextInt();
+				switch (next) {
+				case 0:
+				//TODO
+					break;
+				case 1:
+//					consumer.showConsumerMenu();
+					break;
+				case 2:
+					DemoCinema.menu();
+					break;
 				}
-				Cinema.consumers.add(consumer);
-				// TODO showConsumerMenu is in option 2
-				consumer.showConsumerMenu();
 			}
 			if (option == 0) {
 				System.exit(0);
 			}
+
 		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			return;
 		}
-
 	}
 
-	private static boolean isValidEmailAndPasswor(String email, String password) {
-		return true;
-	}
-
-	private static boolean isValidUsernameAndPassword(String username, String password)
-			throws NoSuchAlgorithmException {
+	private static boolean isValidUsernameAndPassword(String username, String password){
 		if (username != null) {
 			if (password != null) {
-				while (!(username.equals(Cinema.admin.getUsername())
-						&& Cryptography.cryptSHA256(password).equals(Cinema.admin.getPassword()))) {
+				while (!(username.equals(Admin.getInstance().getUsername())
+						&& password.equals(Admin.getInstance().getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
 					System.err.println("Въведете Х за връщане назад към менюто или опитайте отново...");
 
@@ -117,17 +114,16 @@ public class DemoCinema {
 
 	public static void main(String[] args) throws NotValidMovieTheatherTypeException, NotValidTicketTypeException {
 		try {
-			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", new Cinema());
-//			System.out.println(ticket);
+			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", Cinema.getInstance());
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}
 		System.out.println("Добре дошли в Кино Арена!");
+		//TODO load all from file into storage
 		System.out.println();
 		menu();
-		System.out.println();
-
-		Cinema cinema = new Cinema();
+		//TODO save all to file
+		System.out.println("Край");
 
 	}
 

@@ -1,7 +1,7 @@
 package tickets;
 
-import cinema.Cinema;
-import cinema.Movie;
+import bean.Cinema;
+import bean.Movie;
 
 public class Ticket {
 	public enum ticketType {

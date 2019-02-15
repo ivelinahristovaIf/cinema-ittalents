@@ -1,44 +1,37 @@
 package users;
 
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cinema.Cinema;
-import cinema.DemoCinema;
-import cinema.MovieTheather;
-import crypt.Cryptography;
+import bean.Cinema;
+import bean.MovieTheather;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
 public class Consumer {
 	private static final int MIN_PASSWORD_LENGTH = 8;
-	Scanner sc = new Scanner(System.in);
-	private int id;
+//	Scanner sc = new Scanner(System.in);
+//	private final int id;
+	private static int nextId = 1;
 	private String email;
 	private String password;
-	private Cinema personalCinema; // the cinema he choosed; composition
-	private Set<Cinema> allCinemas;// choose from another cinema; agregation
+//	private Cinema personalCinema; // the cinema he choosed; composition
+//	private Set<Cinema> allCinemas;// choose from another cinema; agregation
 	private double money;
 
 	private ConsumerProfile myProfile;
 
-	public Consumer(int id) {
-
-		this.id = id;
-		System.out.println("Моля въведете вашите данни: ");
-		this.setEmail();
-		try {
-			this.setPassword();
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("NoSuchAlgorithmException");
-			e.printStackTrace();
-		}
+	public Consumer() {
+//		this.id = nextId++;
+//		System.out.println("Моля въведете вашите данни: ");
+//		this.setEmail();
+//		try {
+//			this.setPassword();
+//		} catch (NoSuchAlgorithmException e) {
+//			System.out.println("NoSuchAlgorithmException");
+//			e.printStackTrace();
+//		}
 
 		// TODO personal cinema
 //		if (isValidCinema(personalCinema)) {
@@ -46,43 +39,67 @@ public class Consumer {
 //		}
 		this.myProfile = new ConsumerProfile();
 		// TODO hashCode and equals
-		this.allCinemas = new HashSet<Cinema>();
+//		this.allCinemas = new HashSet<Cinema>();
 
 	}
 
-	public void showConsumerMenu() {
-		System.out.println("Добре дошли в потребителското меню!\nМоля, изберете опция: ");
-		System.out.println("1 -> Попълване на лични данни...");
-		System.out.println("2 -> Смяна на парола...");
-		System.out.println("3 -> Добавяне на интереси и любими жанрове...");
-		System.out.println("4 -> Връщане към главното меню =>");
-		System.out.println("0 -> Изход...");
-		try {
-			int option = sc.nextInt();
-			switch (option) {
-			case 0:
-				System.exit(0);
-				break;
-			case 1:
-				this.setUpMyProfile();
-				break;
-			case 2:
-				this.changePassword();
-				break;
-			case 3:
-				this.setInterests();
-				break;
-			case 4:
-				DemoCinema.menu();
+//	public void showConsumerMenu() {
+//		System.out.println("Добре дошли в потребителското меню!\nМоля, изберете опция: ");
+//		System.out.println("1 -> Попълване на лични данни...");
+//		System.out.println("2 -> Изберете филм от програма за днес...");
+//		System.out.println("3 -> Смяна на парола...");
+//		System.out.println("4 -> Добавяне на интереси и любими жанрове...");
+//		System.out.println("5 -> Връщане към главното меню =>");
+//		System.out.println("0 -> Изход...");
+//		try {
+//			int option = sc.nextInt();
+//			switch (option) {
+//			case 0:
+//				System.exit(0);
+//				break;
+//			case 1:
+//				this.setUpMyProfile();
+//				break;
+//			case 2:
+//				this.chooseMovieFromAllToday();
+//				break;
+//			case 3:
+//				this.changePassword();
+//				break;
+//			case 4:
+//				this.setInterests();
+//				break;
+//			case 5:
+//				DemoCinema.menu();
+//				break;
+//			}
+//			System.out.println("1 -> За да продължите действия...");
+//			System.out.println("2 -> За да се отпишете...");
+//			System.out.println("0 -> Изход...");
+//
+//			int next = sc.nextInt();
+//			switch (next) {
+//			case 0:
+//				System.exit(0);
+//				break;
+//			case 1:
+//				showConsumerMenu();
+//				break;
+//			case 2:
+//				DemoCinema.menu();
+//				break;
+//			}
+//		} catch (InputMismatchException e) {
 //			showConsumerMenu();
-				break;
-			}
-		} catch (InputMismatchException e) {
-			showConsumerMenu();
-			System.out.println("Wrong command!");
-			System.out.println(e.getMessage());
-		}
-	}
+//			System.out.println("Wrong command!");
+//			System.out.println(e.getMessage());
+//		}
+//	}
+	
+//	private void chooseMovieFromAllToday() {
+//		Cinema.getInstance().showAllMoviesByDate(LocalDate.now());
+//		//TODO choose movie
+//	}
 
 	private void setUpMyProfile() {
 		this.myProfile.setPhoneNumber();
@@ -90,22 +107,20 @@ public class Consumer {
 		this.myProfile.setEducation();
 	}
 
-	private void changePassword() {
-		System.out.println("Смяна на парола...");
-		System.out.println("Въведете старата парола:");
-		String oldPass = sc.next();
-		try {
-			while (!Cryptography.cryptSHA256(oldPass).equals(this.password)) {
-				System.err.println("Грешна парола! Опитайте пак: ");
-				oldPass = sc.next();
-			}
-			System.out.println("Въведете нова парола...");
-			this.setPassword();
-			System.out.println("Паролата е сменена успешно!");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-	}
+//	private void changePassword() {
+//		System.out.println("Смяна на парола...");
+//		System.out.println("Въведете старата парола:");
+//		String oldPass = sc.next();
+//		try {
+//			while (!oldPass.equals(this.password)) {
+//				System.err.println("Грешна парола! Опитайте пак: ");
+//				oldPass = sc.next();
+//			}
+//			System.out.println("Въведете нова парола...");
+//			this.setPassword();
+//			System.out.println("Паролата е сменена успешно!");
+//		
+//	}
 
 	private void setInterests() {
 		// TODO choose multiple
@@ -113,31 +128,35 @@ public class Consumer {
 		this.myProfile.addPersonalInterest();
 	}
 
-	private void setPassword() throws NoSuchAlgorithmException {
-		System.out.println("Парола:");
-		String password = sc.next();
-		while (!isValidPassword(password)) {
-			System.out.println("Try again: ");
-			password = sc.next();
-		}
-		this.password = Cryptography.cryptSHA256(password);
-	}
+//	private void setPassword() {
+//		System.out.println("Парола:");
+//		String password = sc.next();
+//		while (!isValidPassword(password)) {
+//			System.out.println("Try again: ");
+//			password = sc.next();
+//		}
+//		this.password =password;
+//	}
 
-	private void setEmail() {
-		System.out.println("E-mail:");
-		String email = sc.next();
-		while (!isValidEmail(email)) {
-			System.out.println("Try again: ");
-			email = sc.next();
-		}
-		this.email = email;
-
-	}
+//	private void setEmail() {
+//		System.out.println("E-mail:");
+//		String email = sc.next();
+//		while (!isValidEmail(email)) {
+//			System.out.println("Try again: ");
+//			email = sc.next();
+//		}
+//		this.email = email;
+//
+//	}
 
 //	private boolean isValidCinema(Cinema personalCinema) {
 //		// TODO if set contains personalCinema
 //		return true;
 //	}
+	public void showProgramForToday() {
+		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
+		
+	}
 
 	public void buyTicket(Cinema cinema, MovieTheather mt) throws NotValidTicketTypeException {
 		Scanner sc = new Scanner(System.in);
@@ -219,11 +238,11 @@ public class Consumer {
 		return false;
 	}
 
-	@Override
-	public String toString() {
-		return /* "Consumer [id=" + id + */", email: " + email + ", password: " + password + ", предпочитано кино: "
-				+ personalCinema + "," + myProfile + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Consumer [id=" + id + ", email: " + email + ", password: " + password + ", предпочитано кино: "
+//				+ personalCinema + "," + myProfile + "]";
+//	}
 
 	public ConsumerProfile getMyProfile() {
 		return myProfile;
@@ -237,31 +256,12 @@ public class Consumer {
 		this.money = money;
 	}
 
-//	public static void main(String[] args) throws NotValidTicketTypeException {
-//		Cinema c = new Cinema();
-//
-//		Consumer con = new Consumer(5);
-//		con.money = 100000;
-//	
-//		Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, "j4", c);
-//		
-//		
-//		try {
-//			con.buyTicket(c);
-//		} catch (NotValidTicketTypeException e) {
-//			e.printStackTrace();
-//		}
-//		
-////		try {
-////			con.buyTicket(c);
-////		} catch (NotValidTicketTypeException e) {
-////			e.printStackTrace();
-////		}
-//		
-//		System.out.println(con.money);
-//		
-//		
-//		
-//	}
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
 
 }
