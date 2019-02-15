@@ -39,6 +39,7 @@ public class Consumer {
 //		}
 		this.myProfile = new ConsumerProfile();
 		// TODO hashCode and equals
+<<<<<<< HEAD
 //		this.allCinemas = new HashSet<Cinema>();
 
 	}
@@ -90,6 +91,44 @@ public class Consumer {
 //				break;
 //			}
 //		} catch (InputMismatchException e) {
+=======
+		this.allCinemas = new HashSet<Cinema>();
+		this.money = 1000;
+
+	}
+
+	public void showConsumerMenu() {
+		System.out.println("Добре дошли в потребителското меню!\nМоля, изберете опция: ");
+		System.out.println("1 -> Попълване на лични данни...");
+		System.out.println("2 -> Смяна на парола...");
+		System.out.println("3 -> Добавяне на интереси и любими жанрове...");
+		System.out.println("4 -> Връщане към главното меню =>");
+		//TODO System.out.println("5 -> Запазване на билет...");
+		System.out.println("0 -> Изход...");
+		try {
+			String strOption = sc.next();
+			String reg = "[0-9]+";
+			while(!(strOption.matches(reg) && Integer.parseInt(strOption) >= 0 && Integer.parseInt(strOption) <= 4)) {
+				System.out.println("Невалидна опция. Моля опитайте отново");
+				strOption = sc.next();
+			}
+			int option = Integer.parseInt(strOption);
+			switch (option) {
+			case 0:
+				System.exit(0);
+				break;
+			case 1:
+				this.setUpMyProfile();
+				break;
+			case 2:
+				this.changePassword();
+				break;
+			case 3:
+				this.setInterests();
+				break;
+			case 4:
+				DemoCinema.menu();
+>>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
 //			showConsumerMenu();
 //			System.out.println("Wrong command!");
 //			System.out.println(e.getMessage());
@@ -204,23 +243,23 @@ public class Consumer {
 					}
 				}
 				if (!isAlreadyReserved) {
-					cinema.addBookedTicket(mt, ticket);
+					mt.bookTicketInTheather(ticket);
 					ticket.reservedTicket();
 					this.money -= ticket.getPrice();
 					System.out.println("Поздравления вие запазихте билет");
+					countTickets--;
 				} else {
 					System.out.println("Съжаляваме този билет вече е бил запазен");
+					continue;
 				}
 			} else {
 				System.out.println("Нямате достатъчно пари");
 				break;
 			}
-			countTickets--;
 		}
 	}
 
 	private boolean isValidPassword(String password) {
-		// TODO validate password
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
 			return true;
 		}

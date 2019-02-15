@@ -23,15 +23,43 @@ public class Cinema {
 	private static final int NUMBER_DAYS_IN_CALENDAR = 7;
 
 
+<<<<<<< HEAD
 	// TODO remove tickets
 	private Set<Ticket> tickets;
+=======
+		private String name;
+
+		private MovieGenres(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+	}
+	
+	public enum movieCategories {
+		A, B, C, D
+	}
+
+	public static Set<Consumer> consumers; // TO DO private non static
+	private Set<MovieTheather> theathers;
+>>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
 	// type->date->movie
 	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
 	private Comparator<Movie> movieComparator;
 	private static Cinema instance = null;
 
+<<<<<<< HEAD
 	private Cinema() {
 		this.tickets = new HashSet<>();
+=======
+	public Cinema() {
+		consumers = new HashSet<Consumer>();
+		// TODO comparator consumers
+		// TODO compare by theather type
+		this.theathers = new TreeSet<MovieTheather>((mt1, mt2) -> mt1.getType().compareToIgnoreCase(mt2.getType()));
+>>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
 		// TODO maybe compare movies by id
 		this.movieComparator = (movie1, movie2) -> movie1.getName().compareToIgnoreCase(movie2.getName());
 		this.moviesCatalogue = new HashMap<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>();
@@ -44,6 +72,7 @@ public class Cinema {
 		}
 	}
 
+<<<<<<< HEAD
 	public static Cinema getInstance() {
 		if (instance == null) {
 			instance = new Cinema();
@@ -62,6 +91,19 @@ public class Cinema {
 			}else {
 				System.out.println("Няма филми за този ден в зала "+movieTheather);
 			}
+=======
+	public MovieTheather addMovieTheatherToCinema() {
+		MovieTheather theather = null;
+		try {
+			theather = MovieTheather.getInstance();
+		} catch (NotValidMovieTheatherTypeException e) {
+			e.printStackTrace();
+		}
+		if (theather != null) {
+			this.theathers.add(theather);
+		} else {
+			System.err.println("Null theather!"); 
+>>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
 		}
 	}
 
@@ -120,20 +162,19 @@ public class Cinema {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+//	public void addMovieTheater(MovieTheather mt) {
+//		this.theathers.add(mt);
+//	}
+
+>>>>>>> fb06fde8333fae600dcfb72f91cb2840e2cfbfe6
 	public void addBookedTicket(MovieTheather mt, Ticket ticket) {
 		if (mt != null && ticket != null) {
 			mt.bookTicketInTheather(ticket);
 		}
 	}
 
-	// TODO tickets are in movieTheather only
-	public void addTicket(Ticket ticket) {
-		if (ticket != null) {
-			this.tickets.add(ticket);
-		} else {
-			System.out.println("Не може да се добави NULL билет");
-		}
-	}
 
 	private LocalDate inputDate() {
 		System.out.print("Моля изберете дата, на която да добавите прожекциите: ");
@@ -160,9 +201,6 @@ public class Cinema {
 		return date;
 	}
 
-	public Set<Ticket> getTickets() {
-		return Collections.unmodifiableSet(tickets);
-	}
 
 	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
