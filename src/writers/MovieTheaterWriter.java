@@ -82,6 +82,10 @@ public class MovieTheaterWriter {
 		}
 	}
 	
+	public static void main(String[] args) {
+		MovieTheather mt = new MovieTheather(type, cinema);
+	}
+	
 	
 	
 }

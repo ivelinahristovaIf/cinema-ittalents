@@ -16,7 +16,7 @@ public class MovieTheather {
 
 	private int id;
 	private static int nextId = 1;// TODO
-	private Cinema cinema;
+//	private Cinema cinema;
 	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> bookedTickets;
 
@@ -32,7 +32,7 @@ public class MovieTheather {
 	public MovieTheather(MovieTheatherType type, Cinema cinema) {
 		this.id = nextId++;
 		this.type = type;
-		this.cinema = cinema;
+//		this.cinema = cinema;
 		this.bookedTickets = new HashSet<>();
 		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.fillInMovieTheatreSeats();
