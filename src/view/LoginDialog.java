@@ -88,10 +88,10 @@ public class LoginDialog {
 
 	private void handleSignInButton(ActionEvent event) throws NoSuchAlgorithmException {
 		try {
-		  ILogger logger =new LoginController().validateLogin(emailTextField.getText(),passBox.getText());//TODO crypt password
-		  System.out.println("logger"+ logger);
+		  ILogger logger =new LoginController().validateLogin(emailTextField.getText(),passBox.getText());
+//		  System.out.println("logger "+ logger.getType());
 			if (logger != null){
-				if (logger.getType() == ILogger.ADMIN){
+				if (logger.getType() == 2){
 					new AdminPanel().start(logger);
 				} 
 				else {

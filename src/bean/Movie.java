@@ -14,9 +14,7 @@ import helper.NotValidMovieGenreException;
 public class Movie implements Comparable<Movie> {
 	public static final String[] MOVIE_GENRE = { "ƒ–¿Ã¿", "”∆¿—»", " ŒÃ≈ƒ»ﬂ", "¿Õ»Ã¿÷»ﬂ", "≈ ÿ⁄Õ", "‘¿Õ“¿—“» ¿",
 			"¡»Œ√–¿‘»◊≈Õ", "œ–» Àﬁ◊≈Õ— »", "–ŒÃ¿Õ“»◊≈Õ", " –»Ã»Õ¿À≈Õ", "¬Œ≈Õ≈Õ", "Õ¿”◊ÕŒ œŒœ”Àﬂ–≈Õ", "Ãﬁ«» ⁄À" };
-	public enum movieCategories {
-		A, B, C, D
-	}
+	public static final String[] MOVIE_CATEGORIES = { "A", "B", "C", "D" };
 
 	private static final int NUMBER_OF_DAYS_BEFORE_TODAY = 30;
 	private static final int NUMBER_OF_DAYS_FROM_TODAY = 1;
@@ -30,7 +28,7 @@ public class Movie implements Comparable<Movie> {
 	private short length;
 	private LocalDate premiere;
 	private String genre;
-	private movieCategories category;
+	private String category;
 	private Set<LocalTime> projections;
 	private LocalTime startTimes;
 	private LocalTime endTimes;
@@ -40,7 +38,7 @@ public class Movie implements Comparable<Movie> {
 		super();
 	}
 
-	private Movie(String name, short length, LocalDate premiere, movieCategories category) {
+	private Movie(String name, short length, LocalDate premiere, String category) {
 		this.id = nextId++;
 
 		if (name != null && name.trim().length() >= 2) {
@@ -65,7 +63,7 @@ public class Movie implements Comparable<Movie> {
 
 	// FACTORY
 	public static Movie getInstance(String genre, String name, short length, LocalDate premiere,
-			movieCategories category) throws NotValidMovieGenreException {
+			String category) throws NotValidMovieGenreException {
 //		System.out.println("»Á·ÂÂÚÂ Ê‡Ì ÓÚ: ");
 //		for (int index = 0; index < MovieGenres.values().length; index++) {
 //			System.out.println(index + " - " + MovieGenres.values()[index].getName());
@@ -111,22 +109,21 @@ public class Movie implements Comparable<Movie> {
 //		}
 //
 		Movie movie;
-//		MovieGenres g= MovieGenres.valueOf(genre);
 		switch (genre) {
 		case "¿Õ»Ã¿÷»ﬂ":
-			movie = new Movie(name, (short) 90, premiere, category);
+			movie = new Movie(name, length, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(9, 0);
-			movie.endTimes = LocalTime.of(18, 20).minusMinutes(90);
+			movie.endTimes = LocalTime.of(18, 20).minusMinutes(length);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
 		case "Ãﬁ«» ⁄À":
 		case " ŒÃ≈ƒ»ﬂ":
 		case "–ŒÃ¿Õ“»◊≈Õ":
-			movie = new Movie(name, (short) 120, premiere, category);
+			movie = new Movie(name, length, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(12, 20);
-			movie.endTimes = LocalTime.of(00, 00).minusMinutes(120);
+			movie.endTimes = LocalTime.of(00, 00).minusMinutes(length);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
 		case "¡»Œ√–¿‘»◊≈Õ":
@@ -138,18 +135,10 @@ public class Movie implements Comparable<Movie> {
 		case "œ–» Àﬁ◊≈Õ— »":
 		case "”∆¿—»":
 		case "‘¿Õ“¿—“» ¿":
-			Movie.maxProjections = 4;
-//			System.out.println("¬˙‚Â‰ÂÚÂ ‰˙ÎÊËÌ‡ Ì‡ ÙËÎÏ‡: ");
-//			String strLength = DemoCinema.sc.next();
-//			String regex = "[0-9]+";
-//			while(!(strLength.matches(regex) && Integer.parseInt(strLength) >= MIN_LENGTH && Integer.parseInt(strLength) <= MAX_LENGTH)) {
-//				System.out.println("ÕÂ‚‡ÎË‰Ì‡ ‰˙ÎÊËÌ‡, ÏÓÎˇ ÓÔËÚ‡ÈÚÂ Ô‡Í");
-//				strLength = DemoCinema.sc.next();
-//			}
-//			int length = Integer.parseInt(strLength);
+			Movie.maxProjections = 4;;
 			movie = new Movie(name, (short) length, premiere, category);
 			movie.setGenre(genre);
-			movie.endTimes = LocalTime.of(23, 50);// TODO work after 12
+			movie.endTimes = LocalTime.of(23, 50);
 			movie.startTimes = movie.endTimes.minusMinutes(maxProjections * (movie.length + BREAK_BETWEEN_MOVIES));
 			movie.freeHours = movie.fillInFreeHours();
 			// TODO write to file
@@ -157,11 +146,6 @@ public class Movie implements Comparable<Movie> {
 		}
 		throw new NotValidMovieGenreException("ÕˇÏ‡ Ú‡Í˙‚ Ê‡Ì ÙËÎÏ!");
 
-	}
-
-	private static boolean isInputCategoryWrong(String cat) {
-		return !cat.equalsIgnoreCase("A") && !cat.equalsIgnoreCase("B") && !cat.equalsIgnoreCase("C")
-				&& !cat.equalsIgnoreCase("D");
 	}
 
 	public void setTimes() {
@@ -235,10 +219,10 @@ public class Movie implements Comparable<Movie> {
 		this.freeHours.forEach(hour -> System.out.println(hour));
 	}
 
-	private boolean isValidMovieCategory(movieCategories category) {
+	private boolean isValidMovieCategory(String category) {
 		if (category != null) {
-			for (movieCategories cat : movieCategories.values()) {
-				if (cat.name().equalsIgnoreCase(category.name())) {
+			for (String cat : MOVIE_CATEGORIES) {
+				if (cat.equalsIgnoreCase(category)) {
 					return true;
 				}
 			}
@@ -255,7 +239,7 @@ public class Movie implements Comparable<Movie> {
 	@Override
 	public String toString() {
 		return "Movie [name=" + name + ", length: " + length + ", premiere=" + premiere + ", genre="
-				+ this.getClass().getSimpleName() + ", category=" + category.name() + "]";
+				+ this.getClass().getSimpleName() + ", category=" + category + "]";
 	}
 
 	public int getId() {
@@ -274,34 +258,6 @@ public class Movie implements Comparable<Movie> {
 		this.genre = genre;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Movie other = (Movie) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
-
 	public short getLength() {
 		return length;
 	}
@@ -317,15 +273,6 @@ public class Movie implements Comparable<Movie> {
 	public void setPremiere(LocalDate premiere) {
 		this.premiere = premiere;
 	}
-
-	public movieCategories getCategory() {
-		return category;
-	}
-
-	public void setCategory(movieCategories category) {
-		this.category = category;
-	}
-
 	public Set<LocalTime> getFreeHours() {
 		return freeHours;
 	}
@@ -341,5 +288,62 @@ public class Movie implements Comparable<Movie> {
 	@Override
 	public int compareTo(Movie m) {
 		return this.getName().compareTo(m.getName());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
+		result = prime * result + id;
+		result = prime * result + length;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((premiere == null) ? 0 : premiere.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Movie other = (Movie) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (genre == null) {
+			if (other.genre != null)
+				return false;
+		} else if (!genre.equals(other.genre))
+			return false;
+		if (id != other.id)
+			return false;
+		if (length != other.length)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (premiere == null) {
+			if (other.premiere != null)
+				return false;
+		} else if (!premiere.equals(other.premiere))
+			return false;
+		return true;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

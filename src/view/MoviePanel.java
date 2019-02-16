@@ -25,8 +25,10 @@ public class MoviePanel extends GridPane{
 	private Label genre;
 	private Label category;
 	private String choosenGenre;
+	private String choosenCategory;
 	
-	ComboBox<String> genresComboBox;
+	private ComboBox<String> genresComboBox;
+	private ComboBox<String> categoriesComboBox;
 	
 	public MoviePanel() {
 		super();
@@ -54,12 +56,22 @@ public class MoviePanel extends GridPane{
 		 genresComboBox = new ComboBox<String>(options);
 		genresComboBox.setVisibleRowCount(7);
 		
+		ObservableList<String> categories = FXCollections.observableArrayList("A","B","C","D");
+		 categoriesComboBox = new ComboBox<String>(categories);
+		categoriesComboBox.setVisibleRowCount(4);
+		
 		Button save = new Button("Запази");
 		
 		genresComboBox.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				getChoosenGenre(event);
+			}
+		});
+		categoriesComboBox.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				getChoosenCategory(event);
 			}
 		});
 		
@@ -70,7 +82,7 @@ public class MoviePanel extends GridPane{
 				short l = Short.parseShort(lengthField.getText());
 				Movie movie = null;
 				try {
-					movie = Movie.getInstance(choosenGenre, nameField.getText(), l, datePicker.getValue(),Movie.movieCategories.C);
+					movie = Movie.getInstance(choosenGenre, nameField.getText(), l, datePicker.getValue(),this.choosenCategory);
 					try {
 						MovieWriter.getInstance().getMoviesFromFile();
 					} catch (FileNotFoundException e) {
@@ -100,6 +112,10 @@ public class MoviePanel extends GridPane{
 		add(category, 0, 4);
 		add(save, 0, 5);
 		
+	}
+
+	protected void getChoosenCategory(ActionEvent event) {
+		this.choosenGenre = categoriesComboBox.getValue().toString();
 	}
 
 	protected void getChoosenGenre(ActionEvent event) {

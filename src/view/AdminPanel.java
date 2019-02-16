@@ -35,11 +35,12 @@ public class AdminPanel {
 
 		
 		Tab personalTab = new Tab("Профил");
-		GridPane personalGrid = new GridPane();//TODO change pass and uusername separetly
+		System.out.println("admin "+ user);
+		AdminProfile adminGrid = new AdminProfile(user);
 		
 		// TODO Personal information edit page
 		
-		personalTab.setContent(personalGrid);
+		personalTab.setContent(adminGrid);
 		tabPane.getTabs().add(personalTab);
 		
 		Scene scene = new Scene(tabPane, 1000, 500);

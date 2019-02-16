@@ -190,7 +190,7 @@ public class Admin implements ILogger{
 
 	@Override
 	public void setType() {
-		this.type = ILogger.ADMIN;
+		this.type = 2;
 	}
 
 	@Override
