@@ -19,7 +19,7 @@ public class MovieTheatherType {
 		this.id = nextId++;
 	}
 
-	private MovieTheatherType(String type, String videoFormat, String audioFormat) {
+	public MovieTheatherType(String type, String videoFormat, String audioFormat) {
 		this.id = nextId++;
 		if (isValidTheatherType(type)) {
 			this.type = type;
@@ -32,29 +32,29 @@ public class MovieTheatherType {
 		}
 	}
 
-	public static MovieTheatherType getInstance() throws NotValidMovieTheatherTypeException {
-		System.out.println("Изберете формат на залата от: ");
-		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
-			System.out.println(index + " - " + MOVIE_THEATHER_TYPE[index - 1]);
-		}
-
-		String type = MOVIE_THEATHER_TYPE[inputMovieTheaterFields(MOVIE_THEATHER_TYPE)];
-
-		System.out.println("Изберете видео формат от: ");
-		for (int index = 1; index <= VIDEO_FORMAT.length; index++) {
-			System.out.println(index + " - " + VIDEO_FORMAT[index - 1]);
-		}
-		String videoFormat = VIDEO_FORMAT[inputMovieTheaterFields(VIDEO_FORMAT)];
-
-		System.out.println("Изберете аудио формат от: ");
-		for (int index = 1; index <= AUDIO_FORMAT.length; index++) {
-			System.out.println(index + " - " + AUDIO_FORMAT[index - 1]);
-		}
-		String audioFormat = AUDIO_FORMAT[inputMovieTheaterFields(AUDIO_FORMAT)];
-
-		return new MovieTheatherType(type, videoFormat, audioFormat);
-
-	}
+//	public static MovieTheatherType getInstance() throws NotValidMovieTheatherTypeException {
+//		System.out.println("Изберете формат на залата от: ");
+//		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
+//			System.out.println(index + " - " + MOVIE_THEATHER_TYPE[index - 1]);
+//		}
+//
+//		String type = MOVIE_THEATHER_TYPE[inputMovieTheaterFields(MOVIE_THEATHER_TYPE)];
+//
+//		System.out.println("Изберете видео формат от: ");
+//		for (int index = 1; index <= VIDEO_FORMAT.length; index++) {
+//			System.out.println(index + " - " + VIDEO_FORMAT[index - 1]);
+//		}
+//		String videoFormat = VIDEO_FORMAT[inputMovieTheaterFields(VIDEO_FORMAT)];
+//
+//		System.out.println("Изберете аудио формат от: ");
+//		for (int index = 1; index <= AUDIO_FORMAT.length; index++) {
+//			System.out.println(index + " - " + AUDIO_FORMAT[index - 1]);
+//		}
+//		String audioFormat = AUDIO_FORMAT[inputMovieTheaterFields(AUDIO_FORMAT)];
+//
+//		return new MovieTheatherType(type, videoFormat, audioFormat);
+//
+//	}
 
 	// try again.. sushto taka izbqgva arrayIndexOutOfBoundsException
 	// i InputMismatchException ako se vuvede neshto gadno
@@ -143,6 +143,15 @@ public class MovieTheatherType {
 
 	public void setAudioFormat(String audioFormat) {
 		this.audioFormat = audioFormat;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "MovieTheatherType [id=" + id + ", type=" + type + ", videoFormat=" + videoFormat + ", audioFormat="
+				+ audioFormat + "]";
 	}
 
 }
