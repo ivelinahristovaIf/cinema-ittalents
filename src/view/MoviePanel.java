@@ -2,9 +2,7 @@ package view;
 
 import java.io.FileNotFoundException;
 
-import bean.ILogger;
 import bean.Movie;
-import helper.MovieGenres;
 import helper.NotValidMovieGenreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -103,11 +101,6 @@ public class MoviePanel extends GridPane{
 		add(save, 0, 5);
 		
 	}
-
-//	protected void handleSaveButton(ActionEvent event) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 	protected void getChoosenGenre(ActionEvent event) {
 		this.choosenGenre = genresComboBox.getValue().toString();	}

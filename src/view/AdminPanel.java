@@ -26,6 +26,11 @@ public class AdminPanel {
 		movieTab.setContent(movieGrid);
 		tabPane.getTabs().add(movieTab);
 		
+		Tab theatherTab = new Tab("Добави зала");
+		MovieTheatherPanel theatherGrid = new MovieTheatherPanel();
+		theatherTab.setContent(theatherGrid);
+		tabPane.getTabs().add(theatherTab);
+		
 		// TODO Show all cinema information and theathers - editable for admin
 		
 		
