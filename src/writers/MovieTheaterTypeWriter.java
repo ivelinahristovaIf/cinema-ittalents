@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -82,6 +83,13 @@ public class MovieTheaterTypeWriter {
 		if(type != null) {
 			this.types.add(type);
 		}
+	}
+
+	/**
+	 * @return the types
+	 */
+	public Set<MovieTheatherType> getTypes() {
+		return Collections.unmodifiableSet(types);
 	}
 	
 	

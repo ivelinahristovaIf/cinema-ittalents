@@ -2,6 +2,7 @@ package tickets;
 
 import bean.Cinema;
 import bean.Movie;
+import bean.MovieTheather;
 
 public class Ticket {
 	public enum ticketType {
@@ -14,7 +15,6 @@ public class Ticket {
 	private static final int STANDART_TICKET_PRICE = 10;
 
 	private Cinema cinema;
-	//MovieTheathre mt;
 	private Movie movie;
 	private int price;
 	private Seat seat;
@@ -24,15 +24,15 @@ public class Ticket {
 	private static int id = 0;
 	private int serialNumber;
 
-	private Ticket(String seat, int price, Cinema cinema /* ,M	ovie movie */) {
+	private Ticket(String seat, int price, MovieTheather theater /* ,M	ovie movie */) {
 		this.seat = new Seat(seat);
 		setPrice(price);
 
-		if (cinema != null) {
-			this.cinema = cinema;
-		} else {
-			System.out.println("Cinema is null");
-		}
+//		if (theater != null) {
+//			this.theater = theater;
+//		} else {
+//			System.out.println("Cinema is null");
+//		}
 
 		this.serialNumber = ++Ticket.id; // unique serial number
 		// TO DO this.movie = movie
@@ -56,16 +56,16 @@ public class Ticket {
 		return s1 != null && s2 != null && s1.equals(s2);
 	}
 	
-	public static Ticket getInstance(ticketType type, String seat, Cinema cinema) throws NotValidTicketTypeException {
+	public static Ticket getInstance(ticketType type, String seat, MovieTheather theater) throws NotValidTicketTypeException {
 		switch (type) {
 		case STANDART_TICKET:
-			return new Ticket(seat, STANDART_TICKET_PRICE, cinema);
+			return new Ticket(seat, STANDART_TICKET_PRICE, theater);
 		case CHILD_TICKET:
-			return new Ticket(seat, CHILD_TICKET_PRICE, cinema);
+			return new Ticket(seat, CHILD_TICKET_PRICE, theater);
 		case STUDENT_TICKET:
-			return new Ticket(seat, STUDENT_TICKET_PRICE, cinema);
+			return new Ticket(seat, STUDENT_TICKET_PRICE, theater);
 		case INVALID_TICKET:
-			return new Ticket(seat, INVALID_TICKET_PRICE, cinema);
+			return new Ticket(seat, INVALID_TICKET_PRICE, theater);
 		}
 		throw new NotValidTicketTypeException("Няма такъв билет");
 	}

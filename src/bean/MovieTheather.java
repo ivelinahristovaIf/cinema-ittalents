@@ -16,7 +16,6 @@ public class MovieTheather {
 
 	private int id;
 	private static int nextId = 1;// TODO
-//	private Cinema cinema;
 	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> bookedTickets;
 
@@ -64,7 +63,7 @@ public class MovieTheather {
 			System.out.print("Πεδ " + entry.getKey() + ": ");
 			for (Integer col : entry.getValue()) {
 				String seat = entry.getKey() + ("" + col);
-				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, this.cinema);
+				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, this);
 				boolean isFreeSeat = true;
 				for (Ticket ticket : this.getBookedTickets()) {
 					if (t.isTicketsEquals(ticket)) {

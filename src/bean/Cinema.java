@@ -16,8 +16,8 @@ import helper.NotValidMovieTheatherTypeException;
 import tickets.Ticket;
 
 public class Cinema {
-	private int id;
-	private static int nextId=1;
+//	private int id;
+//	private static int nextId=1;
 	private String name;
 	private String address;
 	private List<MovieTheather> movieTheathers;
@@ -26,16 +26,14 @@ public class Cinema {
 
 	public Cinema() {
 		super();
-		this.id = nextId++;
 	}
 
 	public Cinema(String name, String address, List<MovieTheather> movieTheathers) {
-		this.id = nextId++;
 		this.name = name;
 		this.address = address;
 		this.movieTheathers = movieTheathers;
 		
-		//TODO fill in some theathers
+		
 	}
 	public MovieTheather addMovieTheatherInCinema(MovieTheatherType type) {
 		if (this.movieTheathers == null) {

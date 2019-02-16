@@ -21,7 +21,7 @@ public class UserHelper {
 		return instance;
 	}
 
-	public void buyTicket(Cinema cinema, MovieTheather mt) throws NotValidTicketTypeException {
+	public void buyTicket(MovieTheather mt) throws NotValidTicketTypeException {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Колко билета искате да купите: ");
@@ -41,19 +41,19 @@ public class UserHelper {
 			Ticket ticket = null;
 			switch (ticketType) {
 			case 1:
-				ticket = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, cinema);
+				ticket = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, mt);
 				break;
 
 			case 2:
-				ticket = Ticket.getInstance(Ticket.ticketType.STANDART_TICKET, seat, cinema);
+				ticket = Ticket.getInstance(Ticket.ticketType.STANDART_TICKET, seat, mt);
 				break;
 
 			case 3:
-				ticket = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, seat, cinema);
+				ticket = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, seat, mt);
 				break;
 
 			case 4:
-				ticket = Ticket.getInstance(Ticket.ticketType.STUDENT_TICKET, seat, cinema);
+				ticket = Ticket.getInstance(Ticket.ticketType.STUDENT_TICKET, seat, mt);
 				break;
 			default:
 				break;

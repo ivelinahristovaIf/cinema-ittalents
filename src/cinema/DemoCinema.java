@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import bean.Admin;
 import bean.Cinema;
+import bean.MovieTheather;
 import helper.NotValidMovieTheatherTypeException;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
@@ -154,8 +155,9 @@ public class DemoCinema {
 
 	public static void main(String[] args) throws NotValidMovieTheatherTypeException, NotValidTicketTypeException {
 		Cinema cinema = new Cinema();
+		MovieTheather mt = new MovieTheather();
 		try {
-			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", cinema);
+			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", mt);
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}
