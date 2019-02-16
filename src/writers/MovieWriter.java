@@ -37,7 +37,6 @@ public class MovieWriter {
 			try {
 				instance = new MovieWriter();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

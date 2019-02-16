@@ -1,19 +1,31 @@
 package bean;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.InputMismatchException;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import cinema.DemoCinema;
 import helper.UserHelper;
+import writers.MovieWriter;
 
 public class Admin implements ILogger{
 	private int type;
 	private String email;
 	private String password;
+	private Gson gson;
+	private File movieFile;
 
 	private static Admin instance = null;
 
@@ -24,7 +36,29 @@ public class Admin implements ILogger{
 		this.email = email;
 		this.setPassword(password);
 		this.movies = new TreeSet<Movie>();
-		//TODO movies from file input into movies
+		this.gson = new Gson();
+		this.movieFile = new File("Movies.json");
+		this.fillMovies();
+	}
+
+	
+	public void fillMovies() {
+		StringBuilder builder = new StringBuilder();
+		try (Scanner sc = new Scanner(this.movieFile)) {
+			while (sc.hasNextLine()) {
+				builder.append(sc.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		Type setType = new TypeToken<LinkedHashSet<Movie>>() {
+		}.getType();
+		if (builder.length() > 0) {
+			Set<Movie> getMovies = gson.fromJson(builder.toString(), setType);
+			this.movies.addAll(getMovies);
+		} else {
+			System.out.println("Oshte nqma obekti");
+		}
 	}
 	
 	public static Admin getInstance() {
@@ -128,8 +162,11 @@ public class Admin implements ILogger{
 		LocalDate date = dates.get(DemoCinema.sc.nextInt());
 
 //		this.cinema.getMoviesCatalogue().values();
-		TreeSet<Movie> movies = new TreeSet<Movie>(cinema.getMoviesCatalogue().get(theather).get(date));
-		// TODO select movies from file
+//		TreeSet<Movie> movies = new TreeSet<Movie>(cinema.getMoviesCatalogue().get(theather).get(date));
+
+		//select movies from file - DONE
+		TreeSet<Movie> movies = new TreeSet<Movie>(this.movies);
+
 		Movie movie = null;
 		if (this.movies.size() > 0) {
 			System.out.println("Изберете филм от каталога: ");// TODO file
@@ -212,5 +249,15 @@ public class Admin implements ILogger{
 			return false;
 		return true;
 	}
+
+	/**
+	 * @return the movies
+	 */
+	public Set<Movie> getMovies() {
+		return Collections.unmodifiableSet(movies);
+	}
+	
+
+
 
 }

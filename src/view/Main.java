@@ -1,5 +1,6 @@
 package view;
 
+import bean.Admin;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,6 +13,7 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		arguments = args;
 		launch(args);
+		
 	}
 
 	@Override
