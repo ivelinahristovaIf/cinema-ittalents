@@ -25,6 +25,7 @@ public class UserWriter {
 
 	// TODO singleton
 
+	private static UserWriter instance = null;
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
 
@@ -35,6 +36,18 @@ public class UserWriter {
 			new File("Users.json").createNewFile();
 		}
 
+	}
+	
+	public static UserWriter getInstance() {
+		if (instance == null) {
+			try {
+				instance = new UserWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return instance;
 	}
 
 	public void saveUsersToFile() {

@@ -24,14 +24,27 @@ public class MovieTheaterTypeWriter {
 	
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
+	private static MovieTheaterTypeWriter instance = null;
+
 	
 	
-	public MovieTheaterTypeWriter() throws IOException {
+	private MovieTheaterTypeWriter() throws IOException {
 		this.types = new LinkedHashSet<>();
 		this.file = new File("MovieTheaterTypes.json");
 		if(!this.file.exists()) {
 			new File("MovieTheaterTypes.json").createNewFile();
 		}
+	}
+	
+	public static MovieTheaterTypeWriter getInstance() {
+		if (instance == null) {
+			try {
+				instance = new MovieTheaterTypeWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return instance;
 	}
 
 	public void saveMovieTheaterTypesToFile() {
@@ -58,8 +71,8 @@ public class MovieTheaterTypeWriter {
 		Type setType = new TypeToken<LinkedHashSet<MovieTheatherType>>() {
 		}.getType();
 		if (builder.length() > 0) {
-			Set<MovieTheatherType> getUsers = gson.fromJson(builder.toString(), setType);
-			this.types.addAll(getUsers);
+			Set<MovieTheatherType> getTypes = gson.fromJson(builder.toString(), setType);
+			this.types.addAll(getTypes);
 		} else {
 			System.out.println("Oshte nqma obekti");
 		}
@@ -73,7 +86,7 @@ public class MovieTheaterTypeWriter {
 	
 	public static void main(String[] args) throws IOException {
 		
-		MovieTheaterTypeWriter mw = new MovieTheaterTypeWriter();
+		MovieTheaterTypeWriter mw = MovieTheaterTypeWriter.getInstance();
 		
 		mw.getMovieTheaterTypesFromFile();
 //		mw.addMovieTheaterType(new MovieTheatherType("IMAX", "2D", "Digital"));
