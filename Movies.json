@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "She",
+    "length": 120,
+    "premiere": {
+      "year": 2019,
+      "month": 2,
+      "day": 6
+    },
+    "genre": "йнледхъ",
+    "category": "C",
+    "projections": [],
+    "freeHours": []
+  }
+]

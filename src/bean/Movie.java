@@ -3,23 +3,16 @@ package bean;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Set;
 import java.util.TreeSet;
+
 import cinema.DemoCinema;
 import helper.InvalidHourException;
-import helper.MovieGenres;
-import helper.NotValidMovieGenreException;
+import helper.MovieHelper;
 
 public class Movie implements Comparable<Movie> {
-	public static final String[] MOVIE_GENRE = { "ДРАМА", "УЖАСИ", "КОМЕДИЯ", "АНИМАЦИЯ", "ЕКШЪН", "ФАНТАСТИКА",
-			"БИОГРАФИЧЕН", "ПРИКЛЮЧЕНСКИ", "РОМАНТИЧЕН", "КРИМИНАЛЕН", "ВОЕНЕН", "НАУЧНО ПОПУЛЯРЕН", "МЮЗИКЪЛ" };
-	public static final String[] MOVIE_CATEGORIES = { "A", "B", "C", "D" };
-
-	private static final int NUMBER_OF_DAYS_BEFORE_TODAY = 30;
-	private static final int NUMBER_OF_DAYS_FROM_TODAY = 1;
 	private static final short BREAK_BETWEEN_MOVIES = 20;
-	private static int maxProjections = 5;
+	private static final int MAX_PROJECTIONS = 5;
 	private static final int MAX_LENGTH = 200;
 	private static final int MIN_LENGTH = 60;
 	private int id;
@@ -33,14 +26,15 @@ public class Movie implements Comparable<Movie> {
 	private LocalTime startTimes;
 	private LocalTime endTimes;
 	private Set<LocalTime> freeHours;
+	private int numberOfProjectionsForDay;
 
 	public Movie() {
 		super();
 	}
 
-	private Movie(String name, short length, LocalDate premiere, String category) {
+	public Movie(String genre, String name, short length, LocalDate premiere, String category) {
 		this.id = nextId++;
-
+		this.genre = genre;
 		if (name != null && name.trim().length() >= 2) {
 			this.name = name;
 		} else {
@@ -51,127 +45,31 @@ public class Movie implements Comparable<Movie> {
 		} else {
 			System.err.println("Невалидна дължина");
 		}
-		if (isValidPremiereDate(premiere)) {
+		if (MovieHelper.getInstance().isValidPremiereDate(premiere)) {
 			this.premiere = premiere;
 		}
 
-		if (isValidMovieCategory(category)) {
+		if (MovieHelper.getInstance().isValidMovieCategory(category)) {
 			this.category = category;
 		}
 		this.projections = new TreeSet<LocalTime>();
-	}
-
-	// FACTORY
-	public static Movie getInstance(String genre, String name, short length, LocalDate premiere,
-			String category) throws NotValidMovieGenreException {
-//		System.out.println("Изберете жанр от: ");
-//		for (int index = 0; index < MovieGenres.values().length; index++) {
-//			System.out.println(index + " - " + MovieGenres.values()[index].getName());
-//		}
-//		// TODO throw and catch exceptions
-//		String stringIndex = DemoCinema.sc.next();
-//		String reg = "[0-Cinema.MovieGenres.values().length]+";
-//		while(!(stringIndex.matches(reg))) {
-//			System.out.println("Опитайте отново");
-//			stringIndex = DemoCinema.sc.next();
-//		}
-//		int index = Integer.parseInt(stringIndex);
-//		MovieGenres genre = MovieGenres.values()[index];
-//
-//		System.out.println("Въведете име: ");
-//		String name = DemoCinema.sc.next();
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-//		System.out.println("Въведете премиерна дата: (ден/месец/година)");
-//		LocalDate premiere = null; // TODO null pointer exception
-//		boolean retry = false;
-//		// Date input
-//		while (!retry) {
-//			try {
-//				String date = DemoCinema.sc.next();
-//				premiere = LocalDate.parse(date, formatter);
-//				retry = true;
-//			} catch (DateTimeParseException e) {
-//				System.out.print("Невалиден формат. Опитайте отново:");
-//				retry = false;
-//			}
-//		}
-//		System.out.println("Изберете категория от: ");
-//		for (movieCategories c : movieCategories.values()) {
-//			System.out.println(c.name());
-//		}
-//		movieCategories category = movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
-//
-//		
-//		String cat = DemoCinema.sc.next();
-//		while(isInputCategoryWrong(cat)) {
-//			System.out.println("Опитайте отново");
-//			cat = DemoCinema.sc.next();
-//		}
-//
-		Movie movie;
-		switch (genre) {
-		case "АНИМАЦИЯ":
-			movie = new Movie(name, length, premiere, category);
-			movie.setGenre(genre);
-			movie.startTimes = LocalTime.of(9, 0);
-			movie.endTimes = LocalTime.of(18, 20).minusMinutes(length);
-			movie.freeHours = movie.fillInFreeHours();
-			return movie;
-		case "МЮЗИКЪЛ":
-		case "КОМЕДИЯ":
-		case "РОМАНТИЧЕН":
-			movie = new Movie(name, length, premiere, category);
-			movie.setGenre(genre);
-			movie.startTimes = LocalTime.of(12, 20);
-			movie.endTimes = LocalTime.of(00, 00).minusMinutes(length);
-			movie.freeHours = movie.fillInFreeHours();
-			return movie;
-		case "БИОГРАФИЧЕН":
-		case "ВОЕНЕН":
-		case "ДРАМА":
-		case "ЕКШЪН":
-		case "КРИМИНАЛЕН":
-		case "НАУЧНО ПОПУЛЯРЕН":
-		case "ПРИКЛЮЧЕНСКИ":
-		case "УЖАСИ":
-		case "ФАНТАСТИКА":
-			Movie.maxProjections = 4;;
-			movie = new Movie(name, (short) length, premiere, category);
-			movie.setGenre(genre);
-			movie.endTimes = LocalTime.of(23, 50);
-			movie.startTimes = movie.endTimes.minusMinutes(maxProjections * (movie.length + BREAK_BETWEEN_MOVIES));
-			movie.freeHours = movie.fillInFreeHours();
-			// TODO write to file
-			return movie;
-		}
-		throw new NotValidMovieGenreException("Няма такъв жанр филм!");
-
+		this.freeHours = new TreeSet<LocalTime>();
+		this.freeHours = this.fillInFreeHours(this);
 	}
 
 	public void setTimes() {
-		// TODO choose theather
 		if (this.projections.size() > 0) {
 			System.out.println("Настоящи прожекции: ");
 			this.projections.forEach(projection -> System.out.println(projection));
+			System.out.println("Можете да добавите " + (MAX_PROJECTIONS - numberOfProjectionsForDay));
 		} else {
 			System.out.println("Все още няма добавени прожекции за този филм, в тази зала");
 		}
-		if (this.projections.size() >= maxProjections) {
+		if (this.projections.size() >= MAX_PROJECTIONS) {
 			System.out.println("Няма свободни часове за този ден!");
 			return;
 		}
-		System.out.println(
-				"Колко прожекции искате да добавите? Не повече от " + (maxProjections - this.projections.size()));
-		String strNumber = DemoCinema.sc.next();
-		String regex = "[0-9]+";
-		while (!(strNumber.matches(regex) && Integer.parseInt(strNumber) <= maxProjections - this.projections.size())) {
-			System.out.println("Невалидно въвеждане!");
-
-			System.out.println("Колко прожекции искате да добавите: ");
-			strNumber = DemoCinema.sc.next();
-		}
-		int number = Integer.parseInt(strNumber);
-		while (this.projections.size() < number) {
+		while (this.projections.size() < MAX_PROJECTIONS - numberOfProjectionsForDay) {
 			this.listFreeHours();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
 			System.out.print("Изберете час и минути: (h:mm)");
@@ -198,12 +96,16 @@ public class Movie implements Comparable<Movie> {
 		}
 	}
 
-	private Set<LocalTime> fillInFreeHours() {
+	private Set<LocalTime> fillInFreeHours(Movie movie) {
 		Set<LocalTime> freeHours = new TreeSet<LocalTime>();
-		if (this.startTimes != null && this.endTimes != null) {
+		movie.endTimes = LocalTime.of(23, 50).minusMinutes(movie.length);
+		movie.startTimes = movie.endTimes.minusMinutes(MAX_PROJECTIONS * (movie.length + BREAK_BETWEEN_MOVIES));
+		if (movie.startTimes != null && movie.endTimes != null) {
+			System.out.println(startTimes);
+			System.out.println(endTimes);
 			LocalTime time = this.startTimes;
 			int count = 0;
-			while (count < maxProjections) {
+			while (count < MAX_PROJECTIONS) {
 				freeHours.add(time);
 				time = time.plusMinutes(this.length + BREAK_BETWEEN_MOVIES);
 				count++;
@@ -219,27 +121,10 @@ public class Movie implements Comparable<Movie> {
 		this.freeHours.forEach(hour -> System.out.println(hour));
 	}
 
-	private boolean isValidMovieCategory(String category) {
-		if (category != null) {
-			for (String cat : MOVIE_CATEGORIES) {
-				if (cat.equalsIgnoreCase(category)) {
-					return true;
-				}
-			}
-		}
-		System.err.println("Invalid movie category!");
-		return false;
-	}
-
-	private boolean isValidPremiereDate(LocalDate premiere) {
-		return premiere.isBefore(LocalDate.now().plusDays(NUMBER_OF_DAYS_FROM_TODAY))
-				&& premiere.isAfter(LocalDate.now().minusDays(NUMBER_OF_DAYS_BEFORE_TODAY));
-	}
-
 	@Override
 	public String toString() {
-		return "Movie [name=" + name + ", length: " + length + ", premiere=" + premiere + ", genre="
-				+ this.getClass().getSimpleName() + ", category=" + category + "]";
+		return "Movie [name=" + name + ", length: " + length + ", premiere=" + premiere + ", genre=" + genre
+				+ ", category=" + category + "]";
 	}
 
 	public int getId() {
@@ -252,10 +137,6 @@ public class Movie implements Comparable<Movie> {
 
 	public String getGenre() {
 		return genre;
-	}
-
-	private void setGenre(String genre) {
-		this.genre = genre;
 	}
 
 	public short getLength() {
@@ -273,6 +154,7 @@ public class Movie implements Comparable<Movie> {
 	public void setPremiere(LocalDate premiere) {
 		this.premiere = premiere;
 	}
+
 	public Set<LocalTime> getFreeHours() {
 		return freeHours;
 	}
@@ -345,5 +227,13 @@ public class Movie implements Comparable<Movie> {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public int getNumberOfProjectionsForDay() {
+		return numberOfProjectionsForDay;
+	}
+
+	public void setNumberOfProjectionsForDay(int numberOfProjectionsForDay) {
+		this.numberOfProjectionsForDay = numberOfProjectionsForDay;
 	}
 }

@@ -12,7 +12,7 @@ public class UserProfile {
 	private String adress;
 	private String education;
 
-	private Set<MovieGenres> favouriteGenres;
+	private Set<String> favouriteGenres;
 	private Set<String> personalInterests;
 	private Set<Movie> favouriteMovies; // TODO add movie to favorites
 	
@@ -25,18 +25,18 @@ public class UserProfile {
 		this.phoneNumber = phoneNumber;
 		this.adress = adress;
 		this.education = education;
-		this.favouriteGenres = new HashSet<MovieGenres>();
+		this.favouriteGenres = new HashSet<String>();
 		this.personalInterests = new HashSet<String>();
 		this.favouriteMovies = new HashSet<Movie>();
 		
 	}
 	public void addFavouriteGenre() {
-		MovieGenres genre = UserProfileHelper.getInstance().addFavouriteGenre();
+		String genre = UserProfileHelper.getInstance().addFavouriteGenre();
 		boolean isAdded = this.favouriteGenres.add(genre);
 		if (isAdded) {
-			System.out.println(genre.getName() + " бе добавен в любими");
+			System.out.println(genre + " бе добавен в любими");
 		} else {
-			System.out.println(genre.getName() + " вече е добавен в любими жанрове");
+			System.out.println(genre + " вече е добавен в любими жанрове");
 		}
 	}
 	public void addPersonalInterest(String interes) {

@@ -15,7 +15,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import bean.Movie;
-import helper.NotValidMovieGenreException;
 
 public class MovieWriter {
 	private Set<Movie> movies;

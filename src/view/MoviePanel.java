@@ -3,7 +3,6 @@ package view;
 import java.io.FileNotFoundException;
 
 import bean.Movie;
-import helper.NotValidMovieGenreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,18 +17,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import writers.MovieWriter;
 
-public class MoviePanel extends GridPane{
+public class MoviePanel extends GridPane {
 	private Label name;
 	private Label length;
 	private Label premiere;
 	private Label genre;
 	private Label category;
+	private Label chooseFromHours;
+
 	private String choosenGenre;
 	private String choosenCategory;
-	
+	private int choosedNumberProjection;
+
 	private ComboBox<String> genresComboBox;
 	private ComboBox<String> categoriesComboBox;
-	
+	private ComboBox<Integer> numberSelect;
+
 	public MoviePanel() {
 		super();
 		setAlignment(Pos.TOP_LEFT);
@@ -45,23 +48,22 @@ public class MoviePanel extends GridPane{
 		this.premiere = new Label("œÂÏËÂÌ‡ ‰‡Ú‡");
 		this.genre = new Label("∆‡Ì:");
 		this.category = new Label(" ‡ÚÂ„ÓËˇ:");
-		
+		this.chooseFromHours = new Label("¡ÓÈ ÔÓÊÂÍˆËË Ì‡ ‰ÂÌ: ");
+
 		TextField nameField = new TextField();
 		TextField lengthField = new TextField();
-		
+
 		DatePicker datePicker = new DatePicker();
-		ObservableList<String> options = FXCollections.observableArrayList("ƒ–¿Ã¿", "”∆¿—»", " ŒÃ≈ƒ»ﬂ","¿Õ»Ã¿÷»ﬂ","≈ ÿ⁄Õ","‘¿Õ“¿—“» ¿",
-				"¡»Œ√–¿‘»◊≈Õ", "œ–» Àﬁ◊≈Õ— »", "–ŒÃ¿Õ“»◊≈Õ", " –»Ã»Õ¿À≈Õ",
-				"¬Œ≈Õ≈Õ", "Õ¿”◊ÕŒ œŒœ”Àﬂ–≈Õ", "Ãﬁ«» ⁄À");
-		 genresComboBox = new ComboBox<String>(options);
+		ObservableList<String> options = FXCollections.observableArrayList("ƒ–¿Ã¿", "”∆¿—»", " ŒÃ≈ƒ»ﬂ", "¿Õ»Ã¿÷»ﬂ",
+				"≈ ÿ⁄Õ", "‘¿Õ“¿—“» ¿", "¡»Œ√–¿‘»◊≈Õ", "œ–» Àﬁ◊≈Õ— »", "–ŒÃ¿Õ“»◊≈Õ", " –»Ã»Õ¿À≈Õ", "¬Œ≈Õ≈Õ",
+				"Õ¿”◊ÕŒ œŒœ”Àﬂ–≈Õ", "Ãﬁ«» ⁄À");
+		genresComboBox = new ComboBox<String>(options);
 		genresComboBox.setVisibleRowCount(7);
-		
-		ObservableList<String> categories = FXCollections.observableArrayList("A","B","C","D");
-		 categoriesComboBox = new ComboBox<String>(categories);
+
+		ObservableList<String> categories = FXCollections.observableArrayList("A", "B", "C", "D");
+		categoriesComboBox = new ComboBox<String>(categories);
 		categoriesComboBox.setVisibleRowCount(4);
-		
-		Button save = new Button("«‡Ô‡ÁË");
-		
+
 		genresComboBox.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -74,33 +76,43 @@ public class MoviePanel extends GridPane{
 				getChoosenCategory(event);
 			}
 		});
-		
-		save.setOnAction(new EventHandler<ActionEvent>() {
+		 numberSelect = new ComboBox<Integer>();
 
+		ObservableList<Integer> list = FXCollections.observableArrayList(1, 2, 3, 4, 5);
+
+		numberSelect.setItems(list);
+		numberSelect.autosize();
+		numberSelect.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(numberSelect.getValue().intValue());
+				handleNumberSelection(event);
+			}
+
+		});
+
+		Button save = new Button("«‡Ô‡ÁË");
+
+		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				short l = Short.parseShort(lengthField.getText());
 				Movie movie = null;
+				movie = new Movie(choosenGenre, nameField.getText(), l, datePicker.getValue(), choosenCategory);
+				movie.setNumberOfProjectionsForDay(choosedNumberProjection);
 				try {
-					movie = Movie.getInstance(choosenGenre, nameField.getText(), l, datePicker.getValue(),this.choosenCategory);
-					try {
-						MovieWriter.getInstance().getMoviesFromFile();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					MovieWriter.getInstance().addMovie(movie);
-					MovieWriter.getInstance().saveMoviesToFile();
-					System.out.println(movie);
-				} catch (NotValidMovieGenreException e) {
+					MovieWriter.getInstance().getMoviesFromFile();
+				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				MovieWriter.getInstance().addMovie(movie);
+				MovieWriter.getInstance().saveMoviesToFile();
+				System.out.println(movie);
 				System.out.println(movie);
 			}
 		});
-			
-	
+
 		add(name, 0, 0);
 		add(nameField, 1, 0);
 		add(length, 0, 1);
@@ -110,16 +122,24 @@ public class MoviePanel extends GridPane{
 		add(genre, 0, 3);
 		add(genresComboBox, 1, 3);
 		add(category, 0, 4);
-		add(save, 0, 5);
-		
+		add(categoriesComboBox, 1, 4);
+		add(chooseFromHours, 0, 5);
+		add(numberSelect, 1, 5);
+		add(save, 0, 6);
+
+	}
+
+	protected void handleNumberSelection(ActionEvent event) {
+		this.choosedNumberProjection = numberSelect.getValue().intValue();
 	}
 
 	protected void getChoosenCategory(ActionEvent event) {
-		this.choosenGenre = categoriesComboBox.getValue().toString();
+		this.choosenCategory = categoriesComboBox.getValue().toString();
 	}
 
 	protected void getChoosenGenre(ActionEvent event) {
-		this.choosenGenre = genresComboBox.getValue().toString();	}
+		this.choosenGenre = genresComboBox.getValue().toString();
+	}
 
 	public String getChoosenGenre() {
 		return choosenGenre;

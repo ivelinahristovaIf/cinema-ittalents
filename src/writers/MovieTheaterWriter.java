@@ -81,11 +81,4 @@ public class MovieTheaterWriter {
 			this.theaters.add(theater);
 		}
 	}
-	
-	public static void main(String[] args) {
-		MovieTheather mt = new MovieTheather(type, cinema);
-	}
-	
-	
-	
 }

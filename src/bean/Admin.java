@@ -8,8 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import cinema.DemoCinema;
-import helper.NotValidMovieGenreException;
-import helper.NotValidMovieTheatherTypeException;
 import helper.UserHelper;
 
 public class Admin implements ILogger{
@@ -19,13 +17,14 @@ public class Admin implements ILogger{
 
 	private static Admin instance = null;
 
-	private Set<Movie> movies; // bez projekciite
+	private Set<Movie> movies; 
 
 	private Admin(String email, String password) {
 		this.setType();
 		this.email = email;
 		this.setPassword(password);
 		this.movies = new TreeSet<Movie>();
+		//TODO movies from file input into movies
 	}
 	
 	public static Admin getInstance() {
@@ -96,7 +95,7 @@ public class Admin implements ILogger{
 	};
 
 	private void changePassword() {
-
+		//TODO button in admin FX who starts this method (za men)
 		System.out.println("Смяна на парола...");
 		System.out.println("Въведете старата парола:");
 		String oldPass = DemoCinema.sc.next();
@@ -110,20 +109,11 @@ public class Admin implements ILogger{
 		System.out.println("Паролата е сменена успешно!");
 	}
 
-//	public Movie createMovie() throws NotValidMovieGenreException, NotValidMovieTheatherTypeException {
-//		Movie movie = Movie.getInstance();
-////		MovieWriter.getInstance().addMovieToChronology(movie);//TODO
-////		this.cinema.addMovieToCatalogue(movie);// TODO
-//		movie.setTimes();
-//		return movie;
-//	}
 
-	private void changeMovieProgram() {//TODO FX
-		//TODO choose cinema
-		Cinema cinema = new Cinema();
+	private void changeMovieProgram() {
+		Cinema cinema = new Cinema();//TODO get from json not from cinema
 		System.out.println("В коя зала е филма?");
 		// TODO if catalogue is not empty
-//		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(cinema.getMoviesCatalogue().keySet());
 		List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(cinema.getMoviesCatalogue().keySet());
 		for (int index = 1; index <= listOfTheathers.size(); index++) {
 			System.out.println(index + " - " + listOfTheathers.get(index - 1));
@@ -149,16 +139,13 @@ public class Admin implements ILogger{
 			System.out.println(movie);
 		} else {
 			System.out.println("Няма добавени филми!\nСъздайте нов филм: ");
-//			try {
-////				movie = this.createMovie();
-//			} catch (NotValidMovieGenreException | NotValidMovieTheatherTypeException e) {
-//				e.getMessage();
-//			}
+			//TODO shte go napravq da se otvarq scenata i ot tam da se syzdava filma
 		}
 		try {
+			//Zadava chasovete na filma
 			movie.setTimes();
 		} catch (Exception e) {
-			System.err.println("Null movie in Admin!");
+			System.err.println("Null movies in Admin!");
 			e.printStackTrace();
 			return;
 		}

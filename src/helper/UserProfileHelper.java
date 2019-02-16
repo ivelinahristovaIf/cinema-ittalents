@@ -26,14 +26,12 @@ public class UserProfileHelper {
 		}
 		return instance;
 	}
-	public MovieGenres addFavouriteGenre() {
+	public String addFavouriteGenre() {
 		System.out.println("Моля изберете любим жанр от списъка: ");
-		for (int i = 1; i < MovieGenres.values().length; i++) {
-			System.out.println(i + " - " + MovieGenres.values()[i - 1].getName());
+		for (int i = 1; i < MovieHelper.MOVIE_GENRE.length; i++) {
+			System.out.println(i + " - " + MovieHelper.MOVIE_GENRE[i - 1]);
 		}
-		
-//		TODO validate sc number
-		MovieGenres favGenre = MovieGenres.values()[DemoCinema.sc.nextInt() - 1];
+		String favGenre = MovieHelper.MOVIE_GENRE[DemoCinema.sc.nextInt() - 1];
 		return favGenre;
 	}
 	public Interests addPersonalInterest() {
