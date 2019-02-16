@@ -92,6 +92,15 @@ public class MovieTheaterTypeWriter {
 		return Collections.unmodifiableSet(types);
 	}
 	
-	
+	public static void main(String[] args) {
+		try {
+			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MovieTheaterTypeWriter.getInstance().addMovieTheaterType(new MovieTheatherType("IMAX", "2D", "Dolby Digital"));
+		MovieTheaterTypeWriter.getInstance().saveMovieTheaterTypesToFile();
+	}
 	
 }

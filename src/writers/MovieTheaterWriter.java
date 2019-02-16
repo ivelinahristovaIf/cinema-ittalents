@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -80,5 +82,22 @@ public class MovieTheaterWriter {
 		if(theater != null) {
 			this.theaters.add(theater);
 		}
+	}
+	public static void main(String[] args) throws FileNotFoundException {
+		Cinema cinema = new Cinema();
+		try {
+			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<MovieTheatherType> types = new ArrayList<>();
+		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
+		
+		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())), cinema);
+		
+		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
+		MovieTheaterWriter.getInstance().addMovieTheater(theater);
+		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
 	}
 }

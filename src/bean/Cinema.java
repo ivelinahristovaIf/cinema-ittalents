@@ -1,8 +1,10 @@
 package bean;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,38 +16,62 @@ import cinema.DemoCinema;
 import helper.CalendarHelper;
 import helper.NotValidMovieTheatherTypeException;
 import tickets.Ticket;
+import writers.MovieTheaterTypeWriter;
+import writers.MovieTheaterWriter;
 
 public class Cinema {
 	private String name;
 	private String address;
-	private List<MovieTheather> movieTheathers;
+	private List<MovieTheather> movieTheathers = new ArrayList<>();
 	// type->date->movie
-	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue;
+	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
+	// TODO movie setTheather
 
 	public Cinema() {
 		super();
 	}
 
-	public Cinema(String name, String address, List<MovieTheather> movieTheathers) {
+	public Cinema(String name, String address) throws FileNotFoundException {
 		this.name = name;
 		this.address = address;
-		this.movieTheathers = movieTheathers;
 		
-		
+		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
+		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
+		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
+		MovieTheather mt;
+		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
+			mt = new MovieTheather(movieTheatherType, this); // TODO remove cinema from construktor
+			MovieTheaterWriter.getInstance().addMovieTheater(mt);
+			this.movieTheathers.add(mt);//TODO dali da ima movieTheathers kato field
+			if (!this.moviesCatalogue.containsKey(mt)) {//if not contains theather
+				LocalDate start = LocalDate.now().minusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR);//FILL DATES
+				TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
+				while (!start.isAfter(LocalDate.now())) {
+					dates.put(start, new TreeSet<Movie>());
+					start = start.plusDays(1);
+				}
+				this.moviesCatalogue.put(mt, dates);
+			}
+		}
+		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
 	}
-	public Set<MovieTheather> getAllMovieTheathers(){
+
+	public Set<MovieTheather> getAllMovieTheathers() {
 		return this.moviesCatalogue.keySet();
 	}
-	public Set<LocalDate> getAllDatesByTheather(MovieTheather mt){
-		if(this.moviesCatalogue.isEmpty()) {
+
+	public Set<LocalDate> getAllDatesByTheather(MovieTheather mt) {
+		if (this.moviesCatalogue.isEmpty()) {
 			System.out.println("Няма зали в киното");
 			return null;
 		}
 		return this.moviesCatalogue.get(mt).keySet();
 	}
+
 	public void chooseMovieFromCinema() {
-		//TODO
+		// TODO
 	}
+
 	public MovieTheather addMovieTheatherInCinema(MovieTheatherType type) {
 		if (this.movieTheathers == null) {
 			this.movieTheathers = new ArrayList<MovieTheather>();
@@ -55,6 +81,7 @@ public class Cinema {
 		this.movieTheathers.add(theather);
 		return theather;
 	}
+
 	public void addMovieToCatalogue(Movie movie) {
 		if (movie != null && this.moviesCatalogue != null) {
 			System.out.println("Моля изберете зала за прожекцията: ");
@@ -90,18 +117,30 @@ public class Cinema {
 			System.err.println("null movie or catalogue");
 		}
 	}
-	public void showAllMoviesByDate(LocalDate date) {
+
+	public List<Movie> showAllMoviesByDate(LocalDate date) {//TODO Cinema singleton 
 		System.out.println("Всички филми на " + date);
-		for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
-			TreeSet<Movie> movies = this.moviesCatalogue.get(movieTheather).get(date);
-			if (movies != null) {
-				for (Movie movie : movies) {
-					System.out.println(movie.getId() + " " + movie);
+		List<Movie> movies = new ArrayList<Movie>();
+		if (!this.moviesCatalogue.isEmpty()) {
+			for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
+				if (this.moviesCatalogue.get(movieTheather).containsKey(date)) {
+					movies.addAll(this.moviesCatalogue.get(movieTheather).get(date));
+					if (!movies.isEmpty()) {
+						for (Movie movie : movies) {
+							System.out.println(movie.getId() + " " + movie);
+						}
+					} else {
+						System.out.println("Няма филми за този ден в зала " + movieTheather);
+					}
+					return movies;
+				} else {
+					System.out.println("Съжаляваме, но няма филми за тази дата!");
+					// TODO choose again
+					return null;
 				}
-			} else {
-				System.out.println("Няма филми за този ден в зала " + movieTheather);
 			}
 		}
+		return movies;
 	}
 
 	public String getName() {
@@ -130,6 +169,18 @@ public class Cinema {
 
 	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
+	}
+	public static void main(String[] args) throws FileNotFoundException {
+		Cinema cinema = new Cinema("Arena", "Arena");
+		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
+			System.out.println(mt);
+			System.out.println(mt.getType());
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Cinema [name=" + name + ", address=" + address + "]";
 	}
 
 }

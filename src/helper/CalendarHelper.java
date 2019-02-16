@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import cinema.DemoCinema;
 
 public class CalendarHelper {
-	private static final long NUMBER_DAYS_IN_CALENDAR = 10;
+	public static final long NUMBER_DAYS_IN_CALENDAR = 10;
 	private static CalendarHelper instance = null;
 
 	public CalendarHelper() {

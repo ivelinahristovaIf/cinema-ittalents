@@ -16,8 +16,8 @@ public class AdminPanel {
 		TabPane tabPane = new TabPane();
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 				
-		Tab cinemaTab = new Tab("Прожекции");
-		GridPane cinemaGrid = new GridPane();
+		Tab cinemaTab = new Tab("Добави програма");
+		CinemaProgramPane cinemaGrid = new CinemaProgramPane();
 		cinemaTab.setContent(cinemaGrid);
 		tabPane.getTabs().add(cinemaTab);
 		

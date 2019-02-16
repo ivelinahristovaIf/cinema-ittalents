@@ -1,20 +1,23 @@
 package view;
 
+import java.time.LocalDate;
+
 import bean.Movie;
 import bean.MovieTheather;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import writers.MovieWriter;
 
 public class BuyTicketPanel extends GridPane{
-	private Label theather;
 	private Label date;
 	private Label movie;
 	
-	private ComboBox<MovieTheather> theathersComboBox;
 	private DatePicker datePicker;
 	private ComboBox<Movie> moviesComboBox;
 	
@@ -28,7 +31,12 @@ public class BuyTicketPanel extends GridPane{
 	}
 
 	private void init() {
-		// TODO Auto-generated method stub
+		this.date = new Label("Изберете дата:");
+		this.movie = new Label("Изберете филм:");
+		
+		this.datePicker = new DatePicker(LocalDate.now());
+		ObservableList<Movie> movies = FXCollections.observableSet(MovieWriter.getInstance().getMoviesFromFile());
+		
 		
 	}
 

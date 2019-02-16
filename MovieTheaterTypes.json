@@ -22,5 +22,11 @@
     "type": "IMAX",
     "videoFormat": "HFR-3D",
     "audioFormat": "Dolby Atmos"
+  },
+  {
+    "id": 5,
+    "type": "IMAX",
+    "videoFormat": "2D",
+    "audioFormat": "Dolby Digital"
   }
 ]

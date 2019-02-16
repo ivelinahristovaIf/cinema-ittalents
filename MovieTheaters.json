@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "length": 0,
+    "numberOfProjectionsForDay": 0
+  },
+  {
+    "id": 2,
+    "length": 0,
+    "numberOfProjectionsForDay": 0
+  },
+  {
+    "id": 3,
+    "length": 0,
+    "numberOfProjectionsForDay": 0
+  },
+  {
+    "id": 4,
+    "length": 0,
+    "numberOfProjectionsForDay": 0
+  },
+  {
+    "id": 5,
+    "length": 0,
+    "numberOfProjectionsForDay": 0
+  },
+  {
+    "id": 1,
+    "seats": {},
+    "bookedTickets": [],
+    "type": {
+      "id": 1,
+      "type": "IMAX",
+      "videoFormat": "2D",
+      "audioFormat": "Digital"
+    }
+  },
+  {
+    "id": 2,
+    "seats": {},
+    "bookedTickets": [],
+    "type": {
+      "id": 2,
+      "type": "VIP",
+      "videoFormat": "2D",
+      "audioFormat": "Digital"
+    }
+  },
+  {
+    "id": 3,
+    "seats": {},
+    "bookedTickets": [],
+    "type": {
+      "id": 1,
+      "type": "IMAX",
+      "videoFormat": "2D",
+      "audioFormat": "Dolby Atmos"
+    }
+  },
+  {
+    "id": 4,
+    "seats": {},
+    "bookedTickets": [],
+    "type": {
+      "id": 1,
+      "type": "IMAX",
+      "videoFormat": "HFR-3D",
+      "audioFormat": "Dolby Atmos"
+    }
+  },
+  {
+    "id": 5,
+    "seats": {},
+    "bookedTickets": [],
+    "type": {
+      "id": 5,
+      "type": "IMAX",
+      "videoFormat": "2D",
+      "audioFormat": "Dolby Digital"
+    }
+  }
+]
