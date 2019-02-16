@@ -84,21 +84,6 @@ public class MovieTheaterTypeWriter {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
-		
-		MovieTheaterTypeWriter mw = MovieTheaterTypeWriter.getInstance();
-		
-		mw.getMovieTheaterTypesFromFile();
-//		mw.addMovieTheaterType(new MovieTheatherType("IMAX", "2D", "Digital"));
-//		mw.addMovieTheaterType(new MovieTheatherType("VIP", "2D", "Digital"));
-		mw.saveMovieTheaterTypesToFile();
-		
-		for(MovieTheatherType m : mw.types) {
-			System.out.println(m);
-		}
-		
-		
-		
-	}
+	
 	
 }

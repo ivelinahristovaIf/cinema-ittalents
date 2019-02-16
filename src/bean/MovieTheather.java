@@ -32,7 +32,7 @@ public class MovieTheather {
 	public MovieTheather(MovieTheatherType type, Cinema cinema) {
 		this.id = nextId++;
 		this.type = type;
-		this.cinema = new Cinema();
+		this.cinema = cinema;
 		this.bookedTickets = new HashSet<>();
 		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.fillInMovieTheatreSeats();

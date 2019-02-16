@@ -14,42 +14,42 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import bean.Cinema;
 import bean.Movie;
-import helper.NotValidMovieGenreException;
+import bean.MovieTheather;
+import bean.MovieTheatherType;
 
-public class MovieWriter {
-	private Set<Movie> movies;
-	private static MovieWriter instance = null;
+public class MovieTheaterWriter {
 
+	
+	private static MovieTheaterWriter instance = null;
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
-
-	private MovieWriter() throws IOException {
-		this.movies = new LinkedHashSet<Movie>();
-		this.file = new File("Movies.json");
+	private Set<MovieTheather> theaters;
+	
+	private MovieTheaterWriter() throws IOException {
+		this.theaters = new LinkedHashSet<MovieTheather>();
+		this.file = new File("MovieTheaters.json");
 		if (!file.exists()) {
-			new File("Movies.json").createNewFile();
+			new File("MovieTheaters.json").createNewFile();
 		}
-
 	}
-
-	public static MovieWriter getInstance() {
+	
+	public static MovieTheaterWriter getInstance() {
 		if (instance == null) {
 			try {
-				instance = new MovieWriter();
+				instance = new MovieTheaterWriter();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return instance;
 	}
-
-
-	public void saveMoviesToFile() {
-		if (!this.movies.isEmpty()) {
-			try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File("Movies.json"), false))) {
-				pw.println(gson.toJson(movies));
+	
+	public void saveMovieTheaterToFile() {
+		if (!this.theaters.isEmpty()) {
+			try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File("MovieTheaters.json"), false))) {
+				pw.println(gson.toJson(theaters));
 			} catch (FileNotFoundException e) {
 				return;
 			}
@@ -57,7 +57,7 @@ public class MovieWriter {
 		}
 	}
 	
-	public void getMoviesFromFile() throws FileNotFoundException {
+	public void getMovieTheatersFromFile() throws FileNotFoundException {
 		StringBuilder builder = new StringBuilder();
 		try (Scanner sc = new Scanner(file)) {
 			while (sc.hasNextLine()) {
@@ -69,20 +69,19 @@ public class MovieWriter {
 		Type setType = new TypeToken<LinkedHashSet<Movie>>() {
 		}.getType();
 		if (builder.length() > 0) {
-			Set<Movie> getMovies = gson.fromJson(builder.toString(), setType);
-			this.movies.addAll(getMovies);
+			Set<MovieTheather> getTheaters = gson.fromJson(builder.toString(), setType);
+			this.theaters.addAll(getTheaters);
 		} else {
 			System.out.println("Oshte nqma obekti");
 		}
 	}
-	public void addMovie(Movie movie) {
-		if(movie!=null) {
-			this.movies.add(movie);
+	
+	public void addMovieTheater(MovieTheather theater) {
+		if(theater != null) {
+			this.theaters.add(theater);
 		}
 	}
-	public Set<Movie> getMovies() {
-		return movies;
-	}
 	
-
+	
+	
 }
