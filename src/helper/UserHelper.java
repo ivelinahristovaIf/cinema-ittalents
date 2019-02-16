@@ -1,14 +1,17 @@
 package helper;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import bean.Cinema;
 import bean.MovieTheather;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
 public class UserHelper {
 	private static final int MIN_PASSWORD_LENGTH = 5;
+	public static final String[] CITIES = { "София", "Пловдив", "Варна", "Стара Загора", "Плевен", "Смолян", "Бургас",
+	"Благоевград" };
 	private static UserHelper instance = null;
 	
 	private UserHelper() {
@@ -79,6 +82,10 @@ public class UserHelper {
 				sc.close();
 		}
 	}
+	public void showProgramForToday() {
+		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
+
+	}
 	public boolean isValidPassword(String password) {
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
 			return true;
@@ -87,5 +94,13 @@ public class UserHelper {
 		return false;
 	}
 
-
+	public boolean isValidEmail(String email) {
+		Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+		Matcher regMatcher = regexPattern.matcher(email);
+		if (regMatcher.matches()) {
+			return true;
+		}
+		System.err.println("Not suitable email adress!");
+		return false;
+	}
 }

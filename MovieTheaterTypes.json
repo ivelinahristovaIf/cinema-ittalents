@@ -1,11 +1,5 @@
 [
   {
-    "id": 1,
-    "type": "IMAX",
-    "videoFormat": "2D",
-    "audioFormat": "Digital"
-  },
-  {
     "id": 2,
     "type": "VIP",
     "videoFormat": "2D",

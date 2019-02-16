@@ -22,6 +22,7 @@ import writers.MovieTheaterWriter;
 public class Cinema {
 	private String name;
 	private String address;
+	private String phoneNumber;
 	private List<MovieTheather> movieTheathers = new ArrayList<>();
 	// type->date->movie
 	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
@@ -31,10 +32,11 @@ public class Cinema {
 		super();
 	}
 
-	public Cinema(String name, String address) throws FileNotFoundException {
+	public Cinema(String name, String address, String phoneNumber) throws FileNotFoundException {
 		this.name = name;
 		this.address = address;
-		
+		this.phoneNumber = phoneNumber;
+
 		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
 		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
 		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
@@ -42,11 +44,11 @@ public class Cinema {
 		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
 			mt = new MovieTheather(movieTheatherType, this); // TODO remove cinema from construktor
 			MovieTheaterWriter.getInstance().addMovieTheater(mt);
-			this.movieTheathers.add(mt);//TODO dali da ima movieTheathers kato field
-			if (!this.moviesCatalogue.containsKey(mt)) {//if not contains theather
-				LocalDate start = LocalDate.now().minusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR);//FILL DATES
+			this.movieTheathers.add(mt);// TODO dali da ima movieTheathers kato field
+			if (!this.moviesCatalogue.containsKey(mt)) {// if not contains theather
+				LocalDate start = LocalDate.now();// FILL DATES
 				TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
-				while (!start.isAfter(LocalDate.now())) {
+				while (!start.isAfter(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
 					dates.put(start, new TreeSet<Movie>());
 					start = start.plusDays(1);
 				}
@@ -118,7 +120,7 @@ public class Cinema {
 		}
 	}
 
-	public List<Movie> showAllMoviesByDate(LocalDate date) {//TODO Cinema singleton 
+	public List<Movie> showAllMoviesByDate(LocalDate date) {// TODO Cinema singleton
 		System.out.println("Всички филми на " + date);
 		List<Movie> movies = new ArrayList<Movie>();
 		if (!this.moviesCatalogue.isEmpty()) {
@@ -170,8 +172,9 @@ public class Cinema {
 	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
 	}
+
 	public static void main(String[] args) throws FileNotFoundException {
-		Cinema cinema = new Cinema("Arena", "Arena");
+		Cinema cinema = new Cinema("Arena", "Arena", "555-012-413");
 		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
 			System.out.println(mt);
 			System.out.println(mt.getType());
@@ -181,6 +184,14 @@ public class Cinema {
 	@Override
 	public String toString() {
 		return "Cinema [name=" + name + ", address=" + address + "]";
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

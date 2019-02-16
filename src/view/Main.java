@@ -1,6 +1,5 @@
 package view;
 
-import bean.Admin;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

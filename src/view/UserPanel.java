@@ -18,14 +18,18 @@ public class UserPanel {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 				
 		Tab cinemaTab = new Tab("Кино");
-		GridPane cinemaGrid = new GridPane();
+		CinemaPanel cinemaGrid = new CinemaPanel();
 		
 		// TODO Show all cinema information and theathers
 		
 		cinemaTab.setContent(cinemaGrid);
 		tabPane.getTabs().add(cinemaTab);
 		
+		
 		Tab buyTicketTab = new Tab("Купи билет");
+		BuyTicketPanel buyTicket = new BuyTicketPanel();
+		buyTicketTab.setContent(buyTicket);
+		tabPane.getTabs().add(buyTicketTab);
 
 		
 		Tab userManagementTab = new Tab("Профил");//change username password
@@ -46,7 +50,7 @@ public class UserPanel {
 //		personalTab.setContent(personalGrid);
 //		tabPane.getTabs().add(personalTab);
 		
-		Scene scene = new Scene(tabPane, 1000, 500);
+		Scene scene = new Scene(tabPane, 1400, 700);
 		stage.setScene(scene);
 		stage.show();
 		

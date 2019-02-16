@@ -147,8 +147,7 @@ public class MovieTheatherType {
 
 	@Override
 	public String toString() {
-		return "MovieTheatherType [id=" + id + ", type=" + type + ", videoFormat=" + videoFormat + ", audioFormat="
-				+ audioFormat + "]";
+		return "Зала " + type + ", формат: " + videoFormat + ", аудио: " + audioFormat;
 	}
 
 	@Override

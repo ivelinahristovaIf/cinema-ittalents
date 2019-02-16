@@ -33,5 +33,13 @@ public class MovieHelper {
 		System.err.println("Invalid movie category!");
 		return false;
 	}
+	public boolean isValidMovieGenre(String genre) {
+		for (String string : MOVIE_GENRE) {
+			if(string.equalsIgnoreCase(genre)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

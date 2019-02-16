@@ -11,8 +11,8 @@ import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
 public class MovieTheather {
-	private static final char MAX_ROWS_IN_THEATHER = 0;
-	private static final int MAX_COLS_IN_ONE_ROW = 0;
+	private static final char MAX_ROWS_IN_THEATHER = 'M';
+	private static final int MAX_COLS_IN_ONE_ROW = 15;
 
 	private int id;
 	private static int nextId = 1;// TODO
@@ -28,10 +28,9 @@ public class MovieTheather {
 		this.bookedTickets = new HashSet<>();
 	}
 
-	public MovieTheather(MovieTheatherType type, Cinema cinema) {
+	public MovieTheather(MovieTheatherType type, Cinema cinema) {//TODO remove cinema
 		this.id = nextId++;
 		this.type = type;
-//		this.cinema = cinema;
 		this.bookedTickets = new HashSet<>();
 		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.fillInMovieTheatreSeats();
@@ -144,5 +143,16 @@ public class MovieTheather {
 	@Override
 	public String toString() {
 		return "MovieTheather [id=" + id + ", seats=" + seats + ", type=" + type + "]";
+	}
+	public static void main(String[] args) {
+		Cinema cinema = new Cinema();
+		MovieTheather mt = new MovieTheather(new MovieTheatherType("IMAX", "2D", "Dolby Atmos"), cinema);
+		try {
+			mt.showSeatsInTheathre();
+		} catch (NotValidTicketTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		System.out.println(mt);
 	}
 }

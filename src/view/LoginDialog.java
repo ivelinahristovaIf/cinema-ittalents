@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class LoginDialog {
 	private static String[] arguments;
 
-	private TextField emailTextField = new TextField("username");
+	private TextField emailTextField = new TextField("ivelina@abv.bg");
 	private PasswordField passBox = new PasswordField();
 	private static Stage stage = null;
 	
@@ -31,7 +31,7 @@ public class LoginDialog {
 		stage = s;
 		arguments = args;
 		stage.setTitle("Login");
-		passBox.setText("username");
+		passBox.setText("12345");
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
