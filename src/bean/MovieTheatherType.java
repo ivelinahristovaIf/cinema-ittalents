@@ -6,7 +6,7 @@ import helper.NotValidMovieTheatherTypeException;
 public class MovieTheatherType {
 	public static final String[] MOVIE_THEATHER_TYPE = { "IMAX", "VIP", "LUXE", "PREMIUM" };
 	public static final String[] VIDEO_FORMAT = { "Real-D-3D", "2D", "HFR-3D", "4D" };
-	public static final String[] AUDIO_FORMAT = { "Digital", "Atmos" };
+	public static final String[] AUDIO_FORMAT = { "Dolby Digital", "Dolby Atmos" };
 
 	private int id;
 	private static int nextId = 1;

@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileNotFoundException;
+
 import bean.MovieTheatherType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import writers.MovieTheaterTypeWriter;
 
 
 public class MovieTheatherPanel extends GridPane {
@@ -81,14 +84,15 @@ public class MovieTheatherPanel extends GridPane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				MovieTheatherType movieTheather = null;
-//				try {
-//					movieTheather = ;//TODO
-		
-//				} catch (NotValidMovieGenreException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				MovieTheatherType movieTheather = new MovieTheatherType(choosenType, choosenVideo, choosenAudio);
+				try {
+					MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				MovieTheaterTypeWriter.getInstance().addMovieTheaterType(movieTheather);
+				MovieTheaterTypeWriter.getInstance().saveMovieTheaterTypesToFile();
 				System.out.println(movieTheather);
 			}
 		});

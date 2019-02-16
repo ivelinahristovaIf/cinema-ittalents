@@ -32,20 +32,10 @@ public class AdminPanel {
 		tabPane.getTabs().add(theatherTab);
 		
 		// TODO Show all cinema information and theathers - editable for admin
-		
-		
-		Tab adminManagementTab = new Tab("Admin management");//change username password
-		GridPane adminManagementGrid = new GridPane();
-		
-		// TODO Page for managing administrators 
-		
-		adminManagementTab.setContent(adminManagementGrid);
-		tabPane.getTabs().add(adminManagementTab);
-		
 
 		
-		Tab personalTab = new Tab("Personal information");
-		GridPane personalGrid = new GridPane();
+		Tab personalTab = new Tab("Профил");
+		GridPane personalGrid = new GridPane();//TODO change pass and uusername separetly
 		
 		// TODO Personal information edit page
 		
