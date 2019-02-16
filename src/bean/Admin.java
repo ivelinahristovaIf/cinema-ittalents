@@ -257,9 +257,7 @@ public class Admin implements ILogger{
 		return Collections.unmodifiableSet(movies);
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(Admin.getInstance().getMovies().iterator().next().getName());
-	}
+
 
 
 }
