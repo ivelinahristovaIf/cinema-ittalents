@@ -24,9 +24,11 @@ public class UserPanel {
 		
 		cinemaTab.setContent(cinemaGrid);
 		tabPane.getTabs().add(cinemaTab);
+		
+		Tab buyTicketTab = new Tab("Купи билет");
 
 		
-		Tab userManagementTab = new Tab("ПРОФИЛ");//change username password
+		Tab userManagementTab = new Tab("Профил");//change username password
 		PersonalInfoPanel userManagementGrid = new PersonalInfoPanel((User) user);
 		
 		// TODO Page for managing users

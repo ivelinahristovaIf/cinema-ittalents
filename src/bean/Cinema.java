@@ -16,8 +16,6 @@ import helper.NotValidMovieTheatherTypeException;
 import tickets.Ticket;
 
 public class Cinema {
-//	private int id;
-//	private static int nextId=1;
 	private String name;
 	private String address;
 	private List<MovieTheather> movieTheathers;
@@ -34,6 +32,19 @@ public class Cinema {
 		this.movieTheathers = movieTheathers;
 		
 		
+	}
+	public Set<MovieTheather> getAllMovieTheathers(){
+		return this.moviesCatalogue.keySet();
+	}
+	public Set<LocalDate> getAllDatesByTheather(MovieTheather mt){
+		if(this.moviesCatalogue.isEmpty()) {
+			System.out.println("Няма зали в киното");
+			return null;
+		}
+		return this.moviesCatalogue.get(mt).keySet();
+	}
+	public void chooseMovieFromCinema() {
+		//TODO
 	}
 	public MovieTheather addMovieTheatherInCinema(MovieTheatherType type) {
 		if (this.movieTheathers == null) {
