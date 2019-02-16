@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "email": "ivelina@abv.bg",
+    "password": "12345",
+    "firstname": "Ivelina",
+    "surname": "Ivaylova",
+    "lastname": "Hristova",
+    "birthDate": {
+      "year": 1997,
+      "month": 11,
+      "day": 20
+    },
+    "city": "София"
+  },
+  {
+    "id": 0,
+    "type": 2,
+    "email": "admin",
+    "password": "admin"
+  },
+  {
+    "type": 2,
+    "email": "admin",
+    "password": "admin",
+    "movies": []
+  }
+]
