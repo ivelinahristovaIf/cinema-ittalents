@@ -1,6 +1,7 @@
 package view;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 import bean.Movie;
 import javafx.collections.FXCollections;
@@ -53,7 +54,7 @@ public class MoviePanel extends GridPane {
 		TextField nameField = new TextField();
 		TextField lengthField = new TextField();
 
-		DatePicker datePicker = new DatePicker();
+		DatePicker datePicker = new DatePicker(LocalDate.now());
 		ObservableList<String> options = FXCollections.observableArrayList("дпюлю", "сфюях", "йнледхъ", "юмхлюжхъ",
 				"ейьзм", "тюмрюярхйю", "ахнцпютхвем", "опхйкчвемяйх", "пнлюмрхвем", "йпхлхмюкем", "бнемем",
 				"мюсвмн оноскъпем", "лчгхйзк");
