@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileNotFoundException;
+
 import bean.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import writers.UserWriter;
 
 public class RegisterPanel extends GridPane {
 	private Label firstname;
@@ -89,7 +92,16 @@ public class RegisterPanel extends GridPane {
 			public void handle(ActionEvent event) {
 				User consumer = new User(emailField.getText(), passwField.getText(), fnameField.getText(),
 						surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity);
+				try {
+					UserWriter.getInstance().getUsersFromFile();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				UserWriter.getInstance().addUser(consumer);
+				UserWriter.getInstance().saveUsersToFile();
 				System.out.println(consumer);
+				RegisterDialog.close();
 				
 			}
 		});

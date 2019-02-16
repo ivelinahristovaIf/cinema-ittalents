@@ -37,22 +37,13 @@ public class Cinema {
 		
 		//TODO fill in some theathers
 	}
-	public MovieTheather createMovieTheatherInCinema() {
+	public MovieTheather addMovieTheatherInCinema(MovieTheatherType type) {
 		if (this.movieTheathers == null) {
 			this.movieTheathers = new ArrayList<MovieTheather>();
 		}
 		MovieTheather theather = null;
-		try {
-			MovieTheatherType type = MovieTheatherType.getInstance();
-			theather = new MovieTheather(type, this);
-		} catch (NotValidMovieTheatherTypeException e) {
-			e.printStackTrace();
-		}
-		if (theather != null) {
-			this.movieTheathers.add(theather);
-		} else {
-			System.err.println("Null theather!");
-		}
+		theather = new MovieTheather(type, this);
+		this.movieTheathers.add(theather);
 		return theather;
 	}
 	public void addMovieToCatalogue(Movie movie) {
@@ -68,7 +59,7 @@ public class Cinema {
 				movieTheater = listOfTheathers.get(index - 1);
 			} else {
 				System.out.println("Все още няма добавени зали в киното! Създайте зала");
-				movieTheater = this.createMovieTheatherInCinema();
+//				movieTheater = this.addMovieTheatherInCinema();TODO
 			}
 			if (!this.moviesCatalogue.containsKey(movieTheater)) {
 				this.moviesCatalogue.put(movieTheater, new TreeMap<>());

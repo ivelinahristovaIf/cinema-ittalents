@@ -7,10 +7,10 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.stage.Stage;
 
 public class RegisterDialog {
-
+	private static Stage stage;
 	
 	public void start(Stage s, String[] args) {
-		Stage stage = new Stage();
+		stage = new Stage();
 		stage.setTitle("User");
 		
 		TabPane tabPane = new TabPane();
@@ -25,7 +25,13 @@ public class RegisterDialog {
 		Scene scene = new Scene(tabPane, 1000, 500);
 		stage.setScene(scene);
 		stage.show();
-
 	}
-
+	public static void close() {
+		stage.close();
+		LoginDialog dialog = new LoginDialog();
+		dialog.start(LoginDialog.getStage(), LoginDialog.getArguments());
+	}
+	public static Stage getStage() {
+		return stage;
+	}
 }

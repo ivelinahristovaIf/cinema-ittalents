@@ -24,8 +24,8 @@ public class LoginDialog {
 	private static String[] arguments;
 
 	private TextField emailTextField = new TextField("username");
-	PasswordField passBox = new PasswordField();
-	Stage stage = null;
+	private PasswordField passBox = new PasswordField();
+	private static Stage stage = null;
 	
 	public void start(Stage s, String[] args) {
 		stage = s;
@@ -110,8 +110,19 @@ public class LoginDialog {
 		}
 	}
 	private void handleRegisterButton(ActionEvent event) {
-		new RegisterDialog().start(stage, arguments);
-		stage.close();
+		RegisterDialog dialog = new RegisterDialog();
+		dialog.start(stage, arguments);
+		stage.close(); //TODO Error message
+	}
+
+
+	public static String[] getArguments() {
+		return arguments;
+	}
+
+
+	public static Stage getStage() {
+		return stage;
 	}
 
 }

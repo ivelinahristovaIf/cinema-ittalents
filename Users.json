@@ -21,9 +21,18 @@
     "password": "admin"
   },
   {
-    "type": 2,
-    "email": "admin",
-    "password": "admin",
-    "movies": []
+    "id": 2,
+    "type": 1,
+    "email": "silvi@abv.bg",
+    "password": "12345",
+    "firstname": "Силвия",
+    "surname": "Иванова",
+    "lastname": "Петрова",
+    "birthDate": {
+      "year": 2002,
+      "month": 2,
+      "day": 13
+    },
+    "city": "Варна"
   }
 ]
