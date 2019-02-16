@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -14,10 +15,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import bean.Admin;
+import bean.ILogger;
 import bean.User;
+import helper.UserHelper;
 
 public class UserWriter {
-	private Set<User> users;
+	private Set<ILogger> users;
 
 	// TODO singleton
 
@@ -25,7 +29,7 @@ public class UserWriter {
 	private File file;
 
 	public UserWriter() throws IOException {
-		this.users = new LinkedHashSet<User>();
+		this.users = new LinkedHashSet<ILogger>();
 		this.file = new File("Users.json");
 		if (!this.file.exists()) {
 			new File("Users.json").createNewFile();
@@ -63,33 +67,41 @@ public class UserWriter {
 		}
 	}
 
-	public void addUser(User user) {
+	public void addUser(ILogger user) {
 		if (user != null) {
-			for (User u : users) {
-				if (u.equals(user) && (!u.getFirstname().equals(user.getFirstname())
-						|| !u.getSurname().equals(user.getSurname()) || !u.getLastname().equals(u.getLastname())
-						|| !u.getEmail().equals(user.getEmail()) || !u.getPassword().equals(user.getPassword())
-						|| !u.getBirthDate().equals(user.getBirthDate()) || !u.getCity().equals(user.getCity()))) {
-					user = u;
-					//TODO ne se promenq ako promenim profila
+			for (ILogger u : users) {
+				if(u.getType()==ILogger.USER) {
+				if (u.equals(user)) {
+//					((User) u).setFirstname(((User) user).getFirstname());
+//					((User) u).setSurname(((User) user).getSurname());
+//					((User) u).setLastname(((User) user).getLastname());
+//					((User) u).setBirthDate(((User) user).getBirthDate());
+//					((User) u).setCity(((User) user).getCity());
+//					((User) u).setEmail(((User) user).getEmail());
+//					((User) u).setPassword(((Admin) user).getPassword());
+					//TODO
+				}
+				}else {
+					//TODO admin
 				}
 			}
 			this.users.add(user);
 		}
 	}
 
-//	public static void main(String[] args) throws IOException {
-//		UserWriter uw = new UserWriter();
-//		uw.getUsersFromFile();
-//		uw.addUser(new User("ivelina@abv.bg", "12345", "Ivelina", "Ivaylova", "Hristova", LocalDate.of(1997, 11, 20), "София", 1));
-//		uw.saveUsersToFile();
-//		
-//		for (User user : uw.users) {
-//			System.out.println(user);
-//		}
-//	}
+	public static void main(String[] args) throws IOException {
+		UserWriter uw = new UserWriter();
+		uw.getUsersFromFile();
+		uw.addUser(new User("ivelina@abv.bg", "12345", "Ivelina", "Ivaylova", "Hristova", LocalDate.of(1997, 11, 20), "София"));
+		uw.addUser(Admin.getInstance());
+		uw.saveUsersToFile();
+		
+		for (ILogger user : uw.users) {
+			System.out.println(user);
+		}
+	}
 
-	public Set<User> getUsers() {
+	public Set<ILogger> getUsers() {
 		return this.users;
 	}
 }

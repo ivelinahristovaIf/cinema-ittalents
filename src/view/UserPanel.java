@@ -1,5 +1,6 @@
 package view;
 
+import bean.ILogger;
 import bean.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 
 public class UserPanel {
 	
-	public void start(User user) {
+	public void start(ILogger user) {
 		Stage stage = new Stage();
 
 		TabPane tabPane = new TabPane();
@@ -26,7 +27,7 @@ public class UserPanel {
 
 		
 		Tab userManagementTab = new Tab("œ–Œ‘»À");//change username password
-		PersonalInfoPanel userManagementGrid = new PersonalInfoPanel(user);
+		PersonalInfoPanel userManagementGrid = new PersonalInfoPanel((User) user);
 		
 		// TODO Page for managing users
 		

@@ -11,9 +11,10 @@ import helper.InvalidHourException;
 import helper.MovieGenres;
 import helper.NotValidMovieGenreException;
 
-public class Movie {
-
-	private enum movieCategories {
+public class Movie implements Comparable<Movie> {
+	public static final String[] MOVIE_GENRE = { "ДРАМА", "УЖАСИ", "КОМЕДИЯ", "АНИМАЦИЯ", "ЕКШЪН", "ФАНТАСТИКА",
+			"БИОГРАФИЧЕН", "ПРИКЛЮЧЕНСКИ", "РОМАНТИЧЕН", "КРИМИНАЛЕН", "ВОЕНЕН", "НАУЧНО ПОПУЛЯРЕН", "МЮЗИКЪЛ" };
+	public enum movieCategories {
 		A, B, C, D
 	}
 
@@ -28,7 +29,7 @@ public class Movie {
 	private String name;
 	private short length;
 	private LocalDate premiere;
-	private MovieGenres genre;
+	private String genre;
 	private movieCategories category;
 	private Set<LocalTime> projections;
 	private LocalTime startTimes;
@@ -63,91 +64,89 @@ public class Movie {
 	}
 
 	// FACTORY
-	public static Movie getInstance(/*
-									 * MovieGenres genre,String name,short length,LocalDate premiere,movieCategories
-									 * category
-									 */) throws NotValidMovieGenreException {
-		System.out.println("Изберете жанр от: ");
-		for (int index = 0; index < MovieGenres.values().length; index++) {
-			System.out.println(index + " - " + MovieGenres.values()[index].getName());
-		}
-		// TODO throw and catch exceptions
-		String stringIndex = DemoCinema.sc.next();
-		String reg = "[0-Cinema.MovieGenres.values().length]+";
-		while(!(stringIndex.matches(reg))) {
-			System.out.println("Опитайте отново");
-			stringIndex = DemoCinema.sc.next();
-		}
-		int index = Integer.parseInt(stringIndex);
-		MovieGenres genre = MovieGenres.values()[index];
-
-		System.out.println("Въведете име: ");
-		String name = DemoCinema.sc.next();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		System.out.println("Въведете премиерна дата: (ден/месец/година)");
-		LocalDate premiere = null; // TODO null pointer exception
-		boolean retry = false;
-		// Date input
-		while (!retry) {
-			try {
-				String date = DemoCinema.sc.next();
-				premiere = LocalDate.parse(date, formatter);
-				retry = true;
-			} catch (DateTimeParseException e) {
-				System.out.print("Невалиден формат. Опитайте отново:");
-				retry = false;
-			}
-		}
-		System.out.println("Изберете категория от: ");
-		for (movieCategories c : movieCategories.values()) {
-			System.out.println(c.name());
-		}
-		movieCategories category = movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
-
-		
-		String cat = DemoCinema.sc.next();
-		while(isInputCategoryWrong(cat)) {
-			System.out.println("Опитайте отново");
-			cat = DemoCinema.sc.next();
-		}
-
+	public static Movie getInstance(String genre, String name, short length, LocalDate premiere,
+			movieCategories category) throws NotValidMovieGenreException {
+//		System.out.println("Изберете жанр от: ");
+//		for (int index = 0; index < MovieGenres.values().length; index++) {
+//			System.out.println(index + " - " + MovieGenres.values()[index].getName());
+//		}
+//		// TODO throw and catch exceptions
+//		String stringIndex = DemoCinema.sc.next();
+//		String reg = "[0-Cinema.MovieGenres.values().length]+";
+//		while(!(stringIndex.matches(reg))) {
+//			System.out.println("Опитайте отново");
+//			stringIndex = DemoCinema.sc.next();
+//		}
+//		int index = Integer.parseInt(stringIndex);
+//		MovieGenres genre = MovieGenres.values()[index];
+//
+//		System.out.println("Въведете име: ");
+//		String name = DemoCinema.sc.next();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+//		System.out.println("Въведете премиерна дата: (ден/месец/година)");
+//		LocalDate premiere = null; // TODO null pointer exception
+//		boolean retry = false;
+//		// Date input
+//		while (!retry) {
+//			try {
+//				String date = DemoCinema.sc.next();
+//				premiere = LocalDate.parse(date, formatter);
+//				retry = true;
+//			} catch (DateTimeParseException e) {
+//				System.out.print("Невалиден формат. Опитайте отново:");
+//				retry = false;
+//			}
+//		}
+//		System.out.println("Изберете категория от: ");
+//		for (movieCategories c : movieCategories.values()) {
+//			System.out.println(c.name());
+//		}
+//		movieCategories category = movieCategories.valueOf(DemoCinema.sc.next().toUpperCase());
+//
+//		
+//		String cat = DemoCinema.sc.next();
+//		while(isInputCategoryWrong(cat)) {
+//			System.out.println("Опитайте отново");
+//			cat = DemoCinema.sc.next();
+//		}
+//
 		Movie movie;
 //		MovieGenres g= MovieGenres.valueOf(genre);
 		switch (genre) {
-		case anime:
+		case "АНИМАЦИЯ":
 			movie = new Movie(name, (short) 90, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(9, 0);
 			movie.endTimes = LocalTime.of(18, 20).minusMinutes(90);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
-		case musical:
-		case comedy:
-		case romance:
+		case "МЮЗИКЪЛ":
+		case "КОМЕДИЯ":
+		case "РОМАНТИЧЕН":
 			movie = new Movie(name, (short) 120, premiere, category);
 			movie.setGenre(genre);
 			movie.startTimes = LocalTime.of(12, 20);
 			movie.endTimes = LocalTime.of(00, 00).minusMinutes(120);
 			movie.freeHours = movie.fillInFreeHours();
 			return movie;
-		case biography:
-		case military:
-		case drama:
-		case action:
-		case crime:
-		case science:
-		case adventure:
-		case horor:
-		case fantasy:
+		case "БИОГРАФИЧЕН":
+		case "ВОЕНЕН":
+		case "ДРАМА":
+		case "ЕКШЪН":
+		case "КРИМИНАЛЕН":
+		case "НАУЧНО ПОПУЛЯРЕН":
+		case "ПРИКЛЮЧЕНСКИ":
+		case "УЖАСИ":
+		case "ФАНТАСТИКА":
 			Movie.maxProjections = 4;
-			System.out.println("Въведете дължина на филма: ");
-			String strLength = DemoCinema.sc.next();
-			String regex = "[0-9]+";
-			while(!(strLength.matches(regex) && Integer.parseInt(strLength) >= MIN_LENGTH && Integer.parseInt(strLength) <= MAX_LENGTH)) {
-				System.out.println("Невалидна дължина, моля опитайте пак");
-				strLength = DemoCinema.sc.next();
-			}
-			int length = Integer.parseInt(strLength);
+//			System.out.println("Въведете дължина на филма: ");
+//			String strLength = DemoCinema.sc.next();
+//			String regex = "[0-9]+";
+//			while(!(strLength.matches(regex) && Integer.parseInt(strLength) >= MIN_LENGTH && Integer.parseInt(strLength) <= MAX_LENGTH)) {
+//				System.out.println("Невалидна дължина, моля опитайте пак");
+//				strLength = DemoCinema.sc.next();
+//			}
+//			int length = Integer.parseInt(strLength);
 			movie = new Movie(name, (short) length, premiere, category);
 			movie.setGenre(genre);
 			movie.endTimes = LocalTime.of(23, 50);// TODO work after 12
@@ -161,7 +160,8 @@ public class Movie {
 	}
 
 	private static boolean isInputCategoryWrong(String cat) {
-		return !cat.equalsIgnoreCase("A") && !cat.equalsIgnoreCase("B") && !cat.equalsIgnoreCase("C") && !cat.equalsIgnoreCase("D");
+		return !cat.equalsIgnoreCase("A") && !cat.equalsIgnoreCase("B") && !cat.equalsIgnoreCase("C")
+				&& !cat.equalsIgnoreCase("D");
 	}
 
 	public void setTimes() {
@@ -266,11 +266,11 @@ public class Movie {
 		return name;
 	}
 
-	public MovieGenres getGenre() {
+	public String getGenre() {
 		return genre;
 	}
 
-	private void setGenre(MovieGenres genre) {
+	private void setGenre(String genre) {
 		this.genre = genre;
 	}
 
@@ -336,5 +336,10 @@ public class Movie {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int compareTo(Movie m) {
+		return this.getName().compareTo(m.getName());
 	}
 }

@@ -1,5 +1,6 @@
 package view;
 
+import bean.ILogger;
 import bean.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,19 +28,19 @@ public class PersonalInfoPanel extends GridPane {
 
 	private User user;
 
-	public PersonalInfoPanel(User user) {
-		this.user = user;
+	public PersonalInfoPanel(ILogger user) {
+		this.user = (User) user;
 		this.init();
 	}
 
 	public void init() {
 		if (user != null) {
-			fnameField = new TextField(user.getFirstname());
-			surnameField = new TextField(user.getSurname());
-			lnameField = new TextField(user.getLastname());
+			fnameField = new TextField((user).getFirstname());
+			surnameField = new TextField((user).getSurname());
+			lnameField = new TextField((user).getLastname());
 			emailField = new TextField(user.getEmail());
-			 passwField = new TextField(user.getPassword());
-			datePicker = new DatePicker(user.getBirthDate());
+			passwField = new TextField(user.getPassword());
+			datePicker = new DatePicker((user).getBirthDate());
 
 			add(fnameField, 0, 0);
 			add(surnameField, 1, 0);
@@ -51,7 +52,7 @@ public class PersonalInfoPanel extends GridPane {
 			ObservableList<String> options = FXCollections.observableArrayList("София", "Варна", "Бургас");
 			citiesComboBox = new ComboBox<String>(options);
 			citiesComboBox.setVisibleRowCount(5);
-			citiesComboBox.setValue(user.getCity());
+			citiesComboBox.setValue(((User) user).getCity());
 			add(citiesComboBox, 1, 3);
 		}
 
@@ -59,7 +60,7 @@ public class PersonalInfoPanel extends GridPane {
 
 		add(save, 0, 4);
 		save.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				handleSaveButton(event);

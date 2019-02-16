@@ -162,11 +162,6 @@ public class Consumer {
 		
 	}
 
-	private void setInterests() {
-		// TODO choose multiple
-		this.myProfile.addFavouriteGenre();
-		this.myProfile.addPersonalInterest();
-	}
 
 	private void setPassword() {
 		System.out.println("Парола:");
@@ -178,21 +173,6 @@ public class Consumer {
 		this.password =password;
 	}
 
-//	private void setEmail() {
-//		System.out.println("E-mail:");
-//		String email = sc.next();
-//		while (!isValidEmail(email)) {
-//			System.out.println("Try again: ");
-//			email = sc.next();
-//		}
-//		this.email = email;
-//
-//	}
-
-//	private boolean isValidCinema(Cinema personalCinema) {
-//		// TODO if set contains personalCinema
-//		return true;
-//	}
 	public void showProgramForToday() {
 		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
 
@@ -278,30 +258,5 @@ public class Consumer {
 		return false;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Consumer [id=" + id + ", email: " + email + ", password: " + password + ", предпочитано кино: "
-//				+ personalCinema + "," + myProfile + "]";
-//	}
-
-	public ConsumerProfile getMyProfile() {
-		return myProfile;
-	}
-
-	public double getMoney() {
-		return money;
-	}
-
-	public void setMoney(double money) {
-		this.money = money;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
 
 }

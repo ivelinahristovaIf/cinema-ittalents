@@ -1,6 +1,6 @@
 package view;
 
-import bean.User;
+import bean.ILogger;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class AdminPanel {
 
-	public void start(User user) {
+	public void start(ILogger user) {
 		Stage stage = new Stage();
 
 		TabPane tabPane = new TabPane();

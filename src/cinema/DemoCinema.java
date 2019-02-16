@@ -122,7 +122,7 @@ public class DemoCinema {
 	private static boolean isValidEmailAndPassword(String email, String password) {
 		if (email != null) {
 			if (password != null) {
-				while (!(email.equals(Admin.getInstance().getUsername())
+				while (!(email.equals(Admin.getInstance().getEmail())
 						&& password.equals(Admin.getInstance().getPassword()))) {
 					System.err.println("Грешно потребителско име или парола!");
 					System.err.println("Въведете Х за връщане назад към менюто или опитайте отново...");
@@ -155,7 +155,7 @@ public class DemoCinema {
 	public static void main(String[] args) throws NotValidMovieTheatherTypeException, NotValidTicketTypeException {
 		Cinema cinema = new Cinema();
 		try {
-			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", Cinema.getInstance());
+			Ticket.getInstance(ticketType.STANDART_TICKET, "A15", cinema);
 		} catch (NotValidTicketTypeException e) {
 			e.printStackTrace();
 		}

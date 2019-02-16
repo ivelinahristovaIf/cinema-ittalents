@@ -2,42 +2,41 @@ package bean;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
-import cinema.Cinema;
 import tickets.NotValidTicketTypeException;
 import tickets.Ticket;
 
 public class MovieTheather {
 	private static final char MAX_ROWS_IN_THEATHER = 0;
 	private static final int MAX_COLS_IN_ONE_ROW = 0;
-	
+
 	private int id;
-//	private static int nextId = 1;//TODO
-	
+	private static int nextId = 1;// TODO
+	private Cinema cinema;
 	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> bookedTickets;
-	
+
 	private MovieTheatherType type;
-	
+
 	public MovieTheather() {
 		super();
+		this.id = nextId++;
 		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.bookedTickets = new HashSet<>();
 	}
-	
-	
-	public MovieTheather(int id, Set<Ticket> bookedTickets, MovieTheatherType type) {
-		super();
-		this.id = id;
-		this.bookedTickets = bookedTickets;
+
+	public MovieTheather(MovieTheatherType type, Cinema cinema) {
+		this.id = nextId++;
 		this.type = type;
+		this.cinema = new Cinema();
+		this.bookedTickets = new HashSet<>();
+		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.fillInMovieTheatreSeats();
 	}
-
 
 	private void fillInMovieTheatreSeats() {
 		Set<Integer> cols = new TreeSet<>((i1, i2) -> i1 - i2);
@@ -49,13 +48,14 @@ public class MovieTheather {
 			this.seats.put(row, (TreeSet<Integer>) cols);
 		}
 	}
-	public void addBookedTicket(Ticket ticket) {
-			if (this.bookedTickets == null) {
-				this.bookedTickets = new HashSet<Ticket>();
-			}
-			this.bookedTickets.add(ticket);
+
+	public void bookTicketInTheather(Ticket ticket) {
+		if (this.bookedTickets == null) {
+			this.bookedTickets = new HashSet<Ticket>();
+		}
+		this.bookedTickets.add(ticket);
 	}
-	
+
 	public void showSeatsInTheathre() throws NotValidTicketTypeException {
 		System.out.println("Места в киното: ");
 		System.out.println("        ==============ЕКРАН==============");
@@ -64,7 +64,7 @@ public class MovieTheather {
 			System.out.print("Ред " + entry.getKey() + ": ");
 			for (Integer col : entry.getValue()) {
 				String seat = entry.getKey() + ("" + col);
-				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, bean.Cinema.getInstance());
+				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, this.cinema);
 				boolean isFreeSeat = true;
 				for (Ticket ticket : this.getBookedTickets()) {
 					if (t.isTicketsEquals(ticket)) {
@@ -81,7 +81,6 @@ public class MovieTheather {
 			System.out.println();
 		}
 	}
-
 
 	public int getId() {
 		return id;
@@ -114,14 +113,4 @@ public class MovieTheather {
 	public void setType(MovieTheatherType type) {
 		this.type = type;
 	}
-
-
-	public void bookTicketInTheather(Ticket ticket) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-	
 }

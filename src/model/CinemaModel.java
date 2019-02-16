@@ -12,7 +12,7 @@ public class CinemaModel {
 		cinema.setId(savedCinema.getId());
 		cinema.setName(savedCinema.getName());
 		cinema.setAddress(savedCinema.getAddress());
-		cinema.addMovieTheather(new MovieTheather());//TODO not empty movie theather
+//		cinema.addMovieTheather(new MovieTheather());//TODO not empty movie theather
 		
 		return cinema;
 	}

@@ -88,7 +88,7 @@ public class RegisterPanel extends GridPane {
 			@Override
 			public void handle(ActionEvent event) {
 				User consumer = new User(emailField.getText(), passwField.getText(), fnameField.getText(),
-						surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity, 1);
+						surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity);
 				System.out.println(consumer);
 				
 			}

@@ -2,42 +2,39 @@ package bean;
 
 import java.time.LocalDate;
 
-import cinema.Cinema;
-
-public class User {
-	public static final int CONSUMER = 1;
-	public static final int ADMIN = 2;
+public class User implements ILogger {
 
 	private int id;
+	private int type;
 	private static int nextId = 1;
 	private String email;
 	private String password;
-	private String firstName;
-	private String surName;
-	private String lastName;
+	private String firstname;
+	private String surname;
+	private String lastname;
 	private LocalDate birthDate;
 	private String city;
+	private UserProfile profile;
 
 	private Cinema cinema;
 
-	private int type;// CONSUMER ADMIN
-
 	public User() {
 		super();
+		this.setType();
 	}
 
-	public User(String email, String password, String firstName, String surName, String lastName, LocalDate birthDate,
-			String city, int type) {
+	public User(String email, String password, String firstname, String surname, String lastname, LocalDate birthDate,
+			String city) {
 		super();
+		this.setType();
 		this.id = nextId++;
 		this.email = email;
 		this.password = password;
-		this.firstName = firstName;
-		this.surName = surName;
-		this.lastName = lastName;
+		this.firstname = firstname;
+		this.surname = surname;
+		this.lastname = lastname;
 		this.birthDate = birthDate;
 		this.city = city;
-		this.type = type;
 	}
 
 	public int getId() {
@@ -72,37 +69,28 @@ public class User {
 		this.cinema = cinema;
 	}
 
-	public int getType() {
-		// ADMIN USER
-		return this.type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
 	public String getFirstname() {
-		return firstName;
+		return firstname;
 	}
 
-	public void setFirstname(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public String getSurname() {
-		return surName;
+		return surname;
 	}
 
 	public void setSurname(String surName) {
-		this.surName = surName;
+		this.surname = surName;
 	}
 
 	public String getLastname() {
-		return lastName;
+		return lastname;
 	}
 
 	public void setLastname(String lastName) {
-		this.lastName = lastName;
+		this.lastname = lastName;
 	}
 
 	public LocalDate getBirthDate() {
@@ -126,7 +114,6 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + type;
 		return result;
 	}
 
@@ -141,16 +128,31 @@ public class User {
 		User other = (User) obj;
 		if (id != other.id)
 			return false;
-		if (type != other.type)
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", password=" + password + ", firstName=" + firstName + ", surName=" + surName
-				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", city=" + city + "]";
+		return "User "+type+" [email=" + email + ", password=" + password + ", firstName=" + firstname + ", surName=" + surname
+				+ ", lastName=" + lastname + ", birthDate=" + birthDate + ", city=" + city + "]";
 	}
 
-	
+	public UserProfile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(UserProfile profile) {
+		this.profile = profile;
+	}
+
+	@Override
+	public int getType() {
+		return type;
+	}
+
+	@Override
+	public void setType() {
+		this.type = 1;
+	}
+
 }

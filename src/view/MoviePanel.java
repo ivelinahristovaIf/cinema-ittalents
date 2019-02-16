@@ -1,6 +1,10 @@
 package view;
 
+import java.io.FileNotFoundException;
+
+import bean.ILogger;
 import bean.Movie;
+import helper.MovieGenres;
 import helper.NotValidMovieGenreException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import writers.MovieWriter;
 
 public class MoviePanel extends GridPane{
 	private Label name;
@@ -43,14 +48,6 @@ public class MoviePanel extends GridPane{
 		
 		TextField nameField = new TextField();
 		TextField lengthField = new TextField();
-//		lengthField.textProperty().addListener(new ChangeListener<String>() {
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				  if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
-//	                    lengthField.setText(oldValue);
-//	                }
-//			}
-//        });
 		
 		DatePicker datePicker = new DatePicker();
 		ObservableList<String> options = FXCollections.observableArrayList("ƒ–¿Ã¿", "”∆¿—»", " ŒÃ≈ƒ»ﬂ","¿Õ»Ã¿÷»ﬂ","≈ ÿ⁄Õ","‘¿Õ“¿—“» ¿",
@@ -72,10 +69,19 @@ public class MoviePanel extends GridPane{
 
 			@Override
 			public void handle(ActionEvent event) {
-//				short l = Short.parseShort(lengthField.getText());
+				short l = Short.parseShort(lengthField.getText());
 				Movie movie = null;
 				try {
-					movie = Movie.getInstance(/*choosenGenre, nameField.getText(), l, datePicker.getValue(), movieCategories.C*/);
+					movie = Movie.getInstance(choosenGenre, nameField.getText(), l, datePicker.getValue(),Movie.movieCategories.C);
+					try {
+						MovieWriter.getInstance().getMoviesFromFile();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					MovieWriter.getInstance().addMovie(movie);
+					MovieWriter.getInstance().saveMoviesToFile();
+					System.out.println(movie);
 				} catch (NotValidMovieGenreException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -4,36 +4,40 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
+import bean.Admin;
+import bean.ILogger;
 import bean.User;
 import writers.UserWriter;
 
 public class UserModel {
 	private static UserModel instance = null;
-	
+
 	private UserModel() {
 		super();
 	}
+
 	public static UserModel getInstance() {
-		if(instance==null) {
+		if (instance == null) {
 			instance = new UserModel();
 		}
 		return instance;
 	}
 
-	public static User getUserByEmailAndPassword(String email, String password) throws IOException, NoSuchAlgorithmException {
-		//TODO izznesi go nqkyde
+	public static ILogger getLoggerByEmailAndPassword(String email, String password)
+			throws IOException, NoSuchAlgorithmException {
 		UserWriter writer = new UserWriter();
 		writer.getUsersFromFile();
-		Set<User> users = writer.getUsers();
-		for (User user : users) {
-			System.out.println(user);
-			if(user.getEmail().equals(email)&&user.getPassword().equals(password)) {
-				return user;
+		Set<ILogger> loggers = writer.getUsers();
+		for (ILogger logger : loggers) {
+			System.out.println("UserModel " + logger);
+			if (logger.getEmail().equals(email) && logger.getPassword().equals(password)) {
+				return logger;
 			}
 		}
 		System.out.println("no such user");
 		return null;
 	}
+
 	public static User fill(User user, User savedUser) {
 		if (user == null) {
 			user = new User();
