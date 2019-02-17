@@ -109,22 +109,22 @@ public class BuyTicketPanel extends GridPane {
 
 		datePicker.setDayCellFactory(dayCellFactory);
 		datePicker.setValue(LocalDate.now());
-		
-		try {
-			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		datePicker.valueProperty().addListener(new ChangeListener<LocalDate>() {
 
 			@Override
 			public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
 					LocalDate newValue) {
 				handleDatePickerComboBoxChange();
-				
+
 			}
 		});
+
+		try {
+			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		HashSet<MovieTheatherType> types = new HashSet<>();
 //		types.addAll(Cinema.getInstance().getAllMovieTheathers()); //TODO get all type by cinema
 		// TODO stash them in cinema
@@ -212,23 +212,23 @@ public class BuyTicketPanel extends GridPane {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
 		MovieTheatherType type = movieTheathersComboBox.getValue();
 		System.out.println(type);
+		MovieTheather mt = null;
 		if (type != null) {
 			try {
 //				movieTheatherByType 
-				MovieTheather mt = Cinema.getInstance().getMovieTheatherByType(type);
+				mt = Cinema.getInstance().getMovieTheatherByType(type);
 				System.out.println("nmb " + mt);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			movieTheatherByType = new MovieTheather(type);
-
+			movieTheatherByType = mt;
 		}
 	}
 
