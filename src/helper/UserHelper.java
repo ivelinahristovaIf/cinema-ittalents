@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bean.MovieTheather;
+import bean.MovieTheatherType;
 import bean.Ticket;
 
 public class UserHelper {
@@ -24,24 +25,24 @@ public class UserHelper {
 		return instance;
 	}
 
-	public void buyTicket(MovieTheather mt, String type, int count, String seat) throws NotValidTicketTypeException {
+	public void buyTicket(MovieTheatherType mt, String type, int count, String seat) throws NotValidTicketTypeException {
 		// TODO get movieTheather by movieTheather type
 		Ticket ticket = Ticket.getInstance(type, seat, mt, null);
 		boolean isAlreadyReserved = false;
 		if (mt != null) {
-			for (Ticket t : mt.getBookedTickets()) {
-				if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
-					isAlreadyReserved = true;
-					break;
-				}
-			}
-			if (!isAlreadyReserved) {
-				mt.bookTicketInTheather(ticket);
+//			for (Ticket t : mt.getBookedTickets()) {
+//				if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
+//					isAlreadyReserved = true;
+//					break;
+//				}
+//			}
+//			if (!isAlreadyReserved) {
+//				mt.bookTicketInTheather(ticket);
 				ticket.reservedTicket();
 				System.out.println("Поздравления вие запазихте билет");
-			} else {
-				System.out.println("Съжаляваме този билет вече е бил запазен");
-			}
+//			} else {
+//				System.out.println("Съжаляваме този билет вече е бил запазен");
+//			}
 		}
 		System.out.println("Няма такава зала!");
 	}

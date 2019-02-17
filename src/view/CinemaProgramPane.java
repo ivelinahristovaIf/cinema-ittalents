@@ -145,11 +145,10 @@ public class CinemaProgramPane extends GridPane {
 		add(save, 0, 3);
 
 		save.setOnAction(new EventHandler<ActionEvent>() {//TODO getMovieTheather by Type cinema
-			MovieTheather mt = new MovieTheather(choosenTheather);
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Cinema.getInstance().addMovieToCatalogue(mt, choosenDate, moviesComboBox.getValue());
+					Cinema.getInstance().addMovieToCatalogue(choosenTheather, choosenDate, moviesComboBox.getValue());
 				} catch (FileNotFoundException e) {
 					return;
 				}

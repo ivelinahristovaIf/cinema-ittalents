@@ -10,7 +10,7 @@ public class Ticket {
 	private static final int CHILD_TICKET_PRICE = 6;
 	private static final int STANDART_TICKET_PRICE = 10;
 
-	private MovieTheather movieTheather;
+	private MovieTheatherType movieTheather;
 	private Movie movie;
 	private int price;
 	private Seat seat;
@@ -24,7 +24,7 @@ public class Ticket {
 		this.serialNumber = ++id;
 	}
 
-	private Ticket(String seat, int price, MovieTheather theater  ,Movie movie ) {
+	private Ticket(String seat, int price, MovieTheatherType theater  ,Movie movie ) {
 		this.seat = new Seat(seat);
 		setPrice(price);
 		this.movie = movie;
@@ -51,7 +51,7 @@ public class Ticket {
 		return s1 != null && s2 != null && s1.equals(s2);
 	}
 
-	public static Ticket getInstance(String type, String seat, MovieTheather theater,Movie movie)
+	public static Ticket getInstance(String type, String seat, MovieTheatherType theater,Movie movie)
 			throws NotValidTicketTypeException {
 		switch (type) {
 		case "—“¿Õƒ¿–“≈Õ":
@@ -220,11 +220,11 @@ public class Ticket {
 		return col;
 	}
 
-	public MovieTheather getMovieTheather() {
+	public MovieTheatherType getMovieTheather() {
 		return movieTheather;
 	}
 
-	public void setMovieTheather(MovieTheather movieTheather) {
+	public void setMovieTheather(MovieTheatherType movieTheather) {
 		this.movieTheather = movieTheather;
 	}
 

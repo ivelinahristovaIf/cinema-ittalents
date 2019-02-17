@@ -61,7 +61,7 @@ public class BuyTicketPanel extends GridPane {
 	private Button save;
 	private Button buy;
 
-	private MovieTheather movieTheatherByType;
+	private MovieTheatherType movieTheatherByType;
 	private LocalDate choosenDate;
 	private Set<Movie> moviePicker = new TreeSet<>();
 	private String choosenTicketType;
@@ -263,7 +263,7 @@ public class BuyTicketPanel extends GridPane {
 	protected void handleMovieTheatherComboBoxChange() {
 		MovieTheatherType type = movieTheathersComboBox.getValue();
 		System.out.println(type);
-		MovieTheather mt = null;
+		MovieTheatherType mt = null;
 		if (type != null) {
 			try {
 //				movieTheatherByType 

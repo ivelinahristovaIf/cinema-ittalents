@@ -85,7 +85,7 @@ public class Cinema {
 		return this.moviesCatalogue.get(mt).keySet();
 	}
 
-	public Set<Movie> getAllMoviesByTheatherAndDate(MovieTheather mt, LocalDate date) {
+	public Set<Movie> getAllMoviesByTheatherAndDate(MovieTheatherType mt, LocalDate date) {
 		if (!this.moviesCatalogue.containsKey(mt)) {
 			System.out.println("no movie theather");
 			return null;
