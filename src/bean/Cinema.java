@@ -38,24 +38,25 @@ public class Cinema {
 		this.phoneNumber = phoneNumber;
 
 		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
-		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
-		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
-		MovieTheather mt;
-		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
-			mt = new MovieTheather(movieTheatherType); // TODO remove cinema from construktor
-			MovieTheaterWriter.getInstance().addMovieTheater(mt);
-			this.movieTheathers.add(mt);// TODO dali da ima movieTheathers kato field
-			if (!this.moviesCatalogue.containsKey(mt)) {// if not contains theather
-				LocalDate start = LocalDate.now();// FILL DATES
-				TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
-				while (!start.isAfter(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
-					dates.put(start, new TreeSet<Movie>());
-					start = start.plusDays(1);
-				}
-				this.moviesCatalogue.put(mt, dates);
-			}
-		}
-		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
+//		System.out.println("Vzimam gi");
+//		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
+//		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
+//		MovieTheather mt;
+//		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
+//			mt = new MovieTheather(movieTheatherType);
+//			MovieTheaterWriter.getInstance().addMovieTheater(mt);
+//			this.movieTheathers.add(mt);// TODO dali da ima movieTheathers kato field
+//			if (!this.moviesCatalogue.containsKey(mt)) {// if not contains theather
+//				LocalDate start = LocalDate.now();// FILL DATES
+//				TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
+//				while (!start.isAfter(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
+//					dates.put(start, new TreeSet<Movie>());
+//					start = start.plusDays(1);
+//				}
+//				this.moviesCatalogue.put(mt, dates);
+//			}
+//		}
+//		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
 	}
 
 	public static Cinema getInstance() throws FileNotFoundException {
@@ -193,18 +194,18 @@ public class Cinema {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Cinema cinema = Cinema.getInstance();
-		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
-			System.out.println(mt);
-			System.out.println(mt.getType());
-			for (LocalDate date : cinema.moviesCatalogue.get(mt).keySet()) {
-				System.out.println(date);
-				cinema.showAllMoviesByDate(date);
-			}
-		}
-		cinema.getAllMovieTheathers().forEach(mt->System.out.println(mt));
-	}
+//	public static void main(String[] args) throws FileNotFoundException {
+//		Cinema cinema = Cinema.getInstance();
+//		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
+//			System.out.println(mt);
+//			System.out.println(mt.getType());
+//			for (LocalDate date : cinema.moviesCatalogue.get(mt).keySet()) {
+//				System.out.println(date);
+//				cinema.showAllMoviesByDate(date);
+//			}
+//		}
+//		cinema.getAllMovieTheathers().forEach(mt->System.out.println(mt));
+//	}
 
 	@Override
 	public String toString() {

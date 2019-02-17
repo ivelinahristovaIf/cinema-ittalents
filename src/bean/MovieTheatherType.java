@@ -1,7 +1,5 @@
 package bean;
 
-import cinema.DemoCinema;
-import helper.NotValidMovieTheatherTypeException;
 
 public class MovieTheatherType {
 	public static final String[] MOVIE_THEATHER_TYPE = { "IMAX", "VIP", "LUXE", "PREMIUM" };
@@ -31,55 +29,6 @@ public class MovieTheatherType {
 			this.audioFormat = audioFormat;
 		}
 	}
-
-//	public static MovieTheatherType getInstance() throws NotValidMovieTheatherTypeException {
-//		System.out.println("Изберете формат на залата от: ");
-//		for (int index = 1; index <= MOVIE_THEATHER_TYPE.length; index++) {
-//			System.out.println(index + " - " + MOVIE_THEATHER_TYPE[index - 1]);
-//		}
-//
-//		String type = MOVIE_THEATHER_TYPE[inputMovieTheaterFields(MOVIE_THEATHER_TYPE)];
-//
-//		System.out.println("Изберете видео формат от: ");
-//		for (int index = 1; index <= VIDEO_FORMAT.length; index++) {
-//			System.out.println(index + " - " + VIDEO_FORMAT[index - 1]);
-//		}
-//		String videoFormat = VIDEO_FORMAT[inputMovieTheaterFields(VIDEO_FORMAT)];
-//
-//		System.out.println("Изберете аудио формат от: ");
-//		for (int index = 1; index <= AUDIO_FORMAT.length; index++) {
-//			System.out.println(index + " - " + AUDIO_FORMAT[index - 1]);
-//		}
-//		String audioFormat = AUDIO_FORMAT[inputMovieTheaterFields(AUDIO_FORMAT)];
-//
-//		return new MovieTheatherType(type, videoFormat, audioFormat);
-//
-//	}
-
-	// try again.. sushto taka izbqgva arrayIndexOutOfBoundsException
-	// i InputMismatchException ako se vuvede neshto gadno
-	private static int inputMovieTheaterFields(String[] str) {
-		int lenght = str.length;
-		String typeOption;
-		String regex = "[0-9]+";
-		int count = 0;
-		do {
-			if (count > 0) {
-				System.out.println("Няма зала с такъв номер. Моля опитайте пак");
-			}
-			typeOption = DemoCinema.sc.next();
-			if (typeOption.matches(regex)) {
-				if (Integer.parseInt(typeOption) >= 1 && Integer.parseInt(typeOption) <= lenght) {
-					break;
-				}
-			} else {
-				System.out.println("Невалидно въвеждане, моля въведете число");
-			}
-			count++;
-		} while (true);
-		return Integer.parseInt(typeOption) - 1;
-	}
-
 	private boolean isValidTheatherType(String type) {
 		for (int i = 0; i < MOVIE_THEATHER_TYPE.length; i++) {
 			if (type.equalsIgnoreCase(MOVIE_THEATHER_TYPE[i])) {

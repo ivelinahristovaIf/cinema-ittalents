@@ -60,7 +60,7 @@ public class CinemaProgramPane extends GridPane {
 			e.printStackTrace();
 		}
 		this.movieTheathersComboBox = new ComboBox<MovieTheather>(movieTheathers);
-		movieTheathersComboBox.setValue(movieTheathers.get(0));
+//		movieTheathersComboBox.setValue(movieTheathers.get(0));
 		movieTheathersComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieTheather>() {
 
 			@Override
@@ -167,10 +167,9 @@ public class CinemaProgramPane extends GridPane {
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
-		choosenTheather = movieTheathersComboBox.getValue();
 //		System.out.println(choosenTheather);
-		if (choosenTheather != null) {
-			selectedMovieTheather = choosenTheather;
+		if (movieTheathersComboBox.getValue() != null) {
+			choosenTheather = movieTheathersComboBox.getValue();
 		}else {
 			System.out.println("Не успя да избере зала");
 		}

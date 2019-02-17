@@ -54,7 +54,7 @@ public class MovieTheaterWriter {
 			} catch (FileNotFoundException e) {
 				return;
 			}
-			System.out.println("Zapisah gi vyv file");
+			System.out.println("Zapisah gi vyv file "+file);
 		}
 	}
 	
@@ -82,20 +82,20 @@ public class MovieTheaterWriter {
 			this.theaters.add(theater);
 		}
 	}
-	public static void main(String[] args) throws FileNotFoundException {
-		try {
-			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		List<MovieTheatherType> types = new ArrayList<>();
-		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
-		
-		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())));
-		
-		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
-		MovieTheaterWriter.getInstance().addMovieTheater(theater);
-		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
-	}
+//	public static void main(String[] args) throws FileNotFoundException {
+//		try {
+//			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		List<MovieTheatherType> types = new ArrayList<>();
+//		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
+//		
+//		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())));
+//		
+//		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
+//		MovieTheaterWriter.getInstance().addMovieTheater(theater);
+//		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
+//	}
 }
