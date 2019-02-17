@@ -85,7 +85,7 @@ public class BuyTicketPanel extends GridPane {
 		DatePicker startDate = new DatePicker();
 		DatePicker middleDate = new DatePicker();
 		startDate.setValue(LocalDate.now());
-		middleDate.setValue(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR));
+		middleDate.setValue(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR-1));
 
 		final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
 			@Override
@@ -98,7 +98,7 @@ public class BuyTicketPanel extends GridPane {
 							setDisable(true);
 							setStyle("-fx-background-color: #ffc0cb;");
 						}
-						if (item.isAfter(middleDate.getValue().plusDays(1))) {
+						if (item.isAfter(middleDate.getValue())) {
 							setDisable(true);
 							setStyle("-fx-background-color: #ffc0cb;");
 						}
@@ -167,7 +167,7 @@ public class BuyTicketPanel extends GridPane {
 
 		Image image = null;
 		try {
-			image = new Image(new FileInputStream("files\\popcorn.jpg"));
+			image = new Image(new FileInputStream("files\\popcorn.png"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,7 +175,7 @@ public class BuyTicketPanel extends GridPane {
 
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(900);
-		imageView.setFitWidth(400);
+		imageView.setFitWidth(500);
 		imageView.setPreserveRatio(true);
 		imageView.setSmooth(true);
 
@@ -196,7 +196,7 @@ public class BuyTicketPanel extends GridPane {
 		add(priceField, 1, 7);
 		add(seat, 0, 8);
 		add(seatField, 1, 8);
-		add(imageView, 5, 0, 1, 12);
+		add(imageView, 5, 0, 2, 12);
 
 		add(save, 0, 10);
 		add(buy, 1, 10);

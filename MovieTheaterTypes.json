@@ -40,5 +40,11 @@
     "type": "PREMIUM",
     "videoFormat": "4D",
     "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 8,
+    "type": "PREMIUM",
+    "videoFormat": "4D",
+    "audioFormat": "Dolby Atmos"
   }
 ]

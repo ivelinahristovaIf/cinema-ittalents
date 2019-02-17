@@ -57,13 +57,59 @@ public class CinemaPanel extends GridPane {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ImageView imageView = new ImageView(image);
+		ImageView arenaView = new ImageView(image);
 
 		// setting the fit height and width of the image view
-		imageView.setFitHeight(50);
-		imageView.setFitWidth(150);
+		arenaView.setFitHeight(100);
+		arenaView.setFitWidth(200);
 		// Setting the preserve ratio of the image view
-		imageView.setPreserveRatio(true);
+		arenaView.setPreserveRatio(true);
+
+		Image imax = null;
+		try {
+			imax = new Image(new FileInputStream("files\\imax.png"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ImageView imaxView = new ImageView(imax);
+
+		// setting the fit height and width of the image view
+//		imaxView.setFitHeight(50);
+//		arenaView.setFitWidth(150);
+		// Setting the preserve ratio of the image view
+		arenaView.setPreserveRatio(true);
+		
+		Image premium = null;
+		try {
+			premium = new Image(new FileInputStream("files\\premium.png"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ImageView premiumView = new ImageView(premium);
+		premiumView.setPreserveRatio(true);
+		
+		Image luxe = null;
+		try {
+			luxe = new Image(new FileInputStream("files\\luxe.png"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ImageView luxeView = new ImageView(luxe);
+		luxeView.setPreserveRatio(true);
+		
+		Image vip = null;
+		try {
+			vip = new Image(new FileInputStream("files\\vip.png"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ImageView vipView = new ImageView(vip);
+		vipView.setPreserveRatio(true);
+
 		Image image2 = null;
 		try {
 			image2 = new Image(new FileInputStream("files\\image.jpeg"));
@@ -74,18 +120,22 @@ public class CinemaPanel extends GridPane {
 
 		ImageView imageView2 = new ImageView(image2);
 		imageView2.setFitHeight(600);
-		imageView2.setFitWidth(900);
+		imageView2.setFitWidth(950);
 		imageView2.setPreserveRatio(true);
 		imageView2.setSmooth(true);
 
-		add(imageView, 1, 0, 3, 1);
-		add(name, 0, 1);
-		add(nameField, 0, 2);
-		add(adress, 2, 1);
-		add(adressField, 2, 2);
-		add(phoneNumber, 1, 1);
-		add(phoneField, 1, 2);
-		add(imageView2, 0, 3, 3, 1);
+		add(imaxView, 0, 0, 1, 1);
+		add(premiumView, 1, 0,1,1);
+		add(arenaView, 2, 0, 2, 1);
+		add(luxeView, 4, 0,1,1);
+		add(vipView, 5, 0,1,1);
+		add(name, 0, 1, 2, 1);
+		add(nameField, 0, 2, 2, 1);
+		add(adress, 4, 1, 3, 1);
+		add(adressField, 4, 2, 3, 1);
+		add(phoneNumber, 2, 1, 2, 1);
+		add(phoneField, 2, 2, 2, 1);
+		add(imageView2, 0, 3, 6, 1);
 
 	}
 }

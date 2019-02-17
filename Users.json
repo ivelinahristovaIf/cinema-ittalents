@@ -95,7 +95,65 @@
           ],
           "numberOfProjectionsForDay": 3
         },
-        null
+        null,
+        {
+          "id": 2,
+          "name": "Happy Death Day",
+          "length": 101,
+          "premiere": {
+            "year": 2019,
+            "month": 2,
+            "day": 15
+          },
+          "genre": "ÓÆÀÑÈ",
+          "category": "C",
+          "projections": [],
+          "startTimes": {
+            "hour": 12,
+            "minute": 4,
+            "second": 0,
+            "nano": 0
+          },
+          "endTimes": {
+            "hour": 22,
+            "minute": 9,
+            "second": 0,
+            "nano": 0
+          },
+          "freeHours": [
+            {
+              "hour": 12,
+              "minute": 4,
+              "second": 0,
+              "nano": 0
+            },
+            {
+              "hour": 14,
+              "minute": 5,
+              "second": 0,
+              "nano": 0
+            },
+            {
+              "hour": 16,
+              "minute": 6,
+              "second": 0,
+              "nano": 0
+            },
+            {
+              "hour": 18,
+              "minute": 7,
+              "second": 0,
+              "nano": 0
+            },
+            {
+              "hour": 20,
+              "minute": 8,
+              "second": 0,
+              "nano": 0
+            }
+          ],
+          "numberOfProjectionsForDay": 4
+        }
       ]
     }
   }

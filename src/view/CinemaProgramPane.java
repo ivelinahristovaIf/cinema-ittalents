@@ -76,7 +76,7 @@ public class CinemaProgramPane extends GridPane {
 		DatePicker startDate = new DatePicker();
 		DatePicker endDate = new DatePicker();
 		startDate.setValue(LocalDate.now());
-		endDate.setValue(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR));
+		endDate.setValue(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR-1));
 
 		final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
 			@Override
@@ -89,7 +89,7 @@ public class CinemaProgramPane extends GridPane {
 							setDisable(true);
 							setStyle("-fx-background-color: #ffc0cb;");
 						}
-						if (item.isAfter(endDate.getValue().plusDays(1))) {
+						if (item.isAfter(endDate.getValue())) {
 							setDisable(true);
 							setStyle("-fx-background-color: #ffc0cb;");
 						}
@@ -114,19 +114,19 @@ public class CinemaProgramPane extends GridPane {
 		try {
 			MovieWriter.getInstance().getMoviesFromFile();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return;
 		}
 		ObservableList<Movie> movies = FXCollections.observableArrayList(MovieWriter.getInstance().getMovies());
 		this.moviesComboBox = new ComboBox<Movie>(movies);
 		moviesComboBox.setValue(movies.get(0));
 		
-		moviesComboBox.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				
-			}
-		});
+//		moviesComboBox.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent event) {
+//				//TODO choose hour
+//			}
+//		});
 
 		this.save = new Button("Добави");
 
@@ -142,36 +142,33 @@ public class CinemaProgramPane extends GridPane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				handleSaveButton(event);
 				try {
 					Cinema.getInstance().addMovieToCatalogue(choosenTheather, choosenDate, moviesComboBox.getValue());
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					return;
 				}
+				handleSaveButton(event);
 			}
 		});
 	}
 
 	protected void handleSaveButton(ActionEvent event) {
-		// TODO Auto-generated method stub
-		
+		//TODO save catalogue to file
 	}
 
 	protected void handleDatePickerComboBoxChange() {
 		choosenDate = datePicker.getValue();
-//		System.out.println(choosenDate);
 			try {
 				Cinema.getInstance().showAllMoviesByDate(choosenDate);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return;
 			}
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
 		choosenTheather = movieTheathersComboBox.getValue();
-		System.out.println(choosenTheather);
+//		System.out.println(choosenTheather);
 		if (choosenTheather != null) {
 			selectedMovieTheather = choosenTheather;
 		}else {

@@ -90,7 +90,7 @@ public class PersonalInfoPanel extends GridPane {
 
 			ObservableList<String> genres = FXCollections.observableArrayList(MovieHelper.MOVIE_GENRE);
 			favouriteGenreCmb = new ComboBox<String>(genres);
-			favouriteGenreCmb.setValue("”∆¿—»");
+			favouriteGenreCmb.setValue(genres.get(0));
 			try {
 				MovieWriter.getInstance().getMoviesFromFile();
 			} catch (FileNotFoundException e) {
@@ -99,10 +99,11 @@ public class PersonalInfoPanel extends GridPane {
 			}
 			ObservableList<Movie> movies = FXCollections.observableArrayList(MovieWriter.getInstance().getMovies());
 			favouriteMovieCmb = new ComboBox<Movie>(movies);
+			favouriteMovieCmb.setValue(movies.get(0));
 			
 			ObservableList<String> interests = FXCollections.observableArrayList(UserProfileHelper.INTEREST);
 			personalInterestCmb = new ComboBox<String>(interests);
-			personalInterestCmb.setValue(" Õ»√»");
+			personalInterestCmb.setValue(interests.get(0));
 			
 
 			Image image = null;
