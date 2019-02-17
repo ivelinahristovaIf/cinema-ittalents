@@ -24,41 +24,53 @@ public class Admin implements ILogger{
 	private int type;
 	private String email;
 	private String password;
-	private Gson gson;
-	private File movieFile;
+//	private Gson gson;
+//	private File movieFile;
 
 	private static Admin instance = null;
 
 	private Set<Movie> movies; 
 
-	private Admin(String email, String password) {
+	private Admin(String email, String password)  {
 		this.setType();
 		this.email = email;
 		this.setPassword(password);
 		this.movies = new TreeSet<Movie>();
-		this.gson = new Gson();
-		this.movieFile = new File("Movies.json");
+//		this.gson = new Gson();
+//		this.movieFile = new File("Movies.json");
 		this.fillMovies();
 	}
 
 	
 	public void fillMovies() {
-		StringBuilder builder = new StringBuilder();
-		try (Scanner sc = new Scanner(this.movieFile)) {
-			while (sc.hasNextLine()) {
-				builder.append(sc.nextLine());
-			}
+//		StringBuilder builder = new StringBuilder();
+//		try (Scanner sc = new Scanner(this.movieFile)) {
+//			while (sc.hasNextLine()) {
+//				builder.append(sc.nextLine());
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		Type setType = new TypeToken<LinkedHashSet<Movie>>() {
+//		}.getType();
+//		if (builder.length() > 0) {
+//			Set<Movie> getMovies = gson.fromJson(builder.toString(), setType);
+//			this.movies.addAll(getMovies);
+//		} else {
+//			System.out.println("Oshte nqma obekti");
+//		}
+		System.out.println("vzimam ot file");
+		try {
+			MovieWriter.getInstance().getMoviesFromFile();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Type setType = new TypeToken<LinkedHashSet<Movie>>() {
-		}.getType();
-		if (builder.length() > 0) {
-			Set<Movie> getMovies = gson.fromJson(builder.toString(), setType);
-			this.movies.addAll(getMovies);
-		} else {
-			System.out.println("Oshte nqma obekti");
-		}
+		System.out.println("zapazvam v nov Set");
+		Set<Movie> getMovies = MovieWriter.getInstance().getMovies();
+		System.out.println("nalivam seta v this.movies");
+		this.movies.addAll(getMovies);
+		
 	}
 	
 	public static Admin getInstance() {
