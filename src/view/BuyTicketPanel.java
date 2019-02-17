@@ -109,19 +109,21 @@ public class BuyTicketPanel extends GridPane {
 
 		datePicker.setDayCellFactory(dayCellFactory);
 		datePicker.setValue(LocalDate.now());
-		datePicker.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				handleDatePicker(event);
-			}
-		});
-
 		try {
 			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		datePicker.valueProperty().addListener(new ChangeListener<LocalDate>() {
+
+			@Override
+			public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
+					LocalDate newValue) {
+				handleDatePickerComboBoxChange();
+				
+			}
+		});
 //		HashSet<MovieTheatherType> types = new HashSet<>();
 //		types.addAll(Cinema.getInstance().getAllMovieTheathers()); //TODO get all type by cinema
 		// TODO stash them in cinema
@@ -129,8 +131,6 @@ public class BuyTicketPanel extends GridPane {
 				.observableArrayList(MovieTheaterTypeWriter.getInstance().getTypes());
 		this.movieTheathersComboBox = new ComboBox<MovieTheatherType>(movieTheathers);
 		// TODO make sure dates in theather are as dates here
-//		movieTheathersComboBox.setOnAction(new EventHandler<ActionEvent>() {
-//		});
 
 		movieTheathersComboBox.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<MovieTheatherType>() {
@@ -200,6 +200,18 @@ public class BuyTicketPanel extends GridPane {
 		add(save, 0, 10);
 		add(buy, 1, 10);
 
+	}
+
+	protected void handleDatePickerComboBoxChange() {
+		LocalDate date = datePicker.getValue();
+		System.out.println(date);
+		try {
+			Cinema.getInstance().showAllMoviesByDate(date);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
