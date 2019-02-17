@@ -10,41 +10,47 @@ import bean.Ticket;
 public class UserHelper {
 	private static final int MIN_PASSWORD_LENGTH = 5;
 	public static final String[] CITIES = { "София", "Пловдив", "Варна", "Стара Загора", "Плевен", "Смолян", "Бургас",
-	"Благоевград" };
+			"Благоевград" };
 	private static UserHelper instance = null;
-	
+
 	private UserHelper() {
 		super();
 	}
+
 	public static UserHelper getInstance() {
-		if(instance==null) {
+		if (instance == null) {
 			instance = new UserHelper();
 		}
 		return instance;
 	}
 
-	public void buyTicket(MovieTheather mt,String type,int count,String seat) throws NotValidTicketTypeException {
-		//TODO get movieTheather by movieTheather type
-			Ticket ticket = Ticket.getInstance(type, seat, mt, null);
-				boolean isAlreadyReserved = false;
-				for (Ticket t : mt.getBookedTickets()) {
-					if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
-						isAlreadyReserved = true;
-						break;
-					}
+	public void buyTicket(MovieTheather mt, String type, int count, String seat) throws NotValidTicketTypeException {
+		// TODO get movieTheather by movieTheather type
+		Ticket ticket = Ticket.getInstance(type, seat, mt, null);
+		boolean isAlreadyReserved = false;
+		if (mt != null) {
+			for (Ticket t : mt.getBookedTickets()) {
+				if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
+					isAlreadyReserved = true;
+					break;
 				}
-				if (!isAlreadyReserved) {
-					mt.bookTicketInTheather(ticket);
-					ticket.reservedTicket();
-					System.out.println("Поздравления вие запазихте билет");
-				} else {
-					System.out.println("Съжаляваме този билет вече е бил запазен");
-				}
+			}
+			if (!isAlreadyReserved) {
+				mt.bookTicketInTheather(ticket);
+				ticket.reservedTicket();
+				System.out.println("Поздравления вие запазихте билет");
+			} else {
+				System.out.println("Съжаляваме този билет вече е бил запазен");
+			}
+		}
+		System.out.println("Няма такава зала!");
 	}
+
 	public void showProgramForToday() {
 		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
 
 	}
+
 	public boolean isValidPassword(String password) {
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
 			return true;

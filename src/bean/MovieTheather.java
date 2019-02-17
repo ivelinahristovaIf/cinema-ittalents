@@ -16,7 +16,7 @@ public class MovieTheather {
 
 	private int id;
 	private static int nextId = 1;// TODO
-	private Map<Character, TreeSet<Integer>> seats;
+//	private Map<Character, TreeSet<Integer>> seats;
 	private Set<Ticket> bookedTickets;
 
 	private MovieTheatherType type;
@@ -24,7 +24,7 @@ public class MovieTheather {
 	public MovieTheather() {
 		super();
 		this.id = nextId++;
-		this.seats = new TreeMap<Character, TreeSet<Integer>>();
+//		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.bookedTickets = new HashSet<>();
 	}
 
@@ -32,7 +32,7 @@ public class MovieTheather {
 		this.id = nextId++;
 		this.type = type;
 		this.bookedTickets = new HashSet<>();
-		this.seats = new TreeMap<Character, TreeSet<Integer>>();
+//		this.seats = new TreeMap<Character, TreeSet<Integer>>();
 		this.fillInMovieTheatreSeats();
 	}
 
@@ -43,7 +43,7 @@ public class MovieTheather {
 			for (int i = 1; i <= MAX_COLS_IN_ONE_ROW; i++) {
 				cols.add(i);
 			}
-			this.seats.put(row, (TreeSet<Integer>) cols);
+//			this.seats.put(row, (TreeSet<Integer>) cols);
 		}
 	}
 
@@ -54,31 +54,31 @@ public class MovieTheather {
 		this.bookedTickets.add(ticket);
 	}
 
-	public void showSeatsInTheathre() throws NotValidTicketTypeException {
-		System.out.println("Места в киното: ");
-		System.out.println("        ==============ЕКРАН==============");
-		System.out.println();
-		for (Entry<Character, TreeSet<Integer>> entry : this.seats.entrySet()) {
-			System.out.print("Ред " + entry.getKey() + ": ");
-			for (Integer col : entry.getValue()) {
-				String seat = entry.getKey() + ("" + col);
-				Ticket t = Ticket.getInstance("ДЕТСКИ", seat, this,new Movie());//TODO
-				boolean isFreeSeat = true;
-				for (Ticket ticket : this.getBookedTickets()) {
-					if (t.isTicketsEquals(ticket)) {
-						isFreeSeat = false;
-						break;
-					}
-				}
-				if (isFreeSeat) {
-					System.out.print(col + " ");
-				} else {
-					System.out.print("X" + " ");
-				}
-			}
-			System.out.println();
-		}
-	}
+//	public void showSeatsInTheathre() throws NotValidTicketTypeException {
+//		System.out.println("Места в киното: ");
+//		System.out.println("        ==============ЕКРАН==============");
+//		System.out.println();
+//		for (Entry<Character, TreeSet<Integer>> entry : this.seats.entrySet()) {
+//			System.out.print("Ред " + entry.getKey() + ": ");
+//			for (Integer col : entry.getValue()) {
+//				String seat = entry.getKey() + ("" + col);
+//				Ticket t = Ticket.getInstance("ДЕТСКИ", seat, this,new Movie());//TODO
+//				boolean isFreeSeat = true;
+//				for (Ticket ticket : this.getBookedTickets()) {
+//					if (t.isTicketsEquals(ticket)) {
+//						isFreeSeat = false;
+//						break;
+//					}
+//				}
+//				if (isFreeSeat) {
+//					System.out.print(col + " ");
+//				} else {
+//					System.out.print("X" + " ");
+//				}
+//			}
+//			System.out.println();
+//		}
+//	}
 
 	public int getId() {
 		return id;
@@ -88,13 +88,13 @@ public class MovieTheather {
 		this.id = id;
 	}
 
-	public Map<Character, TreeSet<Integer>> getSeats() {
-		return seats;
-	}
-
-	public void setSeats(Map<Character, TreeSet<Integer>> seats) {
-		this.seats = seats;
-	}
+//	public Map<Character, TreeSet<Integer>> getSeats() {
+//		return seats;
+//	}
+//
+//	public void setSeats(Map<Character, TreeSet<Integer>> seats) {
+//		this.seats = seats;
+//	}
 
 	public Set<Ticket> getBookedTickets() {
 		return bookedTickets;
@@ -144,15 +144,15 @@ public class MovieTheather {
 	public String toString() {
 		return "Зала " + id +  ": " + type;
 	}
-	public static void main(String[] args) {
-		Cinema cinema = new Cinema();
-		MovieTheather mt = new MovieTheather(new MovieTheatherType("IMAX", "2D", "Dolby Atmos"));
-		try {
-			mt.showSeatsInTheathre();
-		} catch (NotValidTicketTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		System.out.println(mt);
-	}
+//	public static void main(String[] args) {
+//		Cinema cinema = new Cinema();
+//		MovieTheather mt = new MovieTheather(new MovieTheatherType("IMAX", "2D", "Dolby Atmos"));
+//		try {
+//			mt.showSeatsInTheathre();
+//		} catch (NotValidTicketTypeException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+////		System.out.println(mt);
+//	}
 }

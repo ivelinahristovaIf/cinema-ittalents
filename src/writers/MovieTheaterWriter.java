@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import bean.MovieTheather;
+import bean.MovieTheatherType;
 
 public class MovieTheaterWriter {
 	private static MovieTheaterWriter instance = null;
@@ -22,7 +25,7 @@ public class MovieTheaterWriter {
 	private File file;
 	private Set<MovieTheather> theaters;
 	
-	private MovieTheaterWriter() throws IOException {
+	public MovieTheaterWriter() throws IOException {
 		this.theaters = new LinkedHashSet<MovieTheather>();
 		this.file = new File("MovieTheaters.json");
 		if (!file.exists()) {
@@ -78,22 +81,22 @@ public class MovieTheaterWriter {
 			this.theaters.add(theater);
 		}
 	}
-//	public static void main(String[] args) throws FileNotFoundException {
-//		try {
-//			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		List<MovieTheatherType> types = new ArrayList<>();
-//		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
-//		
-//		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())));
-//		
-//		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
-//		MovieTheaterWriter.getInstance().addMovieTheater(theater);
-//		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
-//	}
+	public static void main(String[] args) throws FileNotFoundException {
+		try {
+			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<MovieTheatherType> types = new ArrayList<>();
+		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
+		
+		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())));
+		
+		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
+		MovieTheaterWriter.getInstance().addMovieTheater(theater);
+		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
+	}
 
 	public Set<MovieTheather> getTheaters() {
 		System.out.println(theaters);

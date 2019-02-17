@@ -46,5 +46,41 @@
     "type": "PREMIUM",
     "videoFormat": "4D",
     "audioFormat": "Dolby Atmos"
+  },
+  {
+    "id": 9,
+    "type": "IMAX",
+    "videoFormat": "2D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 10,
+    "type": "IMAX",
+    "videoFormat": "2D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 20,
+    "type": "VIP",
+    "videoFormat": "HFR-3D",
+    "audioFormat": "Dolby Atmos"
+  },
+  {
+    "id": 31,
+    "type": "LUXE",
+    "videoFormat": "Real-D-3D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 43,
+    "type": "PREMIUM",
+    "videoFormat": "4D",
+    "audioFormat": "Dolby Atmos"
+  },
+  {
+    "id": 56,
+    "type": "IMAX",
+    "videoFormat": "2D",
+    "audioFormat": "Dolby Digital"
   }
 ]

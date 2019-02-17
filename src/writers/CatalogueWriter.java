@@ -61,10 +61,10 @@ public class CatalogueWriter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		Type setType = new TypeToken<Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>>() {
-		}.getType();
+		Type setType = new TypeToken<Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>>>() {}.getType();
 		if (builder.length() > 0) {
-			Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getCatalogue = gson.fromJson(builder.toString(), setType);
+			Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getCatalogue 
+			= gson.fromJson(builder.toString(), setType);
 			this.catalogue.putAll(getCatalogue);
 		} else {
 			System.out.println("Oshte nqma obekti");
@@ -114,10 +114,10 @@ public class CatalogueWriter {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
-//		CatalogueWriter.getInstance().getCatalogueFromFile();
+		CatalogueWriter.getInstance().getCatalogueFromFile();
 //		CatalogueWriter.getInstance().addMovie(new MovieTheather(new MovieTheatherType(MovieTheatherType.MOVIE_THEATHER_TYPE[0], MovieTheatherType.VIDEO_FORMAT[2],MovieTheatherType.AUDIO_FORMAT[1])), LocalDate.of(2019, 02, 19), new Movie("Comedy", "Friends", (short) 90, LocalDate.of(2019, 02, 18), "category"));
 //		CatalogueWriter.getInstance().addMovie(new MovieTheather(new MovieTheatherType(MovieTheatherType.MOVIE_THEATHER_TYPE[1], MovieTheatherType.VIDEO_FORMAT[1],MovieTheatherType.AUDIO_FORMAT[0])), LocalDate.of(2019, 02, 18), new Movie("Comedy", "Allo Allo", (short) 90, LocalDate.of(2019, 02, 18), "category"));
-
+//
 //		CatalogueWriter.getInstance().saveCatalogueToFile();
 		
 //		for(MovieTheather mt : CatalogueWriter.getInstance().getCatalogue().keySet()) {

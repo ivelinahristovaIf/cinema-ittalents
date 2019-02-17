@@ -37,7 +37,7 @@ public class Cinema {
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 
-		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
+//		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
 //		System.out.println("Vzimam gi");
 //		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
 //		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
