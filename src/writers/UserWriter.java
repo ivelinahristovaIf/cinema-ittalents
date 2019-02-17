@@ -22,9 +22,6 @@ import helper.UserHelper;
 
 public class UserWriter {
 	private Set<ILogger> users;
-
-	// TODO singleton
-
 	private static UserWriter instance = null;
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
@@ -57,7 +54,7 @@ public class UserWriter {
 			} catch (IOException e) {
 				return;
 			}
-			System.out.println("Zapisah gi vyv file");
+			System.out.println("Zapisah gi vyv file "+file.getName());
 		}
 	}
 
@@ -83,19 +80,9 @@ public class UserWriter {
 	public void addUser(ILogger user) {
 		if (user != null) {
 			for (ILogger u : users) {
-				if(u.getType()==ILogger.USER) {
 				if (u.equals(user)) {
-//					((User) u).setFirstname(((User) user).getFirstname());
-//					((User) u).setSurname(((User) user).getSurname());
-//					((User) u).setLastname(((User) user).getLastname());
-//					((User) u).setBirthDate(((User) user).getBirthDate());
-//					((User) u).setCity(((User) user).getCity());
-//					((User) u).setEmail(((User) user).getEmail());
-//					((User) u).setPassword(((Admin) user).getPassword());
-					//TODO
-				}
-				}else {
-					//TODO admin
+					this.users.remove(u);
+					System.out.println("Вече има");
 				}
 			}
 			this.users.add(user);
@@ -105,7 +92,6 @@ public class UserWriter {
 	public static void main(String[] args) throws IOException {
 		UserWriter uw = new UserWriter();
 		uw.getUsersFromFile();
-		uw.addUser(new User("ivelina@abv.bg", "12345", "Ivelina", "Ivaylova", "Hristova", LocalDate.of(1997, 11, 20), "София"));
 		uw.addUser(Admin.getInstance());
 		uw.saveUsersToFile();
 		

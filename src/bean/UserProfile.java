@@ -63,6 +63,7 @@ public class UserProfile {
 
 	public void addFavouriteMovie(Movie movie) {
 		this.favouriteMovies.add(movie);// TODO thread
+		System.out.println("Филма бе добавен в любими");
 	}
 
 	public String getPhoneNumber() {

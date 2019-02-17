@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class Cinema {
 	private String address;
 	private String phoneNumber;
 	private List<MovieTheather> movieTheathers = new ArrayList<>();
+	private static Cinema instance = null;
 	// type->date->movie
 	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
 	// TODO movie setTheather
@@ -31,7 +33,7 @@ public class Cinema {
 		super();
 	}
 
-	public Cinema(String name, String address, String phoneNumber) throws FileNotFoundException {
+	private Cinema(String name, String address, String phoneNumber) throws FileNotFoundException {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
@@ -41,7 +43,7 @@ public class Cinema {
 		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
 		MovieTheather mt;
 		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
-			mt = new MovieTheather(movieTheatherType, this); // TODO remove cinema from construktor
+			mt = new MovieTheather(movieTheatherType); // TODO remove cinema from construktor
 			MovieTheaterWriter.getInstance().addMovieTheater(mt);
 			this.movieTheathers.add(mt);// TODO dali da ima movieTheathers kato field
 			if (!this.moviesCatalogue.containsKey(mt)) {// if not contains theather
@@ -57,8 +59,25 @@ public class Cinema {
 		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
 	}
 
-	public Set<MovieTheather> getAllMovieTheathers() {
-		return this.moviesCatalogue.keySet();
+	public static Cinema getInstance() throws FileNotFoundException {
+		if (instance == null) {
+			instance = new Cinema("Кино Арена", "България, София, бул. Цариградско шосе, 115", "555-012-413");
+		}
+		return instance;
+	}
+
+	public HashSet<MovieTheather> getAllMovieTheathers() {
+		HashSet<MovieTheather> theathers = new HashSet<>(this.moviesCatalogue.keySet());
+		return theathers;
+	}
+	public MovieTheather getMovieTheatherByType(MovieTheatherType type) {
+		for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
+			if(movieTheather.equals(type)) {
+				return movieTheather;
+			}
+		}
+		System.out.println("No theather by this type");
+		return null;
 	}
 
 	public Set<LocalDate> getAllDatesByTheather(MovieTheather mt) {
@@ -66,20 +85,20 @@ public class Cinema {
 			System.out.println("Няма зали в киното");
 			return null;
 		}
-		if(!this.moviesCatalogue.containsKey(mt)) {
+		if (!this.moviesCatalogue.containsKey(mt)) {
 			System.out.println();
 			return null;
 		}
 		return this.moviesCatalogue.get(mt).keySet();
 	}
-	
-	public Set<Movie> getAllMoviesByTheatherAndDate(MovieTheather mt,LocalDate date){
-		if(!this.moviesCatalogue.containsKey(mt)) {
-			System.out.println();
+
+	public Set<Movie> getAllMoviesByTheatherAndDate(MovieTheather mt, LocalDate date) {
+		if (!this.moviesCatalogue.containsKey(mt)) {
+			System.out.println("no movie theather");
 			return null;
 		}
-		if(!this.moviesCatalogue.get(mt).containsKey(date)) {
-			System.out.println();
+		if (!this.moviesCatalogue.get(mt).containsKey(date)) {
+			System.out.println("no date");
 			return null;
 		}
 		return this.moviesCatalogue.get(mt).get(date);
@@ -90,7 +109,7 @@ public class Cinema {
 			this.movieTheathers = new ArrayList<MovieTheather>();
 		}
 		MovieTheather theather = null;
-		theather = new MovieTheather(type, this);
+		theather = new MovieTheather(type);
 		this.movieTheathers.add(theather);
 		return theather;
 	}

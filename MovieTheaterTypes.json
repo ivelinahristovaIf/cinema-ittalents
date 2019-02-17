@@ -1,26 +1,44 @@
 [
   {
-    "id": 2,
-    "type": "VIP",
-    "videoFormat": "2D",
-    "audioFormat": "Digital"
+    "id": 1,
+    "type": "IMAX",
+    "videoFormat": "Real-D-3D",
+    "audioFormat": "Dolby Digital"
   },
   {
-    "id": 1,
+    "id": 2,
     "type": "IMAX",
     "videoFormat": "2D",
     "audioFormat": "Dolby Atmos"
   },
   {
-    "id": 1,
+    "id": 4,
     "type": "IMAX",
     "videoFormat": "HFR-3D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 7,
+    "type": "IMAX",
+    "videoFormat": "4D",
     "audioFormat": "Dolby Atmos"
   },
   {
-    "id": 5,
-    "type": "IMAX",
+    "id": 11,
+    "type": "VIP",
+    "videoFormat": "Real-D-3D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 16,
+    "type": "LUXE",
     "videoFormat": "2D",
+    "audioFormat": "Dolby Atmos"
+  },
+  {
+    "id": 22,
+    "type": "PREMIUM",
+    "videoFormat": "4D",
     "audioFormat": "Dolby Digital"
   }
 ]

@@ -31,7 +31,7 @@ public class LoginDialog {
 		stage = s;
 		arguments = args;
 		stage.setTitle("Login");
-		passBox.setText("12345");
+		passBox.setText("12345678");
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);

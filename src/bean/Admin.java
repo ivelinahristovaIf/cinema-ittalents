@@ -256,8 +256,4 @@ public class Admin implements ILogger{
 	public Set<Movie> getMovies() {
 		return Collections.unmodifiableSet(movies);
 	}
-	
-
-
-
 }

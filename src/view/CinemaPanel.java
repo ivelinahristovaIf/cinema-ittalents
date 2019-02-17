@@ -34,7 +34,7 @@ public class CinemaPanel extends GridPane {
 		// TODO cinema getInctance
 		Cinema cinema = null;
 		try {
-			cinema = new Cinema("Arena", "България, София, бул. Цариградско шосе, 115", "555-012-413");
+			cinema = Cinema.getInstance();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

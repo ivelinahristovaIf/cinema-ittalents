@@ -1,10 +1,8 @@
 package model;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
-import bean.Admin;
 import bean.ILogger;
 import bean.User;
 import writers.UserWriter;
@@ -23,8 +21,7 @@ public class UserModel {
 		return instance;
 	}
 
-	public static ILogger getLoggerByEmailAndPassword(String email, String password)
-			throws IOException, NoSuchAlgorithmException {
+	public static ILogger getLoggerByEmailAndPassword(String email, String password) throws IOException {
 		UserWriter writer = new UserWriter();
 		writer.getUsersFromFile();
 		Set<ILogger> loggers = writer.getUsers();
@@ -44,7 +41,6 @@ public class UserModel {
 		}
 		user.setId(savedUser.getId());
 		user.setEmail(savedUser.getEmail());
-//		user.setCinema(CinemaModel.fill(user.getCinema(), savedUser.getCinema()));//TODO
 		return user;
 	}
 

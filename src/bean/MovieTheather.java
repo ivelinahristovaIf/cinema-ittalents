@@ -28,7 +28,7 @@ public class MovieTheather {
 		this.bookedTickets = new HashSet<>();
 	}
 
-	public MovieTheather(MovieTheatherType type, Cinema cinema) {//TODO remove cinema
+	public MovieTheather(MovieTheatherType type) {//TODO remove cinema
 		this.id = nextId++;
 		this.type = type;
 		this.bookedTickets = new HashSet<>();
@@ -146,7 +146,7 @@ public class MovieTheather {
 	}
 	public static void main(String[] args) {
 		Cinema cinema = new Cinema();
-		MovieTheather mt = new MovieTheather(new MovieTheatherType("IMAX", "2D", "Dolby Atmos"), cinema);
+		MovieTheather mt = new MovieTheather(new MovieTheatherType("IMAX", "2D", "Dolby Atmos"));
 		try {
 			mt.showSeatsInTheathre();
 		} catch (NotValidTicketTypeException e) {

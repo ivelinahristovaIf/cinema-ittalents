@@ -8,6 +8,7 @@ import bean.Movie;
 import bean.User;
 import bean.UserProfile;
 import helper.MovieHelper;
+import helper.UserHelper;
 import helper.UserProfileHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,7 +79,7 @@ public class PersonalInfoPanel extends GridPane {
 			this.educationField = user.getProfile() != null ? new TextField(user.getProfile().getEducation())
 					: new TextField("Въведете образование");
 
-			ObservableList<String> options = FXCollections.observableArrayList("София", "Варна", "Бургас");
+			ObservableList<String> options = FXCollections.observableArrayList(UserHelper.CITIES);
 			citiesComboBox = new ComboBox<String>(options);
 			citiesComboBox.setVisibleRowCount(5);
 			citiesComboBox.setValue(((User) user).getCity());
@@ -156,9 +157,9 @@ public class PersonalInfoPanel extends GridPane {
 
 	protected void handleSaveButton(ActionEvent event) {
 		if (user == null) {
+			System.out.println("new user");
 			user = new User();
 		}
-		System.out.println(fnameField.getText());
 		user.setFirstname(fnameField.getText());
 		user.setSurname(surnameField.getText());
 		user.setLastname(lnameField.getText());

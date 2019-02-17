@@ -1,5 +1,6 @@
 package bean;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class User implements ILogger {
@@ -21,6 +22,7 @@ public class User implements ILogger {
 	public User() {
 		super();
 		this.setType();
+		this.profile = new UserProfile();
 	}
 
 	public User(String email, String password, String firstname, String surname, String lastname, LocalDate birthDate,
@@ -35,6 +37,13 @@ public class User implements ILogger {
 		this.lastname = lastname;
 		this.birthDate = birthDate;
 		this.city = city;
+		this.profile = new UserProfile();
+//		try {
+//			this.cinema = Cinema.getInstance();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public int getId() {

@@ -1,16 +1,234 @@
 [
   {
     "id": 1,
-    "name": "She",
+    "name": "It",
+    "length": 90,
+    "premiere": {
+      "year": 2019,
+      "month": 1,
+      "day": 23
+    },
+    "genre": "”∆¿—»",
+    "category": "D",
+    "projections": [],
+    "startTimes": {
+      "hour": 13,
+      "minute": 10,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 22,
+      "minute": 20,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 13,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 15,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 16,
+        "minute": 50,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 18,
+        "minute": 40,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 20,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 4
+  },
+  {
+    "id": 1,
+    "name": "Alita",
     "length": 120,
     "premiere": {
       "year": 2019,
       "month": 2,
-      "day": 6
+      "day": 15
     },
-    "genre": " ŒÃ≈ƒ»ﬂ",
+    "genre": "≈ ÿ⁄Õ",
     "category": "C",
     "projections": [],
-    "freeHours": []
+    "startTimes": {
+      "hour": 10,
+      "minute": 10,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 21,
+      "minute": 50,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 10,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 12,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 14,
+        "minute": 50,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 17,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 19,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 3
+  },
+  {
+    "id": 2,
+    "name": "Happy Death Day",
+    "length": 101,
+    "premiere": {
+      "year": 2019,
+      "month": 2,
+      "day": 15
+    },
+    "genre": "”∆¿—»",
+    "category": "C",
+    "projections": [],
+    "startTimes": {
+      "hour": 12,
+      "minute": 4,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 22,
+      "minute": 9,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 12,
+        "minute": 4,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 14,
+        "minute": 5,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 16,
+        "minute": 6,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 18,
+        "minute": 7,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 20,
+        "minute": 8,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 4
+  },
+  {
+    "id": 3,
+    "name": "Lego",
+    "length": 107,
+    "premiere": {
+      "year": 2019,
+      "month": 2,
+      "day": 8
+    },
+    "genre": "¿Õ»Ã¿÷»ﬂ",
+    "category": "B",
+    "projections": [],
+    "startTimes": {
+      "hour": 11,
+      "minute": 28,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 22,
+      "minute": 3,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 11,
+        "minute": 28,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 13,
+        "minute": 35,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 15,
+        "minute": 42,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 17,
+        "minute": 49,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 19,
+        "minute": 56,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 5
   }
 ]
