@@ -123,7 +123,7 @@ public class Movie implements Comparable<Movie> {
 
 	@Override
 	public String toString() {
-		return  name + ", времетраене: " + length + ", премиерна дата:" + premiere + ", жанр: " + genre
+		return  name + ", времетраене: " + length + ", премиерна дата: " + premiere + ", жанр: " + genre
 				+ ", категория: " + category;
 	}
 

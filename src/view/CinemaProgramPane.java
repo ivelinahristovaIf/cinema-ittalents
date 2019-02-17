@@ -119,6 +119,13 @@ public class CinemaProgramPane extends GridPane {
 		ObservableList<Movie> movies = FXCollections.observableArrayList(MovieWriter.getInstance().getMovies());
 		this.moviesComboBox = new ComboBox<Movie>(movies);
 		moviesComboBox.setValue(movies.get(0));
+		
+		moviesComboBox.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
 
 		this.save = new Button("Добави");
 
