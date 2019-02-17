@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,11 +13,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
+import com.google.gson.Gson;
 import cinema.DemoCinema;
 import helper.CalendarHelper;
 import writers.MovieTheaterTypeWriter;
 import writers.MovieTheaterWriter;
+import writers.MovieWriter;
 
 public class Cinema {
 	private String name;
@@ -25,7 +27,7 @@ public class Cinema {
 	private List<MovieTheather> movieTheathers = new ArrayList<>();
 	private static Cinema instance = null;
 	// type->date->movie
-	private Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
+	private Map<MovieTheatherType, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
 	// TODO movie setTheather
 
 	public Cinema() {
@@ -36,27 +38,18 @@ public class Cinema {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-
-//		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();// LOAD TYPES
-//		System.out.println("Vzimam gi");
-//		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();// LOAD THEATERS
-//		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();// GET TYPES
-//		MovieTheather mt;
-//		for (MovieTheatherType movieTheatherType : types) {// FOR EVERY TYPE CREATE THEATHER
-//			mt = new MovieTheather(movieTheatherType);
-//			MovieTheaterWriter.getInstance().addMovieTheater(mt);
-//			this.movieTheathers.add(mt);// TODO dali da ima movieTheathers kato field
-//			if (!this.moviesCatalogue.containsKey(mt)) {// if not contains theather
-//				LocalDate start = LocalDate.now();// FILL DATES
-//				TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
-//				while (!start.isAfter(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
-//					dates.put(start, new TreeSet<Movie>());
-//					start = start.plusDays(1);
-//				}
-//				this.moviesCatalogue.put(mt, dates);
-//			}
-//		}
-//		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
+		
+		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();
+		for(MovieTheatherType type : types) {
+			LocalDate start = LocalDate.now();
+			TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
+			while (start.isBefore(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
+				dates.put(start, new TreeSet<Movie>());
+				start = start.plusDays(1);
+			}
+			this.moviesCatalogue.put(type, dates);
+		}
 	}
 
 	public static Cinema getInstance() throws FileNotFoundException {
@@ -66,14 +59,14 @@ public class Cinema {
 		return instance;
 	}
 
-	public HashSet<MovieTheather> getAllMovieTheathers() {
-		HashSet<MovieTheather> theathers = new HashSet<>(this.moviesCatalogue.keySet());
+	public HashSet<MovieTheatherType> getAllMovieTheathers() {
+		HashSet<MovieTheatherType> theathers = new HashSet<>(this.moviesCatalogue.keySet());
 		return theathers;
 	}
-	public MovieTheather getMovieTheatherByType(MovieTheatherType type) {
-		for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
-			if(movieTheather.getType().equals(type)) {
-				return movieTheather;
+	public MovieTheatherType getMovieTheatherByType(MovieTheatherType type) {
+		for (MovieTheatherType movieTheatherType : this.moviesCatalogue.keySet()) {
+			if(movieTheatherType.equals(type)) {
+				return movieTheatherType;
 			}
 		}
 		System.out.println("No theather by this type");
@@ -114,7 +107,7 @@ public class Cinema {
 		return theather;
 	}
 
-	public void addMovieToCatalogue(MovieTheather theater, LocalDate date, Movie movie) {
+	public void addMovieToCatalogue(MovieTheatherType theater, LocalDate date, Movie movie) {
 		if (movie != null && this.moviesCatalogue != null) {
 			if (!this.moviesCatalogue.isEmpty()) {
 				System.out.println("CLASS CINEMA: kataloga ne e prazen");
@@ -145,15 +138,15 @@ public class Cinema {
 		System.out.println("Всички филми на " + date);
 		List<Movie> movies = new ArrayList<Movie>();
 		if (!this.moviesCatalogue.isEmpty()) {
-			for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
-				if (this.moviesCatalogue.get(movieTheather).containsKey(date)) {
-					movies.addAll(this.moviesCatalogue.get(movieTheather).get(date));
+			for (MovieTheatherType movieTheatherType : this.moviesCatalogue.keySet()) {
+				if (this.moviesCatalogue.get(movieTheatherType).containsKey(date)) {
+					movies.addAll(this.moviesCatalogue.get(movieTheatherType).get(date));
 					if (!movies.isEmpty()) {
 						for (Movie movie : movies) {
 							System.out.println(movie.getId() + " " + movie);
 						}
 					} else {
-						System.out.println("Няма филми за този ден в зала " + movieTheather);
+						System.out.println("Няма филми за този ден в зала " + movieTheatherType);
 					}
 					return movies;
 				} else {
@@ -190,22 +183,14 @@ public class Cinema {
 		this.movieTheathers = movieTheathers;
 	}
 
-	public Map<MovieTheather, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
+	public Map<MovieTheatherType, TreeMap<LocalDate, TreeSet<Movie>>> getMoviesCatalogue() {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
 	}
 
-//	public static void main(String[] args) throws FileNotFoundException {
-//		Cinema cinema = Cinema.getInstance();
-//		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
-//			System.out.println(mt);
-//			System.out.println(mt.getType());
-//			for (LocalDate date : cinema.moviesCatalogue.get(mt).keySet()) {
-//				System.out.println(date);
-//				cinema.showAllMoviesByDate(date);
-//			}
-//		}
-//		cinema.getAllMovieTheathers().forEach(mt->System.out.println(mt));
-//	}
+	public static void main(String[] args) throws FileNotFoundException {
+		Cinema cinema = new Cinema("Arena", "Sofia", "0885546512");
+		System.out.println(cinema.getMoviesCatalogue());
+	}
 
 	@Override
 	public String toString() {
