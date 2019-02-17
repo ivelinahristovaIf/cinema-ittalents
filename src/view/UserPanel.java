@@ -13,7 +13,6 @@ public class UserPanel {
 	
 	public void start(ILogger user) {
 		Stage stage = new Stage();
-
 		TabPane tabPane = new TabPane();
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 				
@@ -40,15 +39,6 @@ public class UserPanel {
 		userManagementTab.setContent(userManagementGrid);
 		tabPane.getTabs().add(userManagementTab);
 		
-
-		
-//		Tab personalTab = new Tab("Personal information");
-//		PersonalInfoPane personalGrid = new PersonalInfoPane(user);
-		
-		// TODO Personal information edit page
-		
-//		personalTab.setContent(personalGrid);
-//		tabPane.getTabs().add(personalTab);
 		
 		Scene scene = new Scene(tabPane, 1400, 700);
 		stage.setScene(scene);

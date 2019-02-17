@@ -1,4 +1,4 @@
-package tickets;
+package helper;
 
 public class NotValidTicketTypeException extends Exception {
 

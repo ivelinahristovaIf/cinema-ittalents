@@ -5,8 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bean.MovieTheather;
-import tickets.NotValidTicketTypeException;
-import tickets.Ticket;
+import bean.Ticket;
 
 public class UserHelper {
 	private static final int MIN_PASSWORD_LENGTH = 5;
@@ -24,43 +23,23 @@ public class UserHelper {
 		return instance;
 	}
 
-	public void buyTicket(MovieTheather mt) throws NotValidTicketTypeException {
+	public void buyTicket(MovieTheather mt,String type,int count,String seat) throws NotValidTicketTypeException {
 		Scanner sc = new Scanner(System.in);
+		//TODO get movieTheather by movieTheather type
 
-		System.out.println("Колко билета искате да купите: ");
-		int countTickets = sc.nextInt();
-
-		while (countTickets > 0) {
-			System.out.println("Какъв билет искате да купите: ");
-			System.out.println("За детски билет натиснете 1");
-			System.out.println("За стандартен билет натиснете 2");
-			System.out.println("За билет за инвалиди натиснете 3");
-			System.out.println("За студентски билет натиснете 4");
-
-			int ticketType = sc.nextInt();
-			System.out.println("Изберете място");
-			mt.showSeatsInTheathre();
-			String seat = sc.next();
-			Ticket ticket = null;
-			switch (ticketType) {
-			case 1:
-				ticket = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, mt);
-				break;
-
-			case 2:
-				ticket = Ticket.getInstance(Ticket.ticketType.STANDART_TICKET, seat, mt);
-				break;
-
-			case 3:
-				ticket = Ticket.getInstance(Ticket.ticketType.INVALID_TICKET, seat, mt);
-				break;
-
-			case 4:
-				ticket = Ticket.getInstance(Ticket.ticketType.STUDENT_TICKET, seat, mt);
-				break;
-			default:
-				break;
-			}
+		while (count > 0) {//TODO
+//			System.out.println("Какъв билет искате да купите: ");
+//			System.out.println("За детски билет натиснете 1");
+//			System.out.println("За стандартен билет натиснете 2");
+//			System.out.println("За билет за инвалиди натиснете 3");
+//			System.out.println("За студентски билет натиснете 4");
+//
+//			int ticketType = sc.nextInt();
+//			System.out.println("Изберете място");
+//			mt.showSeatsInTheathre();
+//			String seat = sc.next();
+			Ticket ticket = Ticket.getInstance(type, seat, mt, null);
+	
 //			if (this.user.g > ticket.getPrice()) {
 				boolean isAlreadyReserved = false;
 				for (Ticket t : mt.getBookedTickets()) {
@@ -74,7 +53,7 @@ public class UserHelper {
 					ticket.reservedTicket();
 
 					System.out.println("Поздравления вие запазихте билет");
-					countTickets--;
+					count--;//TODO choose from console
 				} else {
 					System.out.println("Съжаляваме този билет вече е бил запазен");
 					continue;

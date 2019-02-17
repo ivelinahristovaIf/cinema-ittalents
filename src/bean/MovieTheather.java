@@ -3,12 +3,12 @@ package bean;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import helper.NotValidTicketTypeException;
+
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import tickets.NotValidTicketTypeException;
-import tickets.Ticket;
 
 public class MovieTheather {
 	private static final char MAX_ROWS_IN_THEATHER = 'M';
@@ -62,7 +62,7 @@ public class MovieTheather {
 			System.out.print("–Â‰ " + entry.getKey() + ": ");
 			for (Integer col : entry.getValue()) {
 				String seat = entry.getKey() + ("" + col);
-				Ticket t = Ticket.getInstance(Ticket.ticketType.CHILD_TICKET, seat, this);
+				Ticket t = Ticket.getInstance("ƒ≈“— »", seat, this,new Movie());//TODO
 				boolean isFreeSeat = true;
 				for (Ticket ticket : this.getBookedTickets()) {
 					if (t.isTicketsEquals(ticket)) {

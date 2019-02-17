@@ -15,7 +15,6 @@ import java.util.TreeSet;
 import cinema.DemoCinema;
 import helper.CalendarHelper;
 import helper.NotValidMovieTheatherTypeException;
-import tickets.Ticket;
 import writers.MovieTheaterTypeWriter;
 import writers.MovieTheaterWriter;
 
@@ -67,11 +66,23 @@ public class Cinema {
 			System.out.println("Няма зали в киното");
 			return null;
 		}
+		if(!this.moviesCatalogue.containsKey(mt)) {
+			System.out.println();
+			return null;
+		}
 		return this.moviesCatalogue.get(mt).keySet();
 	}
-
-	public void chooseMovieFromCinema() {
-		// TODO
+	
+	public Set<Movie> getAllMoviesByTheatherAndDate(MovieTheather mt,LocalDate date){
+		if(!this.moviesCatalogue.containsKey(mt)) {
+			System.out.println();
+			return null;
+		}
+		if(!this.moviesCatalogue.get(mt).containsKey(date)) {
+			System.out.println();
+			return null;
+		}
+		return this.moviesCatalogue.get(mt).get(date);
 	}
 
 	public MovieTheather addMovieTheatherInCinema(MovieTheatherType type) {

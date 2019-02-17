@@ -236,4 +236,16 @@ public class Movie implements Comparable<Movie> {
 	public void setNumberOfProjectionsForDay(int numberOfProjectionsForDay) {
 		this.numberOfProjectionsForDay = numberOfProjectionsForDay;
 	}
+
+	public Set<LocalTime> getProjections() {
+		return projections;
+	}
+
+	public void setProjections(Set<LocalTime> projections) {
+		this.projections = projections;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 }
