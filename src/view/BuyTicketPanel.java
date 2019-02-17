@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -121,7 +122,7 @@ public class BuyTicketPanel extends GridPane {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		Set<MovieTheatherType> types = new TreeSet<>();
+		HashSet<MovieTheatherType> types = new HashSet<>();
 		types.addAll(Cinema.getInstance().getAllMovieTheathers());
 		// TODO stash them in cinema
 		ObservableList<MovieTheatherType> movieTheathers = FXCollections
