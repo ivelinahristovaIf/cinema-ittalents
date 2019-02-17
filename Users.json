@@ -216,5 +216,84 @@
         }
       ]
     }
+  },
+  {
+    "id": 1,
+    "type": 1,
+    "email": "pami@mail.bg",
+    "password": "00000000",
+    "firstname": "Pamela",
+    "surname": "Blagoeva",
+    "lastname": "Mitova",
+    "birthDate": {
+      "year": 1999,
+      "month": 2,
+      "day": 11
+    },
+    "city": "Варна",
+    "profile": {
+      "favouriteGenres": [],
+      "personalInterests": [],
+      "favouriteMovies": []
+    }
+  },
+  {
+    "id": 1,
+    "type": 1,
+    "email": "eli@yahoo.com",
+    "password": "123",
+    "firstname": "Eli",
+    "surname": "Ivanova",
+    "lastname": "Dobrinova",
+    "birthDate": {
+      "year": 2016,
+      "month": 2,
+      "day": 17
+    },
+    "city": "Варна",
+    "profile": {
+      "favouriteGenres": [],
+      "personalInterests": [],
+      "favouriteMovies": []
+    }
+  },
+  {
+    "id": 1,
+    "type": 1,
+    "email": "mimi@abv.bg",
+    "firstname": "Мария",
+    "surname": "Петрова",
+    "lastname": "Иванова",
+    "birthDate": {
+      "year": 2019,
+      "month": 2,
+      "day": 12
+    },
+    "city": "Пловдив",
+    "profile": {
+      "favouriteGenres": [],
+      "personalInterests": [],
+      "favouriteMovies": []
+    }
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "email": "kristo@mail.bg",
+    "password": "12345678",
+    "firstname": "Кристиян",
+    "surname": "Георгиев",
+    "lastname": "Георгиев",
+    "birthDate": {
+      "year": 2019,
+      "month": 2,
+      "day": 4
+    },
+    "city": "Варна",
+    "profile": {
+      "favouriteGenres": [],
+      "personalInterests": [],
+      "favouriteMovies": []
+    }
   }
 ]

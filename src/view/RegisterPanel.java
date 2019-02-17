@@ -3,17 +3,21 @@ package view;
 import java.io.FileNotFoundException;
 
 import bean.User;
+import helper.InvalidPersonException;
+import helper.UserHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import writers.UserWriter;
 
@@ -56,7 +60,7 @@ public class RegisterPanel extends GridPane {
 		DatePicker datePicker = new DatePicker();
 		// LocalDate value = datePicker.getValue
 
-		ObservableList<String> options = FXCollections.observableArrayList("София", "Варна", "Бургас");
+		ObservableList<String> options = FXCollections.observableArrayList(UserHelper.CITIES);
 		citiesComboBox = new ComboBox<String>(options);
 		citiesComboBox.setVisibleRowCount(5);
 
@@ -90,19 +94,30 @@ public class RegisterPanel extends GridPane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				User consumer = new User(emailField.getText(), passwField.getText(), fnameField.getText(),
-						surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity);
+				User consumer = null;
+				try {
+					consumer = new User(emailField.getText(), passwField.getText(), fnameField.getText(),
+							surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity);
+				} catch (InvalidPersonException e1) {
+					Alert alert = new Alert(AlertType.ERROR, "Грешни данни!");
+					alert.showAndWait();
+					e1.printStackTrace();
+				}
 				try {
 					UserWriter.getInstance().getUsersFromFile();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				UserWriter.getInstance().addUser(consumer);
-				UserWriter.getInstance().saveUsersToFile();
-				System.out.println(consumer);
-				RegisterDialog.close();
-				
+				if (consumer != null) {
+					Alert alert = new Alert(AlertType.CONFIRMATION, "Регистрирахте се успешно!");
+					alert.showAndWait();
+					UserWriter.getInstance().addUser(consumer);
+					UserWriter.getInstance().saveUsersToFile();
+					System.out.println(consumer);
+					RegisterDialog.close();
+				}
+
 			}
 		});
 
@@ -112,5 +127,4 @@ public class RegisterPanel extends GridPane {
 		this.choosenCity = citiesComboBox.getValue().toString();
 	}
 
-	
 }

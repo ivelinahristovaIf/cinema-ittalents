@@ -1,7 +1,9 @@
 package bean;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
+
+import helper.InvalidPersonException;
+import helper.UserHelper;
 
 public class User implements ILogger {
 
@@ -26,24 +28,23 @@ public class User implements ILogger {
 	}
 
 	public User(String email, String password, String firstname, String surname, String lastname, LocalDate birthDate,
-			String city) {
+			String city) throws InvalidPersonException {
 		super();
 		this.setType();
 		this.id = nextId++;
+		if(UserHelper.getInstance().isValidEmail(email)) {
 		this.email = email;
+		}
+		if(UserHelper.getInstance().isValidPassword(password)) {
 		this.password = password;
+		}
 		this.firstname = firstname;
 		this.surname = surname;
 		this.lastname = lastname;
 		this.birthDate = birthDate;
 		this.city = city;
 		this.profile = new UserProfile();
-//		try {
-//			this.cinema = Cinema.getInstance();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 	}
 
 	public int getId() {
@@ -120,8 +121,8 @@ public class User implements ILogger {
 
 	@Override
 	public String toString() {
-		return "User "+type+" [email=" + email + ", password=" + password + ", firstName=" + firstname + ", surName=" + surname
-				+ ", lastName=" + lastname + ", birthDate=" + birthDate + ", city=" + city + "]";
+		return "User:  email: " + email + ", password: " + password + ", firstname: " + firstname + ", surname: " + surname
+				+ ", lastname: " + lastname + ", birth date: " + birthDate + ", city: " + city;
 	}
 
 	public UserProfile getProfile() {

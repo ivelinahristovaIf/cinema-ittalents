@@ -1,10 +1,8 @@
 package helper;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import bean.MovieTheather;
 import bean.MovieTheatherType;
 import bean.Ticket;
 
@@ -28,7 +26,7 @@ public class UserHelper {
 	public void buyTicket(MovieTheatherType mt, String type, int count, String seat) throws NotValidTicketTypeException {
 		// TODO get movieTheather by movieTheather type
 		Ticket ticket = Ticket.getInstance(type, seat, mt, null);
-		boolean isAlreadyReserved = false;
+//		boolean isAlreadyReserved = false;
 		if (mt != null) {
 //			for (Ticket t : mt.getBookedTickets()) {
 //				if (t != null && ticket != null && ticket.isTicketsEquals(t)) {
@@ -43,30 +41,26 @@ public class UserHelper {
 //			} else {
 //				System.out.println("Съжаляваме този билет вече е бил запазен");
 //			}
-		}
+		}else {
 		System.out.println("Няма такава зала!");
+		}
 	}
 
-	public void showProgramForToday() {
-		System.out.println("----------ДНЕШНА ПРОГРАМА----------");
-
-	}
-
-	public boolean isValidPassword(String password) {
+	public boolean isValidPassword(String password) throws InvalidPersonException {
 		if (password != null && password.trim().length() >= MIN_PASSWORD_LENGTH) {
 			return true;
 		}
 		System.err.println("Password must be at least with " + MIN_PASSWORD_LENGTH + " characters!");
-		return false;
+		throw new InvalidPersonException("Невалидна парола!");
 	}
 
-	public boolean isValidEmail(String email) {
+	public boolean isValidEmail(String email) throws InvalidPersonException {
 		Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
 		Matcher regMatcher = regexPattern.matcher(email);
 		if (regMatcher.matches()) {
 			return true;
 		}
 		System.err.println("Not suitable email adress!");
-		return false;
+		throw new InvalidPersonException("Невалиден e-mail!");
 	}
 }
