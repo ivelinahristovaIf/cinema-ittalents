@@ -109,6 +109,7 @@ public class BuyTicketPanel extends GridPane {
 
 		datePicker.setDayCellFactory(dayCellFactory);
 		datePicker.setValue(LocalDate.now());
+		
 		try {
 			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
 		} catch (FileNotFoundException e) {

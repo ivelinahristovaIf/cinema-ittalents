@@ -214,6 +214,7 @@ public class Cinema {
 				cinema.showAllMoviesByDate(date);
 			}
 		}
+		cinema.getAllMovieTheathers().forEach(mt->System.out.println(mt));
 	}
 
 	@Override

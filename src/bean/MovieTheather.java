@@ -142,7 +142,7 @@ public class MovieTheather {
 
 	@Override
 	public String toString() {
-		return "MovieTheather [id=" + id + ", seats=" + seats + ", type=" + type + "]";
+		return "Зала " + id +  ": " + type;
 	}
 	public static void main(String[] args) {
 		Cinema cinema = new Cinema();
