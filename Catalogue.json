@@ -1,0 +1,114 @@
+{
+  "Зала 2: Зала VIP, формат: 2D, аудио: Dolby Digital": {
+    "2019-02-18": [
+      {
+        "id": 2,
+        "name": "Allo Allo",
+        "length": 90,
+        "genre": "Comedy",
+        "projections": [],
+        "startTimes": {
+          "hour": 13,
+          "minute": 10,
+          "second": 0,
+          "nano": 0
+        },
+        "endTimes": {
+          "hour": 22,
+          "minute": 20,
+          "second": 0,
+          "nano": 0
+        },
+        "freeHours": [
+          {
+            "hour": 13,
+            "minute": 10,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 15,
+            "minute": 0,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 16,
+            "minute": 50,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 18,
+            "minute": 40,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 20,
+            "minute": 30,
+            "second": 0,
+            "nano": 0
+          }
+        ],
+        "numberOfProjectionsForDay": 0
+      }
+    ]
+  },
+  "Зала 1: Зала IMAX, формат: HFR-3D, аудио: Dolby Atmos": {
+    "2019-02-19": [
+      {
+        "id": 1,
+        "name": "Friends",
+        "length": 90,
+        "genre": "Comedy",
+        "projections": [],
+        "startTimes": {
+          "hour": 13,
+          "minute": 10,
+          "second": 0,
+          "nano": 0
+        },
+        "endTimes": {
+          "hour": 22,
+          "minute": 20,
+          "second": 0,
+          "nano": 0
+        },
+        "freeHours": [
+          {
+            "hour": 13,
+            "minute": 10,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 15,
+            "minute": 0,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 16,
+            "minute": 50,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 18,
+            "minute": 40,
+            "second": 0,
+            "nano": 0
+          },
+          {
+            "hour": 20,
+            "minute": 30,
+            "second": 0,
+            "nano": 0
+          }
+        ],
+        "numberOfProjectionsForDay": 0
+      }
+    ]
+  }
+}
