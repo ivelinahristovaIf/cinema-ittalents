@@ -3,7 +3,6 @@ package bean;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +15,6 @@ import java.util.TreeSet;
 
 import cinema.DemoCinema;
 import helper.CalendarHelper;
-import helper.NotValidMovieTheatherTypeException;
 import writers.MovieTheaterTypeWriter;
 import writers.MovieTheaterWriter;
 
@@ -119,12 +117,6 @@ public class Cinema {
 		if (movie != null && this.moviesCatalogue != null) {
 			if (!this.moviesCatalogue.isEmpty()) {
 				System.out.println("CLASS CINEMA: kataloga ne e prazen");
-				List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.moviesCatalogue.keySet());
-				for (int index = 1; index <= listOfTheathers.size(); index++) {
-					System.out.println(index + " - " + listOfTheathers.get(index - 1));
-				}
-				int index = DemoCinema.sc.nextInt();
-				theater = listOfTheathers.get(index - 1);
 			} else {
 				System.out.println("Все още няма добавени зали в киното! Създайте зала");
 //				movieTheater = this.addMovieTheatherInCinema();TODO
@@ -135,11 +127,11 @@ public class Cinema {
 				System.out.println();
 			}
 			System.out.println(date);
-			if (this.moviesCatalogue.get(theater).containsKey(date)) {
-				System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
+			if (!this.moviesCatalogue.get(theater).containsKey(date)) {
+				System.out.println("Залата е свободна за тази дата");// TODO proverka za svobodni chasove
 				// TODO freeHours moved in MovieTheather
+				this.moviesCatalogue.get(theater).put(date, new TreeSet<Movie>());
 			}
-			this.moviesCatalogue.get(theater).put(date, new TreeSet<Movie>());
 			// add movie in TreeSet
 			boolean isAdded = this.moviesCatalogue.get(theater).get(date).add(movie);
 			System.out.println("dobaven li e:" + isAdded);
