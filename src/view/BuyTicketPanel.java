@@ -15,6 +15,8 @@ import bean.MovieTheatherType;
 import bean.Ticket;
 import bean.User;
 import helper.CalendarHelper;
+import helper.NotValidTicketTypeException;
+import helper.UserHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,10 +31,12 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import javafx.util.converter.NumberStringConverter;
 import writers.MovieTheaterTypeWriter;
 
 public class BuyTicketPanel extends GridPane {
@@ -60,6 +64,7 @@ public class BuyTicketPanel extends GridPane {
 	private MovieTheather movieTheatherByType;
 	private LocalDate choosenDate;
 	private Set<Movie> moviePicker = new TreeSet<>();
+	private String choosenTicketType;
 
 	public BuyTicketPanel() {
 		super();
@@ -110,12 +115,10 @@ public class BuyTicketPanel extends GridPane {
 		datePicker.setDayCellFactory(dayCellFactory);
 		datePicker.setValue(LocalDate.now());
 		datePicker.valueProperty().addListener(new ChangeListener<LocalDate>() {
-
 			@Override
 			public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
 					LocalDate newValue) {
 				handleDatePickerComboBoxChange();
-
 			}
 		});
 
@@ -143,12 +146,12 @@ public class BuyTicketPanel extends GridPane {
 					}
 				});
 
+		
 		ObservableList<Movie> movies = FXCollections.observableArrayList();// TODO Cinema.getMoviesByTheatherAndDate
 		// date.setOnAction
 		this.moviesComboBox = new ComboBox<Movie>();
-
 		ObservableList<LocalTime> times = FXCollections.observableArrayList();// TODO times by movie movie
-																				// getProjections
+		// getProjections
 		this.projections = new ComboBox<LocalTime>(times);
 		projections.setVisibleRowCount(4);
 
@@ -156,14 +159,50 @@ public class BuyTicketPanel extends GridPane {
 		this.typesComboBox = new ComboBox<String>(type);
 		typesComboBox.setVisibleRowCount(4);
 		typesComboBox.setValue(Ticket.TICKET_TYPE[0]);
+		
+		typesComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				handleTicketTypesComboBoxChange();
+			}
+		});
 
+		
+		
 		this.seatField = new TextField("A15");
 		this.countField = new TextField();
+	
+		
 		this.priceField = new TextField();// TODO get price by type
 		priceField.setDisable(true);
 
 		this.save = new Button("Запази");
 		this.buy = new Button("Купи");
+		
+		save.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO message window
+//				handleButton(event);
+				try {
+					Ticket ticket = Ticket.getInstance(choosenTicketType, seatField.getText(), movieTheatherByType, null);
+					System.out.println(ticket);
+					UserHelper.getInstance().buyTicket(movieTheatherByType, choosenTicketType, Integer.parseInt(countField.getText()), seatField.getText());
+				} catch (NotValidTicketTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		buy.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO message window
+				
+			}
+		});
 
 		Image image = null;
 		try {
@@ -203,6 +242,12 @@ public class BuyTicketPanel extends GridPane {
 
 	}
 
+	protected void handleTicketTypesComboBoxChange() {
+		String ticketType = typesComboBox.getValue().toString();
+		choosenTicketType = ticketType;
+		priceField.setText(String.valueOf(Ticket.getPriceByType(choosenTicketType)+"лв."));
+	}
+
 	protected void handleDatePickerComboBoxChange() {
 		LocalDate date = datePicker.getValue();
 		System.out.println(date);
@@ -223,7 +268,7 @@ public class BuyTicketPanel extends GridPane {
 			try {
 //				movieTheatherByType 
 				mt = Cinema.getInstance().getMovieTheatherByType(type);
-				System.out.println("nmb " + mt);
+				System.out.println("movie theather " + mt);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

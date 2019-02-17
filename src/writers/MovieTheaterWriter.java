@@ -64,8 +64,10 @@ public class MovieTheaterWriter {
 		Type setType = new TypeToken<LinkedHashSet<MovieTheather>>() {
 		}.getType();
 		if (builder.length() > 0) {
+			System.out.println("Vzimam gi ot json ");
 			Set<MovieTheather> getTheaters = gson.fromJson(builder.toString(), setType);
 			this.theaters.addAll(getTheaters);
+			System.out.println(getTheaters);
 		} else {
 			System.out.println("Oshte nqma obekti");
 		}

@@ -77,6 +77,19 @@ public class Ticket {
 	public int getPrice() {
 		return price;
 	}
+	public static int getPriceByType(String type) {
+		switch (type) {
+		case "—“¿Õƒ¿–“≈Õ":
+			return STANDART_TICKET_PRICE;
+		case "ƒ≈“— »":
+			return CHILD_TICKET_PRICE;
+		case "«¿ »Õ¬¿À»ƒ»":
+			return INVALID_TICKET_PRICE;
+		case "—“”ƒ≈Õ“— »":
+			return STUDENT_TICKET_PRICE;
+		}
+		return 0;
+	}
 
 	@Override
 	public int hashCode() {
@@ -192,6 +205,11 @@ public class Ticket {
 			return Ticket.this;
 		}
 
+		@Override
+		public String toString() {
+			return "Seat [row=" + row + ", place=" + place + "]";
+		}
+
 	}
 
 	public char getRow() {
@@ -236,6 +254,12 @@ public class Ticket {
 
 	public static String[] getTicketType() {
 		return TICKET_TYPE;
+	}
+
+	@Override
+	public String toString() {
+		return "Ticket [movieTheather=" + movieTheather + ", movie=" + movie + ", price=" + price + ", seat=" + seat
+				+ "]";
 	}
 
 }
