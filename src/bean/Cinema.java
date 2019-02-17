@@ -115,36 +115,33 @@ public class Cinema {
 		return theather;
 	}
 
-	public void addMovieToCatalogue(Movie movie) {
+	public void addMovieToCatalogue(MovieTheather theater, LocalDate date, Movie movie) {
 		if (movie != null && this.moviesCatalogue != null) {
-			System.out.println("Моля изберете зала за прожекцията: ");
-			MovieTheather movieTheater = null;
 			if (!this.moviesCatalogue.isEmpty()) {
+				System.out.println("CLASS CINEMA: kataloga ne e prazen");
 				List<MovieTheather> listOfTheathers = new LinkedList<MovieTheather>(this.moviesCatalogue.keySet());
 				for (int index = 1; index <= listOfTheathers.size(); index++) {
 					System.out.println(index + " - " + listOfTheathers.get(index - 1));
 				}
 				int index = DemoCinema.sc.nextInt();
-				movieTheater = listOfTheathers.get(index - 1);
+				theater = listOfTheathers.get(index - 1);
 			} else {
 				System.out.println("Все още няма добавени зали в киното! Създайте зала");
 //				movieTheater = this.addMovieTheatherInCinema();TODO
 			}
-			if (!this.moviesCatalogue.containsKey(movieTheater)) {
-				this.moviesCatalogue.put(movieTheater, new TreeMap<>());
+			if (!this.moviesCatalogue.containsKey(theater)) {
+				this.moviesCatalogue.put(theater, new TreeMap<>());
 				System.out.println("Нова зала беше току що добавена в киното!");
 				System.out.println();
 			}
-			CalendarHelper.getInstance().showWeeksCalendar();
-			LocalDate date = CalendarHelper.getInstance().inputDate();
 			System.out.println(date);
-			if (this.moviesCatalogue.get(movieTheater).containsKey(date)) {
+			if (this.moviesCatalogue.get(theater).containsKey(date)) {
 				System.out.println("Залата е заета за тази дата");// TODO proverka za svobodni chasove
 				// TODO freeHours moved in MovieTheather
 			}
-			this.moviesCatalogue.get(movieTheater).put(date, new TreeSet<Movie>());
+			this.moviesCatalogue.get(theater).put(date, new TreeSet<Movie>());
 			// add movie in TreeSet
-			boolean isAdded = this.moviesCatalogue.get(movieTheater).get(date).add(movie);
+			boolean isAdded = this.moviesCatalogue.get(theater).get(date).add(movie);
 			System.out.println("dobaven li e:" + isAdded);
 		} else {
 			System.err.println("null movie or catalogue");

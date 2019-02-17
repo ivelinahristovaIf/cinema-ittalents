@@ -63,7 +63,7 @@ public class Admin implements ILogger{
 		try {
 			MovieWriter.getInstance().getMoviesFromFile();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("CATCH IN METHOD fillMovies");
 			e.printStackTrace();
 		}
 		System.out.println("zapazvam v nov Set");
