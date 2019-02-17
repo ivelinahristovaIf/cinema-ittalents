@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import bean.Cinema;
 import bean.Movie;
 import bean.MovieTheather;
 import bean.MovieTheatherType;
@@ -84,7 +83,6 @@ public class MovieTheaterWriter {
 		}
 	}
 	public static void main(String[] args) throws FileNotFoundException {
-		Cinema cinema = new Cinema();
 		try {
 			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
 		} catch (FileNotFoundException e) {
@@ -94,7 +92,7 @@ public class MovieTheaterWriter {
 		List<MovieTheatherType> types = new ArrayList<>();
 		types.addAll(( MovieTheaterTypeWriter.getInstance()).getTypes());
 		
-		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())), cinema);
+		MovieTheather theater = new MovieTheather(types.get((int) (types.size()*Math.random())));
 		
 		MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
 		MovieTheaterWriter.getInstance().addMovieTheater(theater);

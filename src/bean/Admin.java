@@ -1,20 +1,14 @@
 package bean;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.InputMismatchException;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import cinema.DemoCinema;
 import helper.UserHelper;
