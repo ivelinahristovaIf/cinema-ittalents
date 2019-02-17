@@ -56,7 +56,7 @@ public class BuyTicketPanel extends GridPane {
 
 	private Button save;
 	private Button buy;
-	
+
 	private MovieTheather movieTheatherByType;
 	private LocalDate choosenDate;
 	private Set<Movie> moviePicker = new TreeSet<>();
@@ -116,34 +116,31 @@ public class BuyTicketPanel extends GridPane {
 			}
 		});
 
-//		try {
-//			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		HashSet<MovieTheatherType> types = new HashSet<>();
-		types.addAll(Cinema.getInstance().getAllMovieTheathers());
+		try {
+			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		HashSet<MovieTheatherType> types = new HashSet<>();
+//		types.addAll(Cinema.getInstance().getAllMovieTheathers()); //TODO get all type by cinema
 		// TODO stash them in cinema
 		ObservableList<MovieTheatherType> movieTheathers = FXCollections
-				.observableArrayList(.);
+				.observableArrayList(MovieTheaterTypeWriter.getInstance().getTypes());
 		this.movieTheathersComboBox = new ComboBox<MovieTheatherType>(movieTheathers);
 		// TODO make sure dates in theather are as dates here
 //		movieTheathersComboBox.setOnAction(new EventHandler<ActionEvent>() {
 //		});
-		
-		
-		movieTheathersComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieTheatherType>() {
 
-			@Override
-			public void changed(ObservableValue<? extends MovieTheatherType> observable, MovieTheatherType oldValue,
-					MovieTheatherType newValue) {
-				handleMovieTheatherComboBoxChange();
-				
-			}
+		movieTheathersComboBox.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<MovieTheatherType>() {
 
-		
-		});
+					@Override
+					public void changed(ObservableValue<? extends MovieTheatherType> observable,
+							MovieTheatherType oldValue, MovieTheatherType newValue) {
+						handleMovieTheatherComboBoxChange();
+					}
+				});
 
 		ObservableList<Movie> movies = FXCollections.observableArrayList();// TODO Cinema.getMoviesByTheatherAndDate
 		// date.setOnAction
@@ -206,33 +203,34 @@ public class BuyTicketPanel extends GridPane {
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
-		MovieTheatherType type= movieTheathersComboBox.getValue();
+		MovieTheatherType type = movieTheathersComboBox.getValue();
 		System.out.println(type);
-		if(type!=null) {
+		if (type != null) {
 			try {
 //				movieTheatherByType 
 				MovieTheather mt = Cinema.getInstance().getMovieTheatherByType(type);
-				System.out.println("nmb "+mt);
+				System.out.println("nmb " + mt);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			movieTheatherByType = new MovieTheather(type);
-			
+
 		}
 	}
 
 	protected void handleDatePicker(ActionEvent event) {
 		choosenDate = datePicker.getValue();
+		System.out.println(choosenDate);
 		try {
-			moviePicker= Cinema.getInstance().getAllMoviesByTheatherAndDate(movieTheatherByType, choosenDate);
+			Cinema.getInstance().showAllMoviesByDate(choosenDate);
+			moviePicker = Cinema.getInstance().getAllMoviesByTheatherAndDate(movieTheatherByType, choosenDate);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ObservableList<Movie> movies = FXCollections.observableArrayList(moviePicker);
-		moviesComboBox.getItems().addAll(movies);
+//		moviesComboBox.getItems().addAll(movies);
 	}
-	
 
 }

@@ -29,10 +29,12 @@
       "adress": "Sofia",
       "education": "sredno",
       "favouriteGenres": [
-        "йнледхъ"
+        "йнледхъ",
+        "сфюях"
       ],
       "personalInterests": [
-        "гюаюбкемхъ"
+        "гюаюбкемхъ",
+        "ймхцх"
       ],
       "favouriteMovies": [
         {
@@ -92,7 +94,8 @@
             }
           ],
           "numberOfProjectionsForDay": 3
-        }
+        },
+        null
       ]
     }
   }

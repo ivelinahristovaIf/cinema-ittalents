@@ -73,7 +73,7 @@ public class Cinema {
 	}
 	public MovieTheather getMovieTheatherByType(MovieTheatherType type) {
 		for (MovieTheather movieTheather : this.moviesCatalogue.keySet()) {
-			if(movieTheather.equals(type)) {
+			if(movieTheather.getType().equals(type)) {
 				return movieTheather;
 			}
 		}
@@ -205,10 +205,13 @@ public class Cinema {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Cinema cinema = new Cinema("Arena", "Arena", "555-012-413");
+		Cinema cinema = Cinema.getInstance();
 		for (MovieTheather mt : cinema.moviesCatalogue.keySet()) {
 			System.out.println(mt);
 			System.out.println(mt.getType());
+			for (LocalDate date : cinema.moviesCatalogue.get(mt).keySet()) {
+				System.out.println(date);
+			}
 		}
 	}
 
