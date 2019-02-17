@@ -211,6 +211,7 @@ public class Cinema {
 			System.out.println(mt.getType());
 			for (LocalDate date : cinema.moviesCatalogue.get(mt).keySet()) {
 				System.out.println(date);
+				cinema.showAllMoviesByDate(date);
 			}
 		}
 	}

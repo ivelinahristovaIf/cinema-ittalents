@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,7 +17,6 @@ import com.google.gson.reflect.TypeToken;
 import bean.Admin;
 import bean.ILogger;
 import bean.User;
-import helper.UserHelper;
 
 public class UserWriter {
 	private Set<ILogger> users;
