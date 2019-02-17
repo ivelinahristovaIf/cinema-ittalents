@@ -37,6 +37,7 @@ public class CinemaProgramPane extends GridPane {
 	private Button save;
 	private MovieTheather selectedMovieTheather;
 	private LocalDate choosenDate;
+	private MovieTheather choosenTheather;
 
 	public CinemaProgramPane() {
 		super();
@@ -142,6 +143,12 @@ public class CinemaProgramPane extends GridPane {
 			@Override
 			public void handle(ActionEvent event) {
 				handleSaveButton(event);
+				try {
+					Cinema.getInstance().addMovieToCatalogue(choosenTheather, choosenDate, moviesComboBox.getValue());
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -163,10 +170,10 @@ public class CinemaProgramPane extends GridPane {
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
-		MovieTheather theater = movieTheathersComboBox.getValue();
-		System.out.println(theater);
-		if (theater != null) {
-			selectedMovieTheather = theater;
+		choosenTheather = movieTheathersComboBox.getValue();
+		System.out.println(choosenTheather);
+		if (choosenTheather != null) {
+			selectedMovieTheather = choosenTheather;
 		}else {
 			System.out.println("Не успя да избере зала");
 		}
