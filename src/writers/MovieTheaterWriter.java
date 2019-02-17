@@ -6,9 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -16,13 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import bean.Movie;
 import bean.MovieTheather;
-import bean.MovieTheatherType;
 
 public class MovieTheaterWriter {
-
-	
 	private static MovieTheaterWriter instance = null;
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
@@ -67,7 +61,7 @@ public class MovieTheaterWriter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		Type setType = new TypeToken<LinkedHashSet<Movie>>() {
+		Type setType = new TypeToken<LinkedHashSet<MovieTheather>>() {
 		}.getType();
 		if (builder.length() > 0) {
 			Set<MovieTheather> getTheaters = gson.fromJson(builder.toString(), setType);
@@ -98,4 +92,9 @@ public class MovieTheaterWriter {
 //		MovieTheaterWriter.getInstance().addMovieTheater(theater);
 //		MovieTheaterWriter.getInstance().saveMovieTheaterToFile();
 //	}
+
+	public Set<MovieTheather> getTheaters() {
+		System.out.println(theaters);
+		return theaters;
+	}
 }

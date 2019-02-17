@@ -23,6 +23,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import writers.MovieTheaterWriter;
 import writers.MovieWriter;
 
 public class CinemaProgramPane extends GridPane {
@@ -53,12 +54,14 @@ public class CinemaProgramPane extends GridPane {
 		this.date = new Label("Избери дата:");
 		this.movie = new Label("Избери филм:");
 		ObservableList<MovieTheather> movieTheathers = null;
+	
 		try {
-			movieTheathers = FXCollections.observableArrayList(Cinema.getInstance().getAllMovieTheathers());
+			MovieTheaterWriter.getInstance().getMovieTheatersFromFile();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		movieTheathers = FXCollections.observableArrayList(MovieTheaterWriter.getInstance().getTheaters());
 		this.movieTheathersComboBox = new ComboBox<MovieTheather>(movieTheathers);
 //		movieTheathersComboBox.setValue(movieTheathers.get(0));
 		movieTheathersComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieTheather>() {
