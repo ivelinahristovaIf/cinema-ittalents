@@ -77,13 +77,13 @@ public class AdminProfile extends GridPane{
 				e.printStackTrace();
 			}
 		}
-		((Admin) logger).setEmail(usernameField.getText());
-		try {
-			((Admin) logger).setPassword(passwordField.getText());
-		} catch (InvalidPersonException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		 logger.setEmail(usernameField.getText());
+//		try {
+//			((Admin) logger).setPassword(passwordField.getText());
+//		} catch (InvalidPersonException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 
 		try {
 			UserWriter writer = new UserWriter();

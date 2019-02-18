@@ -22,7 +22,7 @@ import helper.InvalidPersonException;
 public class UserWriter {
 	private Set<ILogger> users;
 //	private static UserWriter instance = null;
-	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private Gson gson = new GsonBuilder().create();
 	private File file;
 
 	public UserWriter() throws IOException {
@@ -69,7 +69,7 @@ public class UserWriter {
 		Type setType = new TypeToken<LinkedHashSet<User>>() {
 		}.getType();
 		if (builder.length() > 0) {
-			Set<User> getUsers = gson.fromJson(builder.toString(), setType);
+			Set<ILogger> getUsers = gson.fromJson(builder.toString(), setType);
 			this.users.addAll(getUsers);
 		} else {
 			System.out.println("Oshte nqma obekti");

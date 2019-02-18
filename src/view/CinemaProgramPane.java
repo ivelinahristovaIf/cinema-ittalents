@@ -17,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
@@ -127,13 +129,6 @@ public class CinemaProgramPane extends GridPane {
 		this.moviesComboBox = new ComboBox<Movie>(movies);
 		moviesComboBox.setValue(movies.get(0));
 
-//		moviesComboBox.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent event) {
-//				//TODO choose hour
-//			}
-//		});
-
 		this.save = new Button("Добави");
 
 		add(movieTheather, 0, 0);
@@ -152,13 +147,10 @@ public class CinemaProgramPane extends GridPane {
 				} catch (FileNotFoundException e) {
 					return;
 				}
-				handleSaveButton(event);
+				Alert alert = new Alert(AlertType.CONFIRMATION,"Добавихте филм в програмата!");
+				alert.showAndWait();
 			}
 		});
-	}
-
-	protected void handleSaveButton(ActionEvent event) {
-		// TODO save catalogue to file
 	}
 
 	protected void handleDatePickerComboBoxChange() {
@@ -172,7 +164,6 @@ public class CinemaProgramPane extends GridPane {
 	}
 
 	protected void handleMovieTheatherComboBoxChange() {
-//		System.out.println(choosenTheather);
 		if (movieTheathersComboBox.getValue() != null) {
 			choosenTheather = movieTheathersComboBox.getValue();
 		} else {

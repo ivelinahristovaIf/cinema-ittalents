@@ -19,7 +19,6 @@ public class User implements ILogger {
 	private String city;
 	private UserProfile profile;
 
-	private Cinema cinema;
 
 	public User() {
 		super();
@@ -69,14 +68,6 @@ public class User implements ILogger {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Cinema getCinema() {
-		return this.cinema;
-	}
-
-	public void setCinema(Cinema cinema) {
-		this.cinema = cinema;
 	}
 
 	public String getFirstname() {

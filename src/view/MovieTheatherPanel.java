@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -93,6 +95,8 @@ public class MovieTheatherPanel extends GridPane {
 				}
 				MovieTheaterTypeWriter.getInstance().addMovieTheaterType(movieTheather);
 				MovieTheaterTypeWriter.getInstance().saveMovieTheaterTypesToFile();
+				Alert alert = new Alert(AlertType.INFORMATION,"Създадохте зала!");
+				alert.showAndWait();
 				System.out.println(movieTheather);
 			}
 		});

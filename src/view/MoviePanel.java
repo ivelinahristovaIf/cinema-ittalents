@@ -10,11 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import writers.MovieWriter;
 
@@ -109,7 +111,8 @@ public class MoviePanel extends GridPane {
 				}
 				MovieWriter.getInstance().addMovie(movie);
 				MovieWriter.getInstance().saveMoviesToFile();
-				System.out.println(movie);
+				Alert alert = new Alert(AlertType.CONFIRMATION,"Създадохте филм!");
+				alert.showAndWait();
 				System.out.println(movie);
 			}
 		});

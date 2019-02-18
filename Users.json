@@ -1,7 +1,1 @@
-[
-  {
-    "type": 2,
-    "email": "admin",
-    "password": "admin"
-  }
-]
+[{"id":0,"type":2,"email":"admin","password":"admin","profile":{"favouriteGenres":[],"personalInterests":[],"favouriteMovies":[]}},{"id":1,"type":1,"email":"ivelina@abv.bg","password":"12345678","firstname":"Ivelina","surname":"Ivaylova","lastname":"Hristova","birthDate":{"year":2012,"month":2,"day":15},"city":"София","profile":{"favouriteGenres":[],"personalInterests":[],"favouriteMovies":[]}}]

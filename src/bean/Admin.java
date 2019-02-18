@@ -178,12 +178,12 @@ public class Admin implements ILogger {
 	}
 
 //	public static void main(String[] args) {
-////		try {
-//////			Admin.getInstance().changeMovieProgram();
-////		} catch (InvalidPersonException e) {
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();
-////		}
+//		try {
+//			Admin.getInstance().changeMovieProgram();
+//		} catch (InvalidPersonException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		try {
 //			Admin.getInstance().changePassword();
 //		} catch (InvalidPersonException e) {
