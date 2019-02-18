@@ -1,6 +1,7 @@
 package view;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import bean.User;
 import helper.InvalidPersonException;
@@ -103,8 +104,15 @@ public class RegisterPanel extends GridPane {
 					alert.showAndWait();
 					e1.printStackTrace();
 				}
+				UserWriter uw = null;
 				try {
-					UserWriter.getInstance().getUsersFromFile();
+					uw = new UserWriter();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					uw.getUsersFromFile();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -112,8 +120,8 @@ public class RegisterPanel extends GridPane {
 				if (consumer != null) {
 					Alert alert = new Alert(AlertType.CONFIRMATION, "Регистрирахте се успешно!");
 					alert.showAndWait();
-					UserWriter.getInstance().addUser(consumer);
-					UserWriter.getInstance().saveUsersToFile();
+					uw.addUser(consumer);
+					uw.saveUsersToFile();
 					System.out.println(consumer);
 					RegisterDialog.close();
 				}

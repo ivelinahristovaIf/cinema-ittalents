@@ -21,11 +21,6 @@ public class AdminPanel {
 		cinemaTab.setContent(cinemaGrid);
 		tabPane.getTabs().add(cinemaTab);
 		
-//		Tab setMovieProgram = new Tab("Задай програма за филм");
-//		MovieProgram programGrid = new MovieProgram();
-//		setMovieProgram.setContent(programGrid);
-//		tabPane.getTabs().add(setMovieProgram);
-		
 		Tab movieTab = new Tab("Добави филм");
 		MoviePanel movieGrid = new MoviePanel();
 		movieTab.setContent(movieGrid);

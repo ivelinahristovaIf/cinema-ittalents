@@ -179,9 +179,10 @@ public class PersonalInfoPanel extends GridPane {
 		user.getProfile().addFavouriteMovie(favouriteMovieCmb.getValue());
 
 		try {
-			UserWriter.getInstance().getUsersFromFile();
-			UserWriter.getInstance().addUser(user);
-			UserWriter.getInstance().saveUsersToFile();
+			UserWriter writer = new UserWriter();
+			writer.getUsersFromFile();
+			writer.addUser(user);
+			writer.saveUsersToFile();
 			citiesComboBox.setValue(user.getCity());
 			Alert alert = new Alert(AlertType.INFORMATION, "Променихте профила си успешно!");
 			alert.showAndWait();

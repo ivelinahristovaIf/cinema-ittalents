@@ -230,5 +230,121 @@
       }
     ],
     "numberOfProjectionsForDay": 5
+  },
+  {
+    "id": 1,
+    "name": "Ice Age",
+    "length": 100,
+    "premiere": {
+      "year": 2019,
+      "month": 2,
+      "day": 13
+    },
+    "genre": "¿Õ»Ã¿÷»ﬂ",
+    "category": "B",
+    "projections": [],
+    "startTimes": {
+      "hour": 12,
+      "minute": 10,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 22,
+      "minute": 10,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 12,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 14,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 16,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 18,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 20,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 4
+  },
+  {
+    "id": 1,
+    "name": "Deamon",
+    "length": 90,
+    "premiere": {
+      "year": 2019,
+      "month": 2,
+      "day": 13
+    },
+    "genre": "”∆¿—»",
+    "category": "D",
+    "projections": [],
+    "startTimes": {
+      "hour": 13,
+      "minute": 10,
+      "second": 0,
+      "nano": 0
+    },
+    "endTimes": {
+      "hour": 22,
+      "minute": 20,
+      "second": 0,
+      "nano": 0
+    },
+    "freeHours": [
+      {
+        "hour": 13,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 15,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 16,
+        "minute": 50,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 18,
+        "minute": 40,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 20,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    ],
+    "numberOfProjectionsForDay": 3
   }
 ]

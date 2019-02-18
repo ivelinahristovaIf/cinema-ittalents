@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import helper.CalendarHelper;
 import writers.MovieTheaterTypeWriter;
+import writers.MovieWriter;
 
 public class Cinema {
 	private String name;
@@ -22,7 +23,6 @@ public class Cinema {
 	private static Cinema instance = null;
 	// type->date->movie
 	private Map<MovieTheatherType, TreeMap<LocalDate, TreeSet<Movie>>> moviesCatalogue = new HashMap<>();
-	// TODO movie setTheather
 
 	public Cinema() {
 		super();
@@ -32,10 +32,10 @@ public class Cinema {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		
+
 		MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
 		Set<MovieTheatherType> types = MovieTheaterTypeWriter.getInstance().getTypes();
-		for(MovieTheatherType type : types) {
+		for (MovieTheatherType type : types) {
 			LocalDate start = LocalDate.now();
 			TreeMap<LocalDate, TreeSet<Movie>> dates = new TreeMap<>();
 			while (start.isBefore(LocalDate.now().plusDays(CalendarHelper.NUMBER_DAYS_IN_CALENDAR))) {
@@ -43,6 +43,11 @@ public class Cinema {
 				start = start.plusDays(1);
 			}
 			this.moviesCatalogue.put(type, dates);
+			MovieWriter.getInstance().getMoviesFromFile();
+			MovieWriter.getInstance().getMovies();
+			for (LocalDate date : this.moviesCatalogue.get(type).keySet()) {
+				this.moviesCatalogue.get(type).get(date).addAll(MovieWriter.getInstance().getMovies());
+			}
 		}
 	}
 
@@ -57,9 +62,10 @@ public class Cinema {
 		HashSet<MovieTheatherType> theathers = new HashSet<>(this.moviesCatalogue.keySet());
 		return theathers;
 	}
+
 	public MovieTheatherType getMovieTheatherByType(MovieTheatherType type) {
 		for (MovieTheatherType movieTheatherType : this.moviesCatalogue.keySet()) {
-			if(movieTheatherType.equals(type)) {
+			if (movieTheatherType.equals(type)) {
 				return movieTheatherType;
 			}
 		}
@@ -120,9 +126,9 @@ public class Cinema {
 				// TODO freeHours moved in MovieTheather
 				this.moviesCatalogue.get(theater).put(date, new TreeSet<Movie>());
 			}
-			// add movie in TreeSet
-			boolean isAdded = this.moviesCatalogue.get(theater).get(date).add(movie);
-			System.out.println("dobaven li e:" + isAdded);
+//			// add movie in TreeSet
+//			boolean isAdded = this.moviesCatalogue.get(theater).get(date).add(movie);
+//			System.out.println("dobaven li e:" + isAdded);
 		} else {
 			System.err.println("null movie or catalogue");
 		}
@@ -181,10 +187,10 @@ public class Cinema {
 		return Collections.unmodifiableMap(this.moviesCatalogue);
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Cinema cinema = new Cinema("Arena", "Sofia", "0885546512");
-		System.out.println(cinema.getMoviesCatalogue());
-	}
+//	public static void main(String[] args) throws FileNotFoundException {
+//		Cinema cinema = new Cinema("Arena", "Sofia", "0885546512");
+//		System.out.println(cinema.getMoviesCatalogue());
+//	}
 
 	@Override
 	public String toString() {

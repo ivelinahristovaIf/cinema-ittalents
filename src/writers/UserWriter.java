@@ -17,10 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import bean.Admin;
 import bean.ILogger;
 import bean.User;
+import helper.InvalidPersonException;
 
 public class UserWriter {
 	private Set<ILogger> users;
-	private static UserWriter instance = null;
+//	private static UserWriter instance = null;
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private File file;
 
@@ -33,17 +34,17 @@ public class UserWriter {
 
 	}
 	
-	public static UserWriter getInstance() {
-		if (instance == null) {
-			try {
-				instance = new UserWriter();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return instance;
-	}
+//	public static UserWriter getInstance() {
+//		if (instance == null) {
+//			try {
+//				instance = new UserWriter();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		return instance;
+//	}
 
 	public void saveUsersToFile() {
 		if (!users.isEmpty()) {
@@ -87,16 +88,21 @@ public class UserWriter {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		UserWriter uw = new UserWriter();
-		uw.getUsersFromFile();
-		uw.addUser(Admin.getInstance());
-		uw.saveUsersToFile();
-		
-		for (ILogger user : uw.users) {
-			System.out.println(user);
-		}
-	}
+//	public static void main(String[] args) throws IOException {
+//		UserWriter uw = new UserWriter();
+//		uw.getUsersFromFile();
+//		try {
+//			uw.addUser(Admin.getInstance());
+//		} catch (InvalidPersonException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		uw.saveUsersToFile();
+//		
+//		for (ILogger user : uw.users) {
+//			System.out.println(user);
+//		}
+//	}
 
 	public Set<ILogger> getUsers() {
 		return this.users;

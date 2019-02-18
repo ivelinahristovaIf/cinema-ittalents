@@ -1,16 +1,23 @@
 package view;
 
 
+import bean.Admin;
 import bean.ILogger;
+import bean.User;
+import bean.UserProfile;
+import helper.InvalidPersonException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import writers.UserWriter;
 
 public class AdminProfile extends GridPane{
 	private Label username;
@@ -24,7 +31,7 @@ public class AdminProfile extends GridPane{
 	
 	public AdminProfile(ILogger logger) {
 		super();
-		this.logger = logger;
+		this.logger =logger;
 		setAlignment(Pos.TOP_LEFT);
 		setHgap(10);
 		setVgap(10);
@@ -47,7 +54,7 @@ public class AdminProfile extends GridPane{
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO save into json
+				handleSaveButton(event);
 			}
 		});;
 		
@@ -58,6 +65,38 @@ public class AdminProfile extends GridPane{
 		add(this.save, 0, 2);
 		}
 		
+	}
+
+	protected void handleSaveButton(ActionEvent event) {
+		if (logger == null) {
+			System.out.println("new user");
+			try {
+				logger = Admin.getInstance();
+			} catch (InvalidPersonException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		((Admin) logger).setEmail(usernameField.getText());
+		try {
+			((Admin) logger).setPassword(passwordField.getText());
+		} catch (InvalidPersonException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			UserWriter writer = new UserWriter();
+			writer.getUsersFromFile();
+			writer.addUser(logger);
+			writer.saveUsersToFile();
+			Alert alert = new Alert(AlertType.INFORMATION, "Променихте профила си успешно!");
+			alert.showAndWait();
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR, e.getMessage());
+			alert.showAndWait();
+			e.printStackTrace();
+		}
 	}
 	
 }

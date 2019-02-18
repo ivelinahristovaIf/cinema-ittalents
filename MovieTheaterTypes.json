@@ -82,5 +82,17 @@
     "type": "IMAX",
     "videoFormat": "2D",
     "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 29,
+    "type": "LUXE",
+    "videoFormat": "2D",
+    "audioFormat": "Dolby Digital"
+  },
+  {
+    "id": 31,
+    "type": "VIP",
+    "videoFormat": "Real-D-3D",
+    "audioFormat": "Dolby Digital"
   }
 ]

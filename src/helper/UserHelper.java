@@ -23,7 +23,7 @@ public class UserHelper {
 		return instance;
 	}
 
-	public void buyTicket(MovieTheatherType mt, String type, int count, String seat) throws NotValidTicketTypeException {
+	public void buyTicket(MovieTheatherType mt, String type, int count, String seat) throws NotValidTicketTypeException, NotValidMovieTheatherTypeException {
 		// TODO get movieTheather by movieTheather type
 		Ticket ticket = Ticket.getInstance(type, seat, mt, null);
 //		boolean isAlreadyReserved = false;
@@ -42,7 +42,7 @@ public class UserHelper {
 //				System.out.println("Съжаляваме този билет вече е бил запазен");
 //			}
 		}else {
-		System.out.println("Няма такава зала!");
+			throw new NotValidMovieTheatherTypeException("Няма такава зала!");
 		}
 	}
 
