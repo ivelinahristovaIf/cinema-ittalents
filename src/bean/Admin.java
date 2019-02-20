@@ -2,30 +2,26 @@ package bean;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 import cinema.DemoCinema;
 import helper.InvalidPersonException;
 import helper.UserHelper;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import writers.MovieTheaterTypeWriter;
 import writers.MovieWriter;
 
-public class Admin implements ILogger {
-	private int type;
+public class Admin {
 	private String email;
 	private String password;
 
 	private static Admin instance = null;
+	
+	public Admin() {
+	}
 
-	private Admin(String email, String password) throws InvalidPersonException {
-		this.setType();
+	public Admin(String email, String password) throws InvalidPersonException {
 		this.email = email;
 		this.setPassword(password);
 	}
@@ -78,7 +74,7 @@ public class Admin implements ILogger {
 		for (int index = 1; index < dates.size(); index++) {
 			System.out.println(index + " - " + dates.get(index - 1));
 		}
-		LocalDate date = dates.get(DemoCinema.sc.nextInt());
+//		LocalDate date = dates.get(DemoCinema.sc.nextInt());
 		try {
 			MovieWriter.getInstance().getMoviesFromFile();
 		} catch (FileNotFoundException e1) {
@@ -134,15 +130,15 @@ public class Admin implements ILogger {
 		return password;
 	}
 
-	@Override
-	public int getType() {
-		return type;
-	}
-
-	@Override
-	public void setType() {
-		this.type = 2;
-	}
+//	@Override
+//	public int getType() {
+//		return type;
+//	}
+//
+//	@Override
+//	public void setType() {
+//		this.type = 2;
+//	}
 
 	@Override
 	public String toString() {
@@ -154,7 +150,6 @@ public class Admin implements ILogger {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + type;
 		return result;
 	}
 
@@ -172,8 +167,7 @@ public class Admin implements ILogger {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (type != other.type)
-			return false;
+
 		return true;
 	}
 

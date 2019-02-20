@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -14,26 +16,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import bean.Admin;
-import bean.ILogger;
 import bean.User;
 import helper.InvalidPersonException;
 
 public class UserWriter {
-	private Set<ILogger> users;
+	private Set<User> users;
 //	private static UserWriter instance = null;
 	private Gson gson = new GsonBuilder().create();
 	private File file;
 
 	public UserWriter() throws IOException {
-		this.users = new LinkedHashSet<ILogger>();
+		this.users = new LinkedHashSet<User>();
 		this.file = new File("Users.json");
 		if (!this.file.exists()) {
 			new File("Users.json").createNewFile();
 		}
-
 	}
-	
+
 //	public static UserWriter getInstance() {
 //		if (instance == null) {
 //			try {
@@ -53,7 +52,7 @@ public class UserWriter {
 			} catch (IOException e) {
 				return;
 			}
-			System.out.println("Zapisah gi vyv file "+file.getName());
+			System.out.println("Wrote them to file " + file);
 		}
 	}
 
@@ -69,18 +68,18 @@ public class UserWriter {
 		Type setType = new TypeToken<LinkedHashSet<User>>() {
 		}.getType();
 		if (builder.length() > 0) {
-			Set<ILogger> getUsers = gson.fromJson(builder.toString(), setType);
+			Set<User> getUsers = gson.fromJson(builder.toString(), setType);
 			this.users.addAll(getUsers);
 		} else {
-			System.out.println("Oshte nqma obekti");
+			System.out.println("File is empty");
 		}
 	}
 
-	public void addUser(ILogger user) {
+	public void addUser(User user) {
 		if (user != null) {
-			for (ILogger u : users) {
-				if (u.equals(user)) {
-					this.users.remove(u);
+			for (Iterator<User> it = users.iterator(); it.hasNext();) {
+				if (it.next().equals(user)) {
+					it.remove();
 					System.out.println("Вече има");
 				}
 			}
@@ -88,23 +87,31 @@ public class UserWriter {
 		}
 	}
 
-//	public static void main(String[] args) throws IOException {
-//		UserWriter uw = new UserWriter();
-//		uw.getUsersFromFile();
+	public static void main(String[] args) throws IOException {
+		UserWriter uw = new UserWriter();
+		uw.getUsersFromFile();
 //		try {
-//			uw.addUser(Admin.getInstance());
+//			uw.addUser(
+//					new User(true, "admin@abv.bg", "admin", "admin", "adminov", "adminov", LocalDate.now(), "Sofia"));
+//		} catch (InvalidPersonException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			uw.addUser(new User(false, "ivelina@abv.bg", "12345678", "Ivelina", "Ivaylova", "Hristova",
+//					LocalDate.of(1997, 11, 20), "Sofia"));
 //		} catch (InvalidPersonException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		uw.saveUsersToFile();
-//		
-//		for (ILogger user : uw.users) {
-//			System.out.println(user);
-//		}
-//	}
 
-	public Set<ILogger> getUsers() {
+		for (User user : uw.users) {
+			System.out.println(user);
+		}
+	}
+
+	public Set<User> getUsers() {
 		return this.users;
 	}
 }

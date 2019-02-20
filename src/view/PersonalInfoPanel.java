@@ -3,10 +3,10 @@ package view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import bean.ILogger;
 import bean.Movie;
 import bean.User;
 import bean.UserProfile;
+import helper.InvalidPersonException;
 import helper.MovieHelper;
 import helper.UserHelper;
 import helper.UserProfileHelper;
@@ -53,8 +53,8 @@ public class PersonalInfoPanel extends GridPane {
 
 	private User user;
 
-	public PersonalInfoPanel(ILogger user) {
-		this.user = (User) user;
+	public PersonalInfoPanel(User user) {
+		this.user = user;
 		this.init();
 	}
 
@@ -159,14 +159,19 @@ public class PersonalInfoPanel extends GridPane {
 	protected void handleSaveButton(ActionEvent event) {
 		if (user == null) {
 			System.out.println("new user");
-			user = new User();
+			user = new User(false);
 		}
 		user.setFirstname(fnameField.getText());
 		user.setSurname(surnameField.getText());
 		user.setLastname(lnameField.getText());
 		user.setEmail(emailField.getText());
 		user.setBirthDate(datePicker.getValue());
-		user.setPassword(passwField.getText());
+		try {
+			user.setPassword(passwField.getText());
+		} catch (InvalidPersonException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		user.setCity(citiesComboBox.getValue());
 		if(user.getProfile()==null) {
 			user.setProfile(new UserProfile());

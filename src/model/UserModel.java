@@ -3,7 +3,6 @@ package model;
 import java.io.IOException;
 import java.util.Set;
 
-import bean.ILogger;
 import bean.User;
 import writers.UserWriter;
 
@@ -21,11 +20,11 @@ public class UserModel {
 		return instance;
 	}
 
-	public static ILogger getLoggerByEmailAndPassword(String email, String password) throws IOException {
+	public static User getLoggerByEmailAndPassword(String email, String password) throws IOException {
 		UserWriter writer = new UserWriter();
 		writer.getUsersFromFile();
-		Set<ILogger> loggers = writer.getUsers();
-		for (ILogger logger : loggers) {
+		Set<User> loggers = writer.getUsers();
+		for (User logger : loggers) {
 			System.out.println("UserModel " + logger);
 			if (logger.getEmail().equals(email) && logger.getPassword().equals(password)) {
 				return logger;
@@ -37,7 +36,7 @@ public class UserModel {
 
 	public static User fill(User user, User savedUser) {
 		if (user == null) {
-			user = new User();
+			user = new User(savedUser.isAdmin());
 		}
 		user.setId(savedUser.getId());
 		user.setEmail(savedUser.getEmail());

@@ -4,16 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import bean.Cinema;
 import bean.Movie;
-import bean.MovieTheather;
 import bean.MovieTheatherType;
 import bean.Ticket;
-import bean.User;
 import helper.CalendarHelper;
 import helper.NotValidMovieTheatherTypeException;
 import helper.NotValidTicketTypeException;
@@ -34,12 +31,10 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
-import javafx.util.converter.NumberStringConverter;
 import writers.MovieTheaterTypeWriter;
 
 public class BuyTicketPanel extends GridPane {
@@ -317,19 +312,4 @@ public class BuyTicketPanel extends GridPane {
 			movieTheatherByType = mt;
 		}
 	}
-//
-//	protected void handleDatePicker(ActionEvent event) {
-//		choosenDate = datePicker.getValue();
-//		System.out.println(choosenDate);
-//		try {
-////			Cinema.getInstance().showAllMoviesByDate(choosenDate);
-//			moviePicker = Cinema.getInstance().getAllMoviesByTheatherAndDate(movieTheatherByType, choosenDate);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		ObservableList<Movie> movies = FXCollections.observableArrayList(moviePicker);
-//		moviesComboBox.getItems().addAll(movies);
-//	}
-
 }

@@ -1,17 +1,15 @@
 package view;
 
-import bean.ILogger;
 import bean.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class UserPanel {
 	
-	public void start(ILogger user) {
+	public void start(User user) {
 		Stage stage = new Stage();
 		TabPane tabPane = new TabPane();
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
@@ -32,7 +30,7 @@ public class UserPanel {
 
 		
 		Tab userManagementTab = new Tab("Профил");//change username password
-		PersonalInfoPanel userManagementGrid = new PersonalInfoPanel((User) user);
+		PersonalInfoPanel userManagementGrid = new PersonalInfoPanel(user);
 		
 		// TODO Page for managing users
 		

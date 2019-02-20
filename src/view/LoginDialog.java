@@ -2,7 +2,6 @@ package view;
 
 import java.security.NoSuchAlgorithmException;
 
-import bean.ILogger;
 import bean.User;
 import controller.LoginController;
 import javafx.event.ActionEvent;
@@ -88,10 +87,10 @@ public class LoginDialog {
 
 	private void handleSignInButton(ActionEvent event) throws NoSuchAlgorithmException {
 		try {
-		  ILogger logger =new LoginController().validateLogin(emailTextField.getText(),passBox.getText());
+		  User logger =new LoginController().validateLogin(emailTextField.getText(),passBox.getText());
 //		  System.out.println("logger "+ logger.getType());
 			if (logger != null){
-				if (logger.getType() == 2){
+				if (logger.isAdmin()){
 					new AdminPanel().start(logger);
 				} 
 				else {

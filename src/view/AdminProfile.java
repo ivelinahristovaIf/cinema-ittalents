@@ -1,10 +1,9 @@
 package view;
 
 
-import bean.Admin;
-import bean.ILogger;
+import java.time.LocalDate;
+
 import bean.User;
-import bean.UserProfile;
 import helper.InvalidPersonException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,9 +26,9 @@ public class AdminProfile extends GridPane{
 	private PasswordField passwordField;
 	
 	private Button save;
-	private ILogger logger;
+	private User logger;
 	
-	public AdminProfile(ILogger logger) {
+	public AdminProfile(User logger) {
 		super();
 		this.logger =logger;
 		setAlignment(Pos.TOP_LEFT);
@@ -71,20 +70,20 @@ public class AdminProfile extends GridPane{
 		if (logger == null) {
 			System.out.println("new user");
 			try {
-				logger = Admin.getInstance();
+				logger = new User(true, "admin", "admin", "admin", "adminov", "adminov", LocalDate.now(), "Sofia");
 			} catch (InvalidPersonException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-//		 logger.setEmail(usernameField.getText());
-//		try {
-//			((Admin) logger).setPassword(passwordField.getText());
-//		} catch (InvalidPersonException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-
+		logger.setEmail(usernameField.getText());
+		try {
+			logger.setPassword(passwordField.getText());
+		} catch (InvalidPersonException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		try {
 			UserWriter writer = new UserWriter();
 			writer.getUsersFromFile();

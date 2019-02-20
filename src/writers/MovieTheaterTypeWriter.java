@@ -15,9 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import bean.ILogger;
 import bean.MovieTheatherType;
-import bean.User;
 
 public class MovieTheaterTypeWriter {
 
@@ -92,15 +90,15 @@ public class MovieTheaterTypeWriter {
 		return Collections.unmodifiableSet(types);
 	}
 	
-	public static void main(String[] args) {
-		try {
-			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		MovieTheaterTypeWriter.getInstance().addMovieTheaterType(new MovieTheatherType("IMAX", "2D", "Dolby Digital"));
-		MovieTheaterTypeWriter.getInstance().saveMovieTheaterTypesToFile();
-	}
+//	public static void main(String[] args) {
+//		try {
+//			MovieTheaterTypeWriter.getInstance().getMovieTheaterTypesFromFile();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		MovieTheaterTypeWriter.getInstance().addMovieTheaterType(new MovieTheatherType("IMAX", "2D", "Dolby Digital"));
+//		MovieTheaterTypeWriter.getInstance().saveMovieTheaterTypesToFile();
+//	}
 	
 }

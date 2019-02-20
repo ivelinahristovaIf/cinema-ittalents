@@ -97,7 +97,7 @@ public class RegisterPanel extends GridPane {
 			public void handle(ActionEvent event) {
 				User consumer = null;
 				try {
-					consumer = new User(emailField.getText(), passwField.getText(), fnameField.getText(),
+					consumer = new User(false,emailField.getText(), passwField.getText(), fnameField.getText(),
 							surnameField.getText(), lnameField.getText(), datePicker.getValue(), choosenCity);
 				} catch (InvalidPersonException e1) {
 					Alert alert = new Alert(AlertType.ERROR, "Грешни данни!");

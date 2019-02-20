@@ -1,6 +1,6 @@
 package controller;
 
-import bean.ILogger;
+import bean.User;
 import model.UserModel;
 
 public class LoginController {
@@ -9,8 +9,8 @@ public class LoginController {
 		super();
 	}
 
-	public ILogger validateLogin(String email, String password) throws Exception {
-		ILogger user = UserModel.getLoggerByEmailAndPassword(email, password);
+	public User validateLogin(String email, String password) throws Exception {
+		User user = UserModel.getLoggerByEmailAndPassword(email, password);
 		return user;
 	}
 }

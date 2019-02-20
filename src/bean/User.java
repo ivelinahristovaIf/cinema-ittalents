@@ -5,10 +5,9 @@ import java.time.LocalDate;
 import helper.InvalidPersonException;
 import helper.UserHelper;
 
-public class User implements ILogger {
-
+public class User{
 	private int id;
-	private int type;
+	private boolean isAdmin;
 	private static int nextId = 1;
 	private String email;
 	private String password;
@@ -20,16 +19,14 @@ public class User implements ILogger {
 	private UserProfile profile;
 
 
-	public User() {
-		super();
-		this.setType();
+	public User(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 		this.profile = new UserProfile();
 	}
 
-	public User(String email, String password, String firstname, String surname, String lastname, LocalDate birthDate,
+	public User(boolean isAdmin, String email, String password, String firstname, String surname, String lastname, LocalDate birthDate,
 			String city) throws InvalidPersonException {
-		super();
-		this.setType();
+		this.isAdmin = isAdmin;
 		this.id = nextId++;
 		if(UserHelper.getInstance().isValidEmail(email)) {
 		this.email = email;
@@ -66,8 +63,10 @@ public class User implements ILogger {
 		return this.password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password) throws InvalidPersonException {
+		if(UserHelper.getInstance().isValidPassword(password)) {
 		this.password = password;
+		}
 	}
 
 	public String getFirstname() {
@@ -125,22 +124,12 @@ public class User implements ILogger {
 	}
 
 	@Override
-	public int getType() {
-		return type;
-	}
-
-	@Override
-	public void setType() {
-		this.type = 1;
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
-		result = prime * result + type;
+		result = prime * result + (isAdmin ? 1231 : 1237);
 		return result;
 	}
 
@@ -160,9 +149,16 @@ public class User implements ILogger {
 			return false;
 		if (id != other.id)
 			return false;
-		if (type != other.type)
+		if (isAdmin != other.isAdmin)
 			return false;
 		return true;
 	}
 
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }
